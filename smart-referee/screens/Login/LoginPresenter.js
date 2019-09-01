@@ -78,7 +78,16 @@ const Bar = styled.Text`
     font-weight: 600;
 `;
 
-const LoginPresenter = ({ loading, navigation }) =>
+const LoginPresenter = ({
+    loading,
+    error,
+    usernameTerm,
+    passwordTerm,
+    handleUsernameUpdate,
+    handlePasswordUpdate,
+    onSubmitEditing,
+    navigation
+}) =>
     loading ? (
         <Loader />
     ) : (
@@ -89,16 +98,38 @@ const LoginPresenter = ({ loading, navigation }) =>
 
             <LoginInputContainer>
                 <InputContainer>
-                    <Input placeholder="Username or E-mail" />
+                    <Input
+                        placeholder="Username or E-mail"
+                        value={usernameTerm}
+                        onChangeText={handleUsernameUpdate}
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                    />
                 </InputContainer>
                 <InputContainer>
-                    <Input placeholder="Password" />
+                    <Input
+                        placeholder="Password"
+                        value={passwordTerm}
+                        onChangeText={handlePasswordUpdate}
+                        onSubmitEditing={onSubmitEditing}
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                    />
                 </InputContainer>
             </LoginInputContainer>
 
             <ButtonContainer>
                 <LoginButtonContainer
-                    onPress={() => navigation.navigate("Home")}
+                    onPress={() => {
+                        console.log(
+                            "Username :",
+                            usernameTerm,
+                            "\nPassword :",
+                            passwordTerm
+                        );
+
+                        navigation.navigate("Home");
+                    }}
                 >
                     <LoginButton>Login</LoginButton>
                 </LoginButtonContainer>
@@ -125,7 +156,13 @@ const LoginPresenter = ({ loading, navigation }) =>
     );
 
 LoginPresenter.propTypes = {
-    loading: PropTypes.bool.isRequired
+    token: PropTypes.string,
+    error: PropTypes.string,
+    usernameTerm: PropTypes.string,
+    passwordTerm: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
+    handleUsernameUpdate: PropTypes.func.isRequired,
+    handlePasswordUpdate: PropTypes.func.isRequired
 };
 
 export default withNavigation(LoginPresenter);

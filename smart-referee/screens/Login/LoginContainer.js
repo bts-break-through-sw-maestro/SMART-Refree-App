@@ -3,11 +3,65 @@ import LoginPresenter from "./LoginPresenter";
 
 export default class extends React.Component {
     state = {
-        loading: false
+        loading: false,
+        usernameTerm: "",
+        passwordTerm: "",
+        error: null
+    };
+
+    handleUsernameUpdate = text => {
+        this.setState({ usernameTerm: text });
+    };
+
+    handlePasswordUpdate = text => {
+        this.setState({ passwordTerm: text });
+    };
+
+    onSubmitEditing = async () => {
+        const { usernameTerm, passwordTerm } = this.state;
+
+        if (usernameTerm !== "" && passwordTerm !== "") {
+            let error, token;
+            this.setState({ loading: true });
+
+            try {
+                if (usernameTerm === "123" && passwordTerm === "123") {
+                    token = "Get token";
+                } else {
+                    alert("Invaild User Information");
+                }
+            } catch {
+                error = "Invaild Username or Password";
+            } finally {
+                this.setState({
+                    loading: false,
+                    error,
+                    token
+                });
+            }
+        }
     };
 
     render() {
-        const { loading } = this.state;
-        return <LoginPresenter loading={loading} />;
+        const {
+            token,
+            loading,
+            error,
+            usernameTerm,
+            passwordTerm
+        } = this.state;
+
+        return (
+            <LoginPresenter
+                token={token}
+                loading={loading}
+                error={error}
+                usernameTerm={usernameTerm}
+                passwordTerm={passwordTerm}
+                onSubmitEditing={this.onSubmitEditing}
+                handleUsernameUpdate={this.handleUsernameUpdate}
+                handlePasswordUpdate={this.handlePasswordUpdate}
+            />
+        );
     }
 }
