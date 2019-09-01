@@ -1,5 +1,5 @@
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import { createStack } from "./config";
+import { createStack, headerStyles } from "./config";
 import LoginScreen from "../screens/Login";
 import SignUpScreen from "../screens/SignUp";
 import ForgetScreen from "../screens/Forget";
@@ -9,24 +9,44 @@ import MenuScreen from "../screens/Menu";
 const MainNavigation = createStackNavigator(
     {
         Login: {
-            screen: createStack(LoginScreen, "Login")
+            screen: LoginScreen,
+            navigationOptions: {
+                header: null,
+                ...headerStyles
+            }
         },
         SignUp: {
-            screen: createStack(SignUpScreen, "SignUp")
+            screen: SignUpScreen,
+            navigationOptions: {
+                title: "Sign Up",
+                ...headerStyles
+            }
         },
         Forget: {
-            screen: createStack(ForgetScreen, "Forget")
+            screen: ForgetScreen,
+            navigationOptions: {
+                title: "Forget",
+                ...headerStyles
+            }
         },
         Home: {
-            screen: createStack(HomeScreen, "Home")
+            screen: HomeScreen,
+            navigationOptions: {
+                title: "Smart Referee",
+                ...headerStyles
+            }
         },
         Menu: {
-            screen: createStack(MenuScreen, "Menu")
+            screen: MenuScreen,
+            navigationOptions: {
+                title: "Menu",
+                ...headerStyles
+            }
         }
     },
     {
         initialRouteName: "Login",
-        headerMode: "none"
+        headerBackTitleVisible: false
     }
 );
 

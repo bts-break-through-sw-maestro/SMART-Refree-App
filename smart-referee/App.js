@@ -26,7 +26,7 @@ export default class App extends React.Component {
         if (loaded) {
             return (
                 <>
-                    <StatusBar barStyle="light-content" />
+                    <StatusBar barStyle="dark-content" />
                     <MainNavigation />
                 </>
             );
