@@ -66,7 +66,7 @@ const HomePresenter = ({ loading }) =>
                     <StatPlotImg>User Stat Plot</StatPlotImg>
                 </StatPlotImageContainer>
             </StatPlotContiner>
-            <GameResultCotainer>
+            <GameResultCotainer showsVerticalScrollIndicator={false}>
                 <Game />
                 <Game />
                 <Game />

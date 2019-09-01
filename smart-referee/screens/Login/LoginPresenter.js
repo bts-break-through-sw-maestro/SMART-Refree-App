@@ -1,6 +1,6 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
-import { BUTTON_COLOR, BG_COLOR, TINT_COLOR } from "../../constants/Colors";
+import { Text } from "react-native";
+import { BUTTON_COLOR, BG_COLOR, BORDER_COLOR } from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
@@ -18,25 +18,25 @@ const LogoImageContainer = styled.View`
     height: ${Layout.height / 3.5};
     justify-content: center;
     align-items: center;
-    border: 2px solid ${TINT_COLOR};
+    border: 2px solid ${BORDER_COLOR};
+    margin-top: 20px;
 `;
 
 const LoginInputContainer = styled.View`
     width: ${Layout.width / 2};
-    height: ${Layout.height / 3.5};
+    height: ${Layout.height / 4};
     justify-content: center;
     align-items: center;
 `;
 
 const InputContainer = styled.View`
     border-bottom-width: 2px;
-    border-bottom-color: ${TINT_COLOR};
+    border-bottom-color: ${BORDER_COLOR};
     margin-bottom: 5px;
 `;
 
 const Input = styled.TextInput`
     width: ${Layout.width / 1.6};
-    border-radius: 20px;
     padding: 10px;
     text-align: left;
 `;
@@ -44,12 +44,13 @@ const Input = styled.TextInput`
 const ButtonContainer = styled.View`
     justify-content: center;
     align-items: center;
+    padding-bottom: 20px;
 `;
 
 const LoginButtonContainer = styled.TouchableOpacity`
     background-color: ${BUTTON_COLOR};
     margin-horizontal: 30px;
-    padding: 10px 60px;
+    padding: 10px 70px;
     border-radius: 10px;
 `;
 
@@ -108,6 +109,7 @@ const LoginPresenter = ({
                 </InputContainer>
                 <InputContainer>
                     <Input
+                        secureTextEntry={true}
                         placeholder="Password"
                         value={passwordTerm}
                         onChangeText={handlePasswordUpdate}
