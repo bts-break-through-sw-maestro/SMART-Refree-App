@@ -1,5 +1,7 @@
+import React from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import { createStack, headerStyles } from "./config";
+import { headerStyles } from "./config";
+import Avatar from "../components/Avatar";
 import LoginScreen from "../screens/Login";
 import SignUpScreen from "../screens/SignUp";
 import ForgetScreen from "../screens/Forget";
@@ -33,6 +35,7 @@ const MainNavigation = createStackNavigator(
             screen: HomeScreen,
             navigationOptions: {
                 title: "Smart Referee",
+                headerRight: <Avatar />,
                 ...headerStyles
             }
         },
@@ -40,12 +43,13 @@ const MainNavigation = createStackNavigator(
             screen: MenuScreen,
             navigationOptions: {
                 title: "Menu",
+                headerRight: <Avatar />,
                 ...headerStyles
             }
         }
     },
     {
-        initialRouteName: "Login",
+        initialRouteName: "Home",
         headerBackTitleVisible: false
     }
 );
