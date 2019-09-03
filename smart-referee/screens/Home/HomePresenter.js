@@ -11,7 +11,7 @@ const Container = styled.View`
     align-items: center;
 `;
 
-const StatPlotContiner = styled.View`
+const StatPlotContainer = styled.View`
     flex: 3;
     width: ${Layout.width - 60};
     align-items: center;
@@ -31,7 +31,7 @@ const StatPlotImg = styled.Text`
     text-align: center;
 `;
 
-const GameResultCotainer = styled.ScrollView`
+const GameResultContainer = styled.ScrollView`
     flex: 5;
 `;
 
@@ -61,18 +61,18 @@ const HomePresenter = ({ loading }) =>
         <Loader />
     ) : (
         <Container>
-            <StatPlotContiner>
+            <StatPlotContainer>
                 <StatPlotImageContainer>
                     <StatPlotImg>User Stat Plot</StatPlotImg>
                 </StatPlotImageContainer>
-            </StatPlotContiner>
-            <GameResultCotainer showsVerticalScrollIndicator={false}>
+            </StatPlotContainer>
+            <GameResultContainer showsVerticalScrollIndicator={false}>
                 <Game />
                 <Game />
                 <Game />
                 <Game />
                 <Game />
-            </GameResultCotainer>
+            </GameResultContainer>
 
             <MenuButtonContainer>
                 <MenuButton>
