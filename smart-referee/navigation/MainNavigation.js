@@ -10,6 +10,7 @@ import MenuScreen from "../screens/Menu";
 import PlayScreen from "../screens/Play";
 import PracticeScreen from "../screens/Practice";
 import RecordScreen from "../screens/Record";
+import TeamScreen from "../screens/Team";
 
 const MainNavigation = createStackNavigator(
     {
@@ -70,6 +71,14 @@ const MainNavigation = createStackNavigator(
             screen: RecordScreen,
             navigationOptions: {
                 title: "Record",
+                headerRight: <Avatar />,
+                ...headerStyles
+            }
+        },
+        Team: {
+            screen: TeamScreen,
+            navigationOptions: {
+                title: "Team",
                 headerRight: <Avatar />,
                 ...headerStyles
             }

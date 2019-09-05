@@ -50,13 +50,8 @@ const MenuPresenter = ({ loading, navigation }) =>
                 </MenuButton>
             </MenuContainer>
             <MenuContainer>
-                <MenuButton onPress={() => console.log("Menu 3 Clicked")}>
-                    <MenuButtonText>Menu 4</MenuButtonText>
-                </MenuButton>
-            </MenuContainer>
-            <MenuContainer>
-                <MenuButton onPress={() => console.log("Menu 5 Clicked")}>
-                    <MenuButtonText>Menu 5</MenuButtonText>
+                <MenuButton onPress={() => navigation.navigate("Team")}>
+                    <MenuButtonText>Team</MenuButtonText>
                 </MenuButton>
             </MenuContainer>
         </Container>
