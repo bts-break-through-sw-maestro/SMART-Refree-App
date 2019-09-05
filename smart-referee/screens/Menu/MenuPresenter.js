@@ -24,8 +24,8 @@ const MenuButton = styled.TouchableOpacity`
 `;
 
 const MenuButtonText = styled.Text`
-    font-size: 30px;
-    font-weight: 500;
+    font-size: 26px;
+    font-weight: 400;
     color: ${TINT_COLOR};
 `;
 
@@ -40,8 +40,8 @@ const MenuPresenter = ({ loading, navigation }) =>
                 </MenuButton>
             </MenuContainer>
             <MenuContainer>
-                <MenuButton onPress={() => console.log("Menu 2 Clicked")}>
-                    <MenuButtonText>Menu 2</MenuButtonText>
+                <MenuButton onPress={() => navigation.navigate("Practice")}>
+                    <MenuButtonText>Practice</MenuButtonText>
                 </MenuButton>
             </MenuContainer>
             <MenuContainer>

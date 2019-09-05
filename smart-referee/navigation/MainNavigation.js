@@ -8,6 +8,7 @@ import ForgetScreen from "../screens/Forget";
 import HomeScreen from "../screens/Home";
 import MenuScreen from "../screens/Menu";
 import PlayScreen from "../screens/Play";
+import PracticeScreen from "../screens/Practice";
 
 const MainNavigation = createStackNavigator(
     {
@@ -52,6 +53,14 @@ const MainNavigation = createStackNavigator(
             screen: PlayScreen,
             navigationOptions: {
                 title: "Play",
+                headerRight: <Avatar />,
+                ...headerStyles
+            }
+        },
+        Practice: {
+            screen: PracticeScreen,
+            navigationOptions: {
+                title: "Practice",
                 headerRight: <Avatar />,
                 ...headerStyles
             }
