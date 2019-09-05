@@ -17,8 +17,7 @@ const MainNavigation = createStackNavigator(
         Login: {
             screen: LoginScreen,
             navigationOptions: {
-                header: null,
-                ...headerStyles
+                header: null
             }
         },
         SignUp: {
@@ -54,9 +53,7 @@ const MainNavigation = createStackNavigator(
         Play: {
             screen: PlayScreen,
             navigationOptions: {
-                title: "Play",
-                headerRight: <Avatar />,
-                ...headerStyles
+                header: null
             }
         },
         Practice: {
