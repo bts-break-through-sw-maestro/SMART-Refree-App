@@ -4,11 +4,13 @@ import Loader from "../../components/Loader";
 import Game from "../../components/Game";
 import styled from "styled-components";
 import { BG_COLOR, BUTTON_COLOR, TINT_COLOR } from "../../constants/Colors";
+import { withNavigation } from "react-navigation";
 import Layout from "../../constants/Layout";
 
 const Container = styled.View`
     flex: 1;
     align-items: center;
+    background-color: ${BG_COLOR};
 `;
 
 const StatPlotContainer = styled.View`
@@ -56,7 +58,7 @@ const MenuButtonText = styled.Text`
     color: ${BG_COLOR};
 `;
 
-const HomePresenter = ({ loading }) =>
+const HomePresenter = ({ loading, navigation }) =>
     loading ? (
         <Loader />
     ) : (
@@ -75,7 +77,7 @@ const HomePresenter = ({ loading }) =>
             </GameResultContainer>
 
             <MenuButtonContainer>
-                <MenuButton>
+                <MenuButton onPress={() => navigation.navigate("Menu")}>
                     <MenuButtonText>Menu</MenuButtonText>
                 </MenuButton>
             </MenuButtonContainer>
@@ -86,4 +88,4 @@ HomePresenter.propTypes = {
     loading: PropTypes.bool.isRequired
 };
 
-export default HomePresenter;
+export default withNavigation(HomePresenter);

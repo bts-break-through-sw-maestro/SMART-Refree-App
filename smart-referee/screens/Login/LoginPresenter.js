@@ -11,6 +11,7 @@ const Container = styled.View`
     flex: 1;
     justify-content: center;
     align-items: center;
+    background-color: ${BG_COLOR};
 `;
 
 const LogoImageContainer = styled.View`

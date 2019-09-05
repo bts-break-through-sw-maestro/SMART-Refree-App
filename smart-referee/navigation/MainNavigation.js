@@ -7,6 +7,7 @@ import SignUpScreen from "../screens/SignUp";
 import ForgetScreen from "../screens/Forget";
 import HomeScreen from "../screens/Home";
 import MenuScreen from "../screens/Menu";
+import PlayScreen from "../screens/Play";
 
 const MainNavigation = createStackNavigator(
     {
@@ -46,10 +47,18 @@ const MainNavigation = createStackNavigator(
                 headerRight: <Avatar />,
                 ...headerStyles
             }
+        },
+        Play: {
+            screen: PlayScreen,
+            navigationOptions: {
+                title: "Play",
+                headerRight: <Avatar />,
+                ...headerStyles
+            }
         }
     },
     {
-        initialRouteName: "Home",
+        initialRouteName: "Menu",
         headerBackTitleVisible: false
     }
 );
