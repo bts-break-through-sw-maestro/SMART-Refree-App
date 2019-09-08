@@ -1,5 +1,7 @@
 import React from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
+import { headerStyles } from "./config";
+
 import MainNavigation from "./MainNavigation";
 import ModalScreen from "../screens/Modal";
 
@@ -11,8 +13,8 @@ export const AppNavigation = createStackNavigator(
         }
     },
     {
-        headerMode: "none",
         mode: "modal",
+        headerMode: "None",
         initialRouteName: "Main"
     }
 );
