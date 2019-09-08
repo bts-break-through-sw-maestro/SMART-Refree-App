@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { headerStyles } from "./config";
-import Avatar from "../components/Avatar";
+import AvatarModal from "../components/AvatarModal";
 import LoginScreen from "../screens/Login";
 import SignUpScreen from "../screens/SignUp";
 import ForgetScreen from "../screens/Forget";
@@ -38,7 +38,7 @@ const MainNavigation = createStackNavigator(
             screen: HomeScreen,
             navigationOptions: {
                 title: "Smart Referee",
-                headerRight: <Avatar />,
+                headerRight: <AvatarModal />,
                 ...headerStyles
             }
         },
@@ -46,7 +46,7 @@ const MainNavigation = createStackNavigator(
             screen: MenuScreen,
             navigationOptions: {
                 title: "Menu",
-                headerRight: <Avatar />,
+                headerRight: <AvatarModal />,
                 ...headerStyles
             }
         },
@@ -60,7 +60,7 @@ const MainNavigation = createStackNavigator(
             screen: PracticeScreen,
             navigationOptions: {
                 title: "Practice",
-                headerRight: <Avatar />,
+                headerRight: <AvatarModal />,
                 ...headerStyles
             }
         },
@@ -68,7 +68,7 @@ const MainNavigation = createStackNavigator(
             screen: RecordScreen,
             navigationOptions: {
                 title: "Record",
-                headerRight: <Avatar />,
+                headerRight: <AvatarModal />,
                 ...headerStyles
             }
         },
@@ -76,13 +76,13 @@ const MainNavigation = createStackNavigator(
             screen: TeamScreen,
             navigationOptions: {
                 title: "Team",
-                headerRight: <Avatar />,
+                headerRight: <AvatarModal />,
                 ...headerStyles
             }
         }
     },
     {
-        initialRouteName: "Menu",
+        initialRouteName: "Login",
         headerBackTitleVisible: false
     }
 );

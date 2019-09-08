@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar } from "react-native-elements";
 import styled from "styled-components";
+import { withNavigation } from "react-navigation";
 
 const Container = styled.View`
     align-items: center;
@@ -9,15 +10,17 @@ const Container = styled.View`
     width: 44px;
 `;
 
-export default () => (
+const AvatarModal = ({ navigation }) => (
     <Container>
         <Avatar
             rounded
             size={30}
             icon={{ name: "user", type: "font-awesome" }}
-            onPress={() => console.log("Works!")}
+            onPress={() => navigation.navigate("Modal")}
             activeOpacity={0.7}
             containerStyle={{}}
         />
     </Container>
 );
+
+export default withNavigation(AvatarModal);

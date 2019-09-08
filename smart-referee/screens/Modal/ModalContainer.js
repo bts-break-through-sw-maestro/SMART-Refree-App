@@ -1,5 +1,5 @@
 import React from "react";
-import HomePresenter from "./HomePresenter";
+import ModalPresenter from "./ModalPresenter";
 
 export default class extends React.Component {
     state = {
@@ -8,7 +8,6 @@ export default class extends React.Component {
 
     render() {
         const { loading } = this.state;
-
-        return <HomePresenter loading={loading} />;
+        return <ModalPresenter loading={loading} />;
     }
 }
