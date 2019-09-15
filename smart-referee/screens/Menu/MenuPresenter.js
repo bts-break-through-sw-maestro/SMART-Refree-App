@@ -44,11 +44,11 @@ const MenuPresenter = ({ loading, navigation }) =>
                     <MenuButtonText>Practice</MenuButtonText>
                 </MenuButton>
             </MenuContainer>
-            <MenuContainer>
+            {/* <MenuContainer>
                 <MenuButton onPress={() => navigation.navigate("Record")}>
                     <MenuButtonText>Record</MenuButtonText>
                 </MenuButton>
-            </MenuContainer>
+            </MenuContainer> */}
             <MenuContainer>
                 <MenuButton onPress={() => navigation.navigate("Team")}>
                     <MenuButtonText>Team</MenuButtonText>

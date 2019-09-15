@@ -3,11 +3,12 @@ import TeamPresenter from "./TeamPresenter";
 
 export default class extends React.Component {
     state = {
-        loading: false
+        loading: false,
+        hasTeam: false
     };
 
     render() {
-        const { loading } = this.state;
-        return <TeamPresenter loading={loading} />;
+        const { loading, hasTeam } = this.state;
+        return <TeamPresenter loading={loading} hasTeam={hasTeam} />;
     }
 }
