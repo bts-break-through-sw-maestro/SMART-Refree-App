@@ -82,7 +82,7 @@ const MainNavigation = createStackNavigator(
         }
     },
     {
-        initialRouteName: "Login",
+        initialRouteName: "Team",
         headerBackTitleVisible: false
     }
 );
