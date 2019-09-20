@@ -86,12 +86,53 @@ const CenterViewContainer = styled.View`
     justify-content: center;
 `;
 
-const MemberContainer = styled.View`
+const MemberContainer = styled.TouchableOpacity`
     width: 90%;
     height: 80px;
     border: 1px solid black;
     margin-top: 10px;
+    flex-direction: row;
+    align-items: center;
 `;
+
+const MemberProfileImgContainer = styled.View`
+    width: 60px;
+    height: 60px;
+    border: 1px solid black;
+    margin: 10px 20px;
+    border-radius: 50px;
+`;
+
+const MemberProfileContentContainer = styled.View`
+    flex: 7;
+    flex-direction: column;
+`;
+
+const MemberNameContainer = styled.Text`
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+`;
+
+const MemberRecordContainer = styled.View`
+    flex-direction: row;
+    text-align: center;
+`;
+
+const MemberRecordCategoryText = styled.View`
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+`;
+
+const MemberRecordValueText = styled.View`
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 5px;
+`;
+
+var dummy = [1, 2, 3, 4, 5, 6];
 
 const TeamPresenter = ({ loading, hasTeam }) =>
     loading ? (
@@ -111,12 +152,36 @@ const TeamPresenter = ({ loading, hasTeam }) =>
                     </TeamContainer>
                     <TeamMemberContainer>
                         <CenterViewContainer>
-                            <MemberContainer></MemberContainer>
-                            <MemberContainer></MemberContainer>
-                            <MemberContainer></MemberContainer>
-                            <MemberContainer></MemberContainer>
-                            <MemberContainer></MemberContainer>
-                            <MemberContainer></MemberContainer>
+                            {dummy.map(idx => (
+                                <MemberContainer>
+                                    <MemberProfileImgContainer></MemberProfileImgContainer>
+                                    <MemberProfileContentContainer>
+                                        <MemberNameContainer>
+                                            김타자
+                                        </MemberNameContainer>
+                                        <MemberRecordContainer>
+                                            <MemberRecordCategoryText>
+                                                <Text>타수</Text>
+                                            </MemberRecordCategoryText>
+                                            <MemberRecordValueText>
+                                                <Text>300</Text>
+                                            </MemberRecordValueText>
+                                            <MemberRecordCategoryText>
+                                                <Text>안타</Text>
+                                            </MemberRecordCategoryText>
+                                            <MemberRecordValueText>
+                                                <Text>100</Text>
+                                            </MemberRecordValueText>
+                                            <MemberRecordCategoryText>
+                                                <Text>홈런</Text>
+                                            </MemberRecordCategoryText>
+                                            <MemberRecordValueText>
+                                                <Text>10</Text>
+                                            </MemberRecordValueText>
+                                        </MemberRecordContainer>
+                                    </MemberProfileContentContainer>
+                                </MemberContainer>
+                            ))}
                         </CenterViewContainer>
                     </TeamMemberContainer>
                 </>
