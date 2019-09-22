@@ -1,15 +1,17 @@
 import React from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import { headerStyles } from "./config";
-
 import MainNavigation from "./MainNavigation";
 import ModalScreen from "../screens/Modal";
+import TeamDetailScreen from "../screens/TeamDetail";
 
 export const AppNavigation = createStackNavigator(
     {
         Main: MainNavigation,
         Modal: {
             screen: ModalScreen
+        },
+        TeamDetail: {
+            screen: TeamDetailScreen
         }
     },
     {

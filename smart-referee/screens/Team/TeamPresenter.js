@@ -3,6 +3,7 @@ import { Text } from "react-native";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
+import { withNavigation } from "react-navigation";
 import { HEADER_COLOR, BG_COLOR } from "../../constants/Colors";
 
 const Container = styled.View`
@@ -134,7 +135,7 @@ const MemberRecordValueText = styled.View`
 
 var dummy = [1, 2, 3, 4, 5, 6];
 
-const TeamPresenter = ({ loading, hasTeam }) =>
+const TeamPresenter = ({ loading, hasTeam, navigation }) =>
     loading ? (
         <Loader />
     ) : (
@@ -153,7 +154,11 @@ const TeamPresenter = ({ loading, hasTeam }) =>
                     <TeamMemberContainer>
                         <CenterViewContainer>
                             {dummy.map(idx => (
-                                <MemberContainer>
+                                <MemberContainer
+                                    onPress={() =>
+                                        navigation.navigate("TeamDetail")
+                                    }
+                                >
                                     <MemberProfileImgContainer></MemberProfileImgContainer>
                                     <MemberProfileContentContainer>
                                         <MemberNameContainer>
@@ -211,4 +216,4 @@ TeamPresenter.propTypes = {
     hasTeam: PropTypes.bool.isRequired
 };
 
-export default TeamPresenter;
+export default withNavigation(TeamPresenter);
