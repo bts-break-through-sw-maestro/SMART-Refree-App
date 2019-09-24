@@ -40,15 +40,10 @@ const MenuPresenter = ({ loading, navigation }) =>
                 </MenuButton>
             </MenuContainer>
             <MenuContainer>
-                <MenuButton onPress={() => navigation.navigate("Practice")}>
+                <MenuButton onPress={() => navigation.navigate("Play")}>
                     <MenuButtonText>Practice</MenuButtonText>
                 </MenuButton>
             </MenuContainer>
-            {/* <MenuContainer>
-                <MenuButton onPress={() => navigation.navigate("Record")}>
-                    <MenuButtonText>Record</MenuButtonText>
-                </MenuButton>
-            </MenuContainer> */}
             <MenuContainer>
                 <MenuButton onPress={() => navigation.navigate("Team")}>
                     <MenuButtonText>Team</MenuButtonText>

@@ -11,6 +11,7 @@ import PlayScreen from "../screens/Play";
 import PracticeScreen from "../screens/Practice";
 import RecordScreen from "../screens/Record";
 import TeamScreen from "../screens/Team";
+import TeamManageScreen from "../screens/TeamManage";
 
 const MainNavigation = createStackNavigator(
     {
@@ -76,6 +77,14 @@ const MainNavigation = createStackNavigator(
             screen: TeamScreen,
             navigationOptions: {
                 title: "Team",
+                headerRight: <AvatarModal />,
+                ...headerStyles
+            }
+        },
+        TeamManage: {
+            screen: TeamManageScreen,
+            navigationOptions: {
+                title: "Team Manage",
                 headerRight: <AvatarModal />,
                 ...headerStyles
             }

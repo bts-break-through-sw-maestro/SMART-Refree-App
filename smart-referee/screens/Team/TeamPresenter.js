@@ -3,6 +3,8 @@ import { Text } from "react-native";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
+import TeamMember from "../../components/TeamMember";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { withNavigation } from "react-navigation";
 import { HEADER_COLOR, BG_COLOR } from "../../constants/Colors";
 
@@ -23,7 +25,7 @@ const NoTeamText = styled.Text`
     padding-vertical: 3px;
 `;
 
-const TeamButtonContainenr = styled.View`
+const TeamButtonContainer = styled.View`
     flex: 1;
     width: 100%;
     align-items: center;
@@ -85,63 +87,46 @@ const CenterViewContainer = styled.View`
     flex: 1;
     align-items: center;
     justify-content: center;
+    margin-bottom: 10px;
 `;
 
-const MemberContainer = styled.TouchableOpacity`
-    width: 90%;
-    height: 80px;
-    border: 1px solid black;
-    margin-top: 10px;
-    flex-direction: row;
-    align-items: center;
+const TopButtonContainer = styled.View`
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    z-index: 1;
+    top: 10;
 `;
 
-const MemberProfileImgContainer = styled.View`
-    width: 60px;
-    height: 60px;
-    border: 1px solid black;
-    margin: 10px 20px;
-    border-radius: 50px;
+const SettingsButton = styled.TouchableOpacity`
+    align-items: flex-end;
+    padding-right: 20px;
 `;
 
-const MemberProfileContentContainer = styled.View`
-    flex: 7;
-    flex-direction: column;
-`;
+var dummy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const MemberNameContainer = styled.Text`
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 5px;
-`;
-
-const MemberRecordContainer = styled.View`
-    flex-direction: row;
-    text-align: center;
-`;
-
-const MemberRecordCategoryText = styled.View`
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 5px;
-`;
-
-const MemberRecordValueText = styled.View`
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 5px;
-    margin-right: 5px;
-`;
-
-var dummy = [1, 2, 3, 4, 5, 6];
-
-const TeamPresenter = ({ loading, hasTeam, navigation }) =>
+const TeamPresenter = ({ loading, hasTeam, isMaster, navigation, error }) =>
     loading ? (
         <Loader />
     ) : (
         <Container>
             {hasTeam ? (
                 <>
+                    {isMaster ? (
+                        <TopButtonContainer>
+                            <SettingsButton
+                                onPress={() =>
+                                    navigation.navigate("TeamManage")
+                                }
+                            >
+                                <MaterialCommunityIcons
+                                    name="settings"
+                                    size={26}
+                                    color="black"
+                                />
+                            </SettingsButton>
+                        </TopButtonContainer>
+                    ) : null}
                     <TeamContainer>
                         <LogoImgContainer>
                             <Text>Team Logo</Text>
@@ -154,38 +139,7 @@ const TeamPresenter = ({ loading, hasTeam, navigation }) =>
                     <TeamMemberContainer>
                         <CenterViewContainer>
                             {dummy.map(idx => (
-                                <MemberContainer
-                                    onPress={() =>
-                                        navigation.navigate("TeamDetail")
-                                    }
-                                >
-                                    <MemberProfileImgContainer></MemberProfileImgContainer>
-                                    <MemberProfileContentContainer>
-                                        <MemberNameContainer>
-                                            김타자
-                                        </MemberNameContainer>
-                                        <MemberRecordContainer>
-                                            <MemberRecordCategoryText>
-                                                <Text>타수</Text>
-                                            </MemberRecordCategoryText>
-                                            <MemberRecordValueText>
-                                                <Text>300</Text>
-                                            </MemberRecordValueText>
-                                            <MemberRecordCategoryText>
-                                                <Text>안타</Text>
-                                            </MemberRecordCategoryText>
-                                            <MemberRecordValueText>
-                                                <Text>100</Text>
-                                            </MemberRecordValueText>
-                                            <MemberRecordCategoryText>
-                                                <Text>홈런</Text>
-                                            </MemberRecordCategoryText>
-                                            <MemberRecordValueText>
-                                                <Text>10</Text>
-                                            </MemberRecordValueText>
-                                        </MemberRecordContainer>
-                                    </MemberProfileContentContainer>
-                                </MemberContainer>
+                                <TeamMember idx={idx} key={idx} />
                             ))}
                         </CenterViewContainer>
                     </TeamMemberContainer>
@@ -198,14 +152,14 @@ const TeamPresenter = ({ loading, hasTeam, navigation }) =>
                             팀에 가입하거나 팀을 생성해보세요!
                         </NoTeamText>
                     </NoTeamTextContainer>
-                    <TeamButtonContainenr>
+                    <TeamButtonContainer>
                         <TeamJoinButton>
                             <TeamJoinButtonText>팀 가입하기</TeamJoinButtonText>
                         </TeamJoinButton>
                         <TeamJoinButton>
                             <TeamJoinButtonText>팀 생성하기</TeamJoinButtonText>
                         </TeamJoinButton>
-                    </TeamButtonContainenr>
+                    </TeamButtonContainer>
                 </>
             )}
         </Container>
@@ -213,7 +167,9 @@ const TeamPresenter = ({ loading, hasTeam, navigation }) =>
 
 TeamPresenter.propTypes = {
     loading: PropTypes.bool.isRequired,
-    hasTeam: PropTypes.bool.isRequired
+    hasTeam: PropTypes.bool.isRequired,
+    isMaster: PropTypes.bool.isRequired,
+    error: PropTypes.string
 };
 
 export default withNavigation(TeamPresenter);
