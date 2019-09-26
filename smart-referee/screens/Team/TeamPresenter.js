@@ -1,12 +1,12 @@
 import React from "react";
-import { Text } from "react-native";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
-import TeamMember from "../../components/TeamMember";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { withNavigation } from "react-navigation";
 import { HEADER_COLOR, BG_COLOR } from "../../constants/Colors";
+import TeamInfo from "../../components/TeamInfo";
+import TeamMemberList from "../../components/TeamMemberList";
 
 const Container = styled.View`
     flex: 1;
@@ -48,46 +48,8 @@ const TeamJoinButtonText = styled.Text`
     text-align: center;
 `;
 
-const TeamContainer = styled.View`
-    flex: 3;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 0px 10px 0px;
-    border-bottom-width: 1px;
-    border-bottom-color: black;
-    width: 100%;
-`;
-
-const LogoImgContainer = styled.View`
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
-`;
-
-const TeamInfoContainer = styled.View`
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-`;
-
-const TeamName = styled.Text`
-    font-size: 18px;
-    font-weight: 600;
-`;
-const TeamRecord = styled.Text`
-    font-size: 14px;
-    font-weight: 500;
-`;
-
 const TeamMemberContainer = styled.ScrollView`
     flex: 7;
-`;
-
-const CenterViewContainer = styled.View`
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
 `;
 
 const TopButtonContainer = styled.View`
@@ -127,21 +89,9 @@ const TeamPresenter = ({ loading, hasTeam, isMaster, navigation, error }) =>
                             </SettingsButton>
                         </TopButtonContainer>
                     ) : null}
-                    <TeamContainer>
-                        <LogoImgContainer>
-                            <Text>Team Logo</Text>
-                        </LogoImgContainer>
-                        <TeamInfoContainer>
-                            <TeamName>팀 이름</TeamName>
-                            <TeamRecord>0승 0패 0무</TeamRecord>
-                        </TeamInfoContainer>
-                    </TeamContainer>
+                    <TeamInfo />
                     <TeamMemberContainer>
-                        <CenterViewContainer>
-                            {dummy.map(idx => (
-                                <TeamMember idx={idx} key={idx} />
-                            ))}
-                        </CenterViewContainer>
+                        <TeamMemberList />
                     </TeamMemberContainer>
                 </>
             ) : (

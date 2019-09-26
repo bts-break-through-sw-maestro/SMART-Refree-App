@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { withNavigation } from "react-navigation";
-import { Text } from "react-native";
 
 const MemberContainer = styled.TouchableOpacity`
     width: 90%;
@@ -37,13 +36,13 @@ const MemberRecordContainer = styled.View`
     text-align: center;
 `;
 
-const MemberRecordCategoryText = styled.View`
+const MemberRecordCategoryText = styled.Text`
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px;
 `;
 
-const MemberRecordValueText = styled.View`
+const MemberRecordValueText = styled.Text`
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px;
@@ -56,24 +55,12 @@ const TeamMember = ({ idx, navigation }) => (
         <MemberProfileContentContainer>
             <MemberNameContainer>김타자{idx}</MemberNameContainer>
             <MemberRecordContainer>
-                <MemberRecordCategoryText>
-                    <Text>타수</Text>
-                </MemberRecordCategoryText>
-                <MemberRecordValueText>
-                    <Text>300</Text>
-                </MemberRecordValueText>
-                <MemberRecordCategoryText>
-                    <Text>안타</Text>
-                </MemberRecordCategoryText>
-                <MemberRecordValueText>
-                    <Text>100</Text>
-                </MemberRecordValueText>
-                <MemberRecordCategoryText>
-                    <Text>홈런</Text>
-                </MemberRecordCategoryText>
-                <MemberRecordValueText>
-                    <Text>10</Text>
-                </MemberRecordValueText>
+                <MemberRecordCategoryText>타수</MemberRecordCategoryText>
+                <MemberRecordValueText>300</MemberRecordValueText>
+                <MemberRecordCategoryText>안타</MemberRecordCategoryText>
+                <MemberRecordValueText>100</MemberRecordValueText>
+                <MemberRecordCategoryText>홈런</MemberRecordCategoryText>
+                <MemberRecordValueText>10</MemberRecordValueText>
             </MemberRecordContainer>
         </MemberProfileContentContainer>
     </MemberContainer>
