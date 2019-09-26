@@ -65,8 +65,6 @@ const SettingsButton = styled.TouchableOpacity`
     padding-right: 20px;
 `;
 
-var dummy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
 const TeamPresenter = ({ loading, hasTeam, isMaster, navigation, error }) =>
     loading ? (
         <Loader />
@@ -103,10 +101,14 @@ const TeamPresenter = ({ loading, hasTeam, isMaster, navigation, error }) =>
                         </NoTeamText>
                     </NoTeamTextContainer>
                     <TeamButtonContainer>
-                        <TeamJoinButton>
+                        <TeamJoinButton
+                            onPress={() => navigation.navigate("TeamSearch")}
+                        >
                             <TeamJoinButtonText>팀 가입하기</TeamJoinButtonText>
                         </TeamJoinButton>
-                        <TeamJoinButton>
+                        <TeamJoinButton
+                            onPress={() => navigation.navigate("TeamCreate")}
+                        >
                             <TeamJoinButtonText>팀 생성하기</TeamJoinButtonText>
                         </TeamJoinButton>
                     </TeamButtonContainer>

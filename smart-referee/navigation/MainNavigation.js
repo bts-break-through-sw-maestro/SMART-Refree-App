@@ -12,6 +12,8 @@ import PracticeScreen from "../screens/Practice";
 import RecordScreen from "../screens/Record";
 import TeamScreen from "../screens/Team";
 import TeamManageScreen from "../screens/TeamManage";
+import TeamCreateScreen from "../screens/TeamCreate";
+import TeamSearchScreen from "../screens/TeamSearch";
 
 const MainNavigation = createStackNavigator(
     {
@@ -85,6 +87,22 @@ const MainNavigation = createStackNavigator(
             screen: TeamManageScreen,
             navigationOptions: {
                 title: "Team Manage",
+                headerRight: <AvatarModal />,
+                ...headerStyles
+            }
+        },
+        TeamCreate: {
+            screen: TeamCreateScreen,
+            navigationOptions: {
+                title: "Team Create",
+                headerRight: <AvatarModal />,
+                ...headerStyles
+            }
+        },
+        TeamSearch: {
+            screen: TeamSearchScreen,
+            navigationOptions: {
+                title: "Team Search",
                 headerRight: <AvatarModal />,
                 ...headerStyles
             }
