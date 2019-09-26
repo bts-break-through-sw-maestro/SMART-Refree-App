@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { withNavigation } from "react-navigation";
+import { AntDesign } from "@expo/vector-icons";
 
-const MemberContainer = styled.TouchableOpacity`
+const MemberContainer = styled.View`
     width: 90%;
     height: 80px;
     border: 1px solid black;
@@ -22,29 +22,53 @@ const MemberProfileImgContainer = styled.View`
 
 const MemberProfileContentContainer = styled.View`
     flex: 7;
-    flex-direction: column;
+    flex-direction: row;
 `;
 
-const MemberNameContainer = styled.Text`
+const MemberInfoContainer = styled.View`
+    flex: 6;
+`;
+
+const MemberNameText = styled.Text`
     font-size: 16px;
     font-weight: 600;
-    margin-bottom: 5px;
 `;
 
-const JoinSubmitContainer = styled.View``;
+const MemberAgeText = styled.Text`
+    font-size: 14px;
+`;
 
-const AcceptSubmitContainer = styled.View``;
+const MemberPhoneText = styled.Text``;
 
-const RejectSubmitContainer = styled.View``;
+const JoinSubmitContainer = styled.View`
+    flex: 4;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+`;
 
-const TeamJoinMember = ({ idx, navigation }) => (
-    <MemberContainer onPress={() => console.log("Fuck")}>
+const AcceptSubmitContainer = styled.TouchableOpacity`
+    margin-right: 5px;
+`;
+
+const RejectSubmitContainer = styled.TouchableOpacity``;
+
+const TeamJoinMember = ({ idx }) => (
+    <MemberContainer>
         <MemberProfileImgContainer></MemberProfileImgContainer>
         <MemberProfileContentContainer>
-            <MemberNameContainer>김타자{idx}</MemberNameContainer>
+            <MemberInfoContainer>
+                <MemberNameText>김타자{idx}</MemberNameText>
+                <MemberAgeText>20세</MemberAgeText>
+                <MemberPhoneText>010-1111-1111</MemberPhoneText>
+            </MemberInfoContainer>
             <JoinSubmitContainer>
-                <AcceptSubmitContainer></AcceptSubmitContainer>
-                <RejectSubmitContainer></RejectSubmitContainer>
+                <AcceptSubmitContainer onPress={() => console.log("OK")}>
+                    <AntDesign name="checkcircle" size={32} color="green" />
+                </AcceptSubmitContainer>
+                <RejectSubmitContainer onPress={() => console.log("No")}>
+                    <AntDesign name="closecircle" size={32} color="red" />
+                </RejectSubmitContainer>
             </JoinSubmitContainer>
         </MemberProfileContentContainer>
     </MemberContainer>
@@ -54,4 +78,4 @@ TeamJoinMember.propTypes = {
     idx: PropTypes.number.isRequired
 };
 
-export default withNavigation(TeamJoinMember);
+export default TeamJoinMember;
