@@ -4,7 +4,16 @@ import TeamCreatePresenter from "./TeamCreatePresenter";
 export default class extends React.Component {
     state = {
         loading: false,
+        teamNameTerm: "",
         error: null
+    };
+
+    handleTeamNameUpdate = text => {
+        this.setState({ teamNameTerm: text });
+    };
+
+    onClickSearchButton = () => {
+        console.log("Create");
     };
 
     async componentDidMount() {
@@ -21,7 +30,16 @@ export default class extends React.Component {
     }
 
     render() {
-        const { loading, error } = this.state;
-        return <TeamCreatePresenter loading={loading} error={error} />;
+        const { loading, error, teamNameTerm } = this.state;
+
+        return (
+            <TeamCreatePresenter
+                loading={loading}
+                error={error}
+                teamNameTerm={teamNameTerm}
+                handleTeamNameUpdate={this.handleTeamNameUpdate}
+                onClickSearchButton={this.onClickSearchButton}
+            />
+        );
     }
 }

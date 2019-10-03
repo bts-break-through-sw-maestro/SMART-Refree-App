@@ -139,6 +139,8 @@ const TeamSearchPresenter = ({
     searchLoading,
     teamNameTerm,
     handleTeamNameUpdate,
+    onClickSearchButton,
+    onClickJoinButton,
     error
 }) =>
     loading ? (
@@ -176,7 +178,7 @@ const TeamSearchPresenter = ({
                 </PickerContainer>
             </SearchContainer>
             <SearchButtonContainer>
-                <SearchButton>
+                <SearchButton onPress={onClickSearchButton}>
                     <SearchButtonText>Search</SearchButtonText>
                 </SearchButton>
             </SearchButtonContainer>
@@ -203,7 +205,9 @@ const TeamSearchPresenter = ({
                                         </TeamRecordText>
                                     </DetailContainer>
                                     <TeamJoinButtonContainer>
-                                        <TeamJoinButton>
+                                        <TeamJoinButton
+                                            onPress={onClickJoinButton}
+                                        >
                                             <TeamJoinButtonText>
                                                 가입
                                             </TeamJoinButtonText>
@@ -223,6 +227,8 @@ TeamSearchPresenter.propTypes = {
     searchLoading: PropTypes.bool.isRequired,
     teamNameTerm: PropTypes.string.isRequired,
     handleTeamNameUpdate: PropTypes.func.isRequired,
+    onClickSearchButton: PropTypes.func.isRequired,
+    onClickJoinButton: PropTypes.func.isRequired,
     error: PropTypes.string
 };
 
