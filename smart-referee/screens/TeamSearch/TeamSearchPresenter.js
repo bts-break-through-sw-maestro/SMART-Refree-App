@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
 import { BORDER_COLOR, BUTTON_COLOR, BG_COLOR } from "../../constants/Colors";
 import Layout from "../../constants/Layout";
+import { Dropdown } from "react-native-material-dropdown";
+import { Region } from "../../constants/Region";
 
 const Container = styled.View`
     display: flex;
@@ -44,8 +46,10 @@ const PickerContainer = styled.View`
     flex-direction: row;
 `;
 
-const Picker = styled.Text`
-    font-size: 12px;
+const Picker = styled.View`
+    padding-left: 5px;
+    width: 100%;
+    justify-content: center;
 `;
 
 const TeamNameInput = styled.TextInput`
@@ -138,9 +142,13 @@ const TeamSearchPresenter = ({
     loading,
     searchLoading,
     teamNameTerm,
+    locationNameTerm,
+    region,
     handleTeamNameUpdate,
+    handleLocationNameUpdate,
     onClickSearchButton,
     onClickJoinButton,
+    extractRegionData,
     error
 }) =>
     loading ? (
@@ -152,7 +160,13 @@ const TeamSearchPresenter = ({
                     <PickerText>지역</PickerText>
                 </TextContainer>
                 <PickerContainer>
-                    <Picker>선택 드롭다운</Picker>
+                    <Picker>
+                        <Dropdown
+                            placeholder="지역을 선택하세요."
+                            data={Region}
+                            onChangeText={value => extractRegionData(value)}
+                        />
+                    </Picker>
                 </PickerContainer>
             </SearchContainer>
             <SearchContainer>
@@ -160,7 +174,13 @@ const TeamSearchPresenter = ({
                     <PickerText>시 군 구</PickerText>
                 </TextContainer>
                 <PickerContainer>
-                    <Picker>선택 드롭다운</Picker>
+                    <TeamNameInput
+                        placeholder="시 군 구 정보를 입력하세요."
+                        value={teamNameTerm}
+                        onChangeText={handleTeamNameUpdate}
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                    />
                 </PickerContainer>
             </SearchContainer>
             <SearchContainer>
@@ -170,8 +190,8 @@ const TeamSearchPresenter = ({
                 <PickerContainer>
                     <TeamNameInput
                         placeholder="팀 이름을 입력하세요."
-                        value={teamNameTerm}
-                        onChangeText={handleTeamNameUpdate}
+                        value={locationNameTerm}
+                        onChangeText={handleLocationNameUpdate}
                         autoCorrect={false}
                         autoCapitalize="none"
                     />
@@ -206,7 +226,9 @@ const TeamSearchPresenter = ({
                                     </DetailContainer>
                                     <TeamJoinButtonContainer>
                                         <TeamJoinButton
-                                            onPress={onClickJoinButton}
+                                            onPress={() =>
+                                                onClickJoinButton(idx)
+                                            }
                                         >
                                             <TeamJoinButtonText>
                                                 가입
@@ -226,9 +248,13 @@ TeamSearchPresenter.propTypes = {
     loading: PropTypes.bool.isRequired,
     searchLoading: PropTypes.bool.isRequired,
     teamNameTerm: PropTypes.string.isRequired,
+    locationNameTerm: PropTypes.string.isRequired,
+    region: PropTypes.string,
     handleTeamNameUpdate: PropTypes.func.isRequired,
+    handleLocationNameUpdate: PropTypes.func.isRequired,
     onClickSearchButton: PropTypes.func.isRequired,
     onClickJoinButton: PropTypes.func.isRequired,
+    extractRegionData: PropTypes.func.isRequired,
     error: PropTypes.string
 };
 

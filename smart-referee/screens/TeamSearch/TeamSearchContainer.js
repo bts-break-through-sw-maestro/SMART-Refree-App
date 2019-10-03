@@ -1,16 +1,25 @@
 import React from "react";
 import TeamSearchPresenter from "./TeamSearchPresenter";
+import { Alert } from "react-native";
 
 export default class extends React.Component {
     state = {
         loading: false,
         searchLoading: false,
         teamNameTerm: "",
+        locationNameTerm: "",
+        region: "",
         error: null
     };
 
     handleTeamNameUpdate = text => {
         this.setState({ teamNameTerm: text });
+        console.log("Team Name :", text);
+    };
+
+    handleLocationNameUpdate = text => {
+        this.setState({ locationNameTerm: text });
+        console.log("Location Name :", text);
     };
 
     onClickSearchButton = () => {
@@ -26,7 +35,12 @@ export default class extends React.Component {
     };
 
     onClickJoinButton = ({ key }) => {
-        console.log(`Join ${key} team`);
+        Alert.alert("", `${key} 가입 신청 완료`);
+    };
+
+    extractRegionData = ({ region }) => {
+        this.setState({ region });
+        console.log("Region", region);
     };
 
     async componentDidMount() {
@@ -43,16 +57,28 @@ export default class extends React.Component {
     }
 
     render() {
-        const { loading, error, teamNameTerm, searchLoading } = this.state;
+        const {
+            loading,
+            error,
+            teamNameTerm,
+            locationNameTerm,
+            searchLoading,
+            region
+        } = this.state;
+
         return (
             <TeamSearchPresenter
                 loading={loading}
                 searchLoading={searchLoading}
                 error={error}
                 teamNameTerm={teamNameTerm}
+                locationNameTerm={locationNameTerm}
                 handleTeamNameUpdate={this.handleTeamNameUpdate}
+                handleLocationNameUpdate={this.handleLocationNameUpdate}
                 onClickSearchButton={this.onClickSearchButton}
                 onClickJoinButton={this.onClickJoinButton}
+                region={region}
+                extractRegionData={this.extractRegionData}
             />
         );
     }

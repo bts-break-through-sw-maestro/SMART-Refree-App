@@ -1,5 +1,6 @@
 import React from "react";
 import TeamCreatePresenter from "./TeamCreatePresenter";
+import { Alert } from "react-native";
 
 export default class extends React.Component {
     state = {
@@ -9,11 +10,13 @@ export default class extends React.Component {
     };
 
     handleTeamNameUpdate = text => {
+        console.log("Text");
         this.setState({ teamNameTerm: text });
     };
 
     onClickSearchButton = () => {
-        console.log("Create");
+        Alert.alert("", "팀 생성 완료");
+        // team Detail로 이동
     };
 
     async componentDidMount() {
