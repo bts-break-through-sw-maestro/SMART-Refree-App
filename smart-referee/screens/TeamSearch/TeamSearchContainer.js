@@ -34,11 +34,11 @@ export default class extends React.Component {
         }
     };
 
-    onClickJoinButton = ({ key }) => {
+    onClickJoinButton = key => {
         Alert.alert("", `${key} 가입 신청 완료`);
     };
 
-    extractRegionData = ({ region }) => {
+    extractRegionData = region => {
         this.setState({ region });
         console.log("Region", region);
     };

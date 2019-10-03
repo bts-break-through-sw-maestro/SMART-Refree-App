@@ -19,7 +19,8 @@ export default class extends React.Component {
             homeRuns: 0,
             isPitcher: true,
             doubles: 0,
-            triples: 0
+            triples: 0,
+            isMaster: true
         };
 
         try {

@@ -5,6 +5,7 @@ import Loader from "../../components/Loader";
 import { Avatar } from "react-native-elements";
 import { AntDesign } from "@expo/vector-icons";
 import { withNavigation } from "react-navigation";
+import { BG_COLOR } from "../../constants/Colors";
 
 const Container = styled.View`
     flex: 1;
@@ -27,7 +28,7 @@ const BackButton = styled.TouchableOpacity`
 `;
 
 const ProfileContainer = styled.View`
-    flex: 4;
+    flex: 5;
     width: 100%;
     align-items: center;
     justify-content: center;
@@ -51,7 +52,7 @@ const ProfileEmailText = styled.Text`
 `;
 
 const StatContainer = styled.View`
-    flex: 6;
+    flex: 2;
     width: 100%;
     align-items: center;
     justify-content: center;
@@ -68,6 +69,28 @@ const StatCategoryText = styled.Text`
 
 const StatText = styled.Text`
     font-size: 14px;
+`;
+
+const ReleaseButtonContainer = styled.View`
+    flex: 3;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`;
+
+const ReleaseButton = styled.TouchableOpacity`
+    height: 20%;
+    width: 80%;
+    background-color: #ef5350;
+    justify-content: center;
+    border-radius: 20px;
+`;
+
+const ReleaseButtonText = styled.Text`
+    font-size: 16px;
+    font-weight: 600;
+    color: ${BG_COLOR};
+    text-align: center;
 `;
 
 const TeamPresenter = ({ user, loading, navigation }) =>
@@ -143,6 +166,15 @@ const TeamPresenter = ({ user, loading, navigation }) =>
                             </>
                         )}
                     </StatContainer>
+                    {user.isMaster ? (
+                        <ReleaseButtonContainer>
+                            <ReleaseButton>
+                                <ReleaseButtonText>방출하기</ReleaseButtonText>
+                            </ReleaseButton>
+                        </ReleaseButtonContainer>
+                    ) : (
+                        <ReleaseButtonContainer></ReleaseButtonContainer>
+                    )}
                 </>
             ) : null}
         </Container>
