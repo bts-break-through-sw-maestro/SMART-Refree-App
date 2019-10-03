@@ -4,6 +4,7 @@ import TeamSearchPresenter from "./TeamSearchPresenter";
 export default class extends React.Component {
     state = {
         loading: false,
+        searchLoading: true,
         teamNameTerm: "",
         error: null
     };
@@ -26,10 +27,11 @@ export default class extends React.Component {
     }
 
     render() {
-        const { loading, error, teamNameTerm } = this.state;
+        const { loading, error, teamNameTerm, searchLoading } = this.state;
         return (
             <TeamSearchPresenter
                 loading={loading}
+                searchLoading={searchLoading}
                 error={error}
                 teamNameTerm={teamNameTerm}
                 handleTeamNameUpdate={this.handleTeamNameUpdate}
