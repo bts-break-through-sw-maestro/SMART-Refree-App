@@ -21,7 +21,8 @@ export default class extends React.Component {
         console.log("Location Name :", text);
     };
 
-    onClickSearchButton = teamName => {
+    onClickSearchButton = () => {
+        const { teamNameTerm: teamName } = this.state;
         Alert.alert("", `${teamName} 팀 생성 완료`);
     };
 

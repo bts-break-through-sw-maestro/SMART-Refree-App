@@ -51,9 +51,9 @@ const SearchButtonText = styled.Text`
 
 const ForgetPresenter = ({
     loading,
-    emailInputTerm,
+    phoneNumberInputTerm,
     onClickForgetButton,
-    handleEmailInputUpdate
+    handlePhoneNumberInputUpdate
 }) =>
     loading ? (
         <Loader />
@@ -61,9 +61,9 @@ const ForgetPresenter = ({
         <Container>
             <InputContainer>
                 <ForgetInput
-                    placeholder="가입시 사용한 E-mail을 입력하세요."
-                    value={emailInputTerm}
-                    onChangeText={handleEmailInputUpdate}
+                    placeholder="가입시 사용한 번호를 입력하세요."
+                    value={phoneNumberInputTerm}
+                    onChangeText={handlePhoneNumberInputUpdate}
                     autoCorrect={false}
                     autoCapitalize="none"
                 />
@@ -78,8 +78,8 @@ const ForgetPresenter = ({
 
 ForgetPresenter.propTypes = {
     loading: PropTypes.bool.isRequired,
-    emailInputTerm: PropTypes.string.isRequired,
-    handleEmailInputUpdate: PropTypes.func.isRequired,
+    phoneNumberInputTerm: PropTypes.string.isRequired,
+    handlePhoneNumberInputUpdate: PropTypes.func.isRequired,
     onClickForgetButton: PropTypes.func.isRequired
 };
 

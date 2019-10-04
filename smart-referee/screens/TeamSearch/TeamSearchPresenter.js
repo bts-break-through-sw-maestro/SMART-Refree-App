@@ -169,7 +169,7 @@ const TeamSearchPresenter = ({
                     </Picker>
                 </PickerContainer>
             </SearchContainer>
-            <SearchContainer>
+            {/* <SearchContainer>
                 <TextContainer>
                     <PickerText>시 군 구</PickerText>
                 </TextContainer>
@@ -182,7 +182,7 @@ const TeamSearchPresenter = ({
                         autoCapitalize="none"
                     />
                 </PickerContainer>
-            </SearchContainer>
+            </SearchContainer> */}
             <SearchContainer>
                 <TextContainer>
                     <PickerText>팀이름</PickerText>

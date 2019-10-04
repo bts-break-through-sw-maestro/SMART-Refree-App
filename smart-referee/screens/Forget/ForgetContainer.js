@@ -5,26 +5,27 @@ import { Alert } from "react-native";
 export default class extends React.Component {
     state = {
         loading: false,
-        emailInputTerm: ""
+        phoneNumberInputTerm: ""
     };
 
-    handleEmailInputUpdate = text => {
+    handlePhoneNumberInputUpdate = text => {
         console.log(text);
-        this.setState({ emailInputTerm: text });
+        this.setState({ phoneNumberInputTerm: text });
     };
 
     onClickForgetButton = () => {
-        Alert.alert("", "이메일로 비밀번호 초기화 링크 전송");
+        const { phoneNumberInputTerm: phoneNumber } = this.state;
+        Alert.alert("", `${phoneNumber}번호에 관한 이메일 정보`);
     };
 
     render() {
-        const { loading, emailInputTerm } = this.state;
+        const { loading, phoneNumberInputTerm } = this.state;
 
         return (
             <ForgetPresenter
                 loading={loading}
-                emailInputTerm={emailInputTerm}
-                handleEmailInputUpdate={this.handleEmailInputUpdate}
+                phoneNumberInputTerm={phoneNumberInputTerm}
+                handlePhoneNumberInputUpdate={this.handlePhoneNumberInputUpdate}
                 onClickForgetButton={this.onClickForgetButton}
             />
         );

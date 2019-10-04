@@ -24,8 +24,14 @@ export default class extends React.Component {
 
     onClickSearchButton = () => {
         try {
+            const {
+                region,
+                teamNameTerm: teamName,
+                locationNameTerm: location
+            } = this.state;
+
             this.setState({ searchLoading: true });
-            console.log("Searching...");
+            console.log("Searching...", region, teamName, location);
         } catch (e) {
             this.setState({ error: e });
         } finally {

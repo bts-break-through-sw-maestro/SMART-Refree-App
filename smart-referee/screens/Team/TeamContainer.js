@@ -5,7 +5,7 @@ export default class extends React.Component {
     state = {
         loading: false,
         hasTeam: false,
-        isMaster: false,
+        isMaster: true,
         error: null
     };
 
