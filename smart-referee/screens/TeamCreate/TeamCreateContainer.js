@@ -6,17 +6,28 @@ export default class extends React.Component {
     state = {
         loading: false,
         teamNameTerm: "",
+        locationNameTerm: "",
+        region: "",
         error: null
     };
 
     handleTeamNameUpdate = text => {
-        console.log("Text");
         this.setState({ teamNameTerm: text });
+        console.log("Team Name :", text);
     };
 
-    onClickSearchButton = () => {
-        Alert.alert("", "팀 생성 완료");
-        // team Detail로 이동
+    handleLocationNameUpdate = text => {
+        this.setState({ locationNameTerm: text });
+        console.log("Location Name :", text);
+    };
+
+    onClickSearchButton = teamName => {
+        Alert.alert("", `${teamName} 팀 생성 완료`);
+    };
+
+    extractRegionData = region => {
+        this.setState({ region });
+        console.log("Region", region);
     };
 
     async componentDidMount() {
@@ -33,15 +44,18 @@ export default class extends React.Component {
     }
 
     render() {
-        const { loading, error, teamNameTerm } = this.state;
+        const { loading, error, teamNameTerm, locationNameTerm } = this.state;
 
         return (
             <TeamCreatePresenter
                 loading={loading}
                 error={error}
                 teamNameTerm={teamNameTerm}
+                locationNameTerm={locationNameTerm}
                 handleTeamNameUpdate={this.handleTeamNameUpdate}
+                handleLocationNameUpdate={this.handleLocationNameUpdate}
                 onClickSearchButton={this.onClickSearchButton}
+                extractRegionData={this.extractRegionData}
             />
         );
     }

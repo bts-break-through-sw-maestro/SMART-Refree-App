@@ -176,8 +176,8 @@ const TeamSearchPresenter = ({
                 <PickerContainer>
                     <TeamNameInput
                         placeholder="시 군 구 정보를 입력하세요."
-                        value={teamNameTerm}
-                        onChangeText={handleTeamNameUpdate}
+                        value={locationNameTerm}
+                        onChangeText={handleLocationNameUpdate}
                         autoCorrect={false}
                         autoCapitalize="none"
                     />
@@ -190,8 +190,8 @@ const TeamSearchPresenter = ({
                 <PickerContainer>
                     <TeamNameInput
                         placeholder="팀 이름을 입력하세요."
-                        value={locationNameTerm}
-                        onChangeText={handleLocationNameUpdate}
+                        value={teamNameTerm}
+                        onChangeText={handleTeamNameUpdate}
                         autoCorrect={false}
                         autoCapitalize="none"
                     />

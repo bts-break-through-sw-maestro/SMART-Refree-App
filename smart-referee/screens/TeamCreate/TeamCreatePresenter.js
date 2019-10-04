@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
+import { Dropdown } from "react-native-material-dropdown";
+import { Region } from "../../constants/Region";
 import { BORDER_COLOR, BUTTON_COLOR, BG_COLOR } from "../../constants/Colors";
 
 const Container = styled.View`
@@ -43,8 +45,11 @@ const PickerContainer = styled.View`
     flex-direction: row;
 `;
 
-const Picker = styled.Text`
-    font-size: 15px;
+const Picker = styled.View`
+    padding-left: 5px;
+    width: 100%;
+    justify-content: center;
+    padding-bottom: 5px;
 `;
 
 const TeamNameInput = styled.TextInput`
@@ -77,8 +82,11 @@ const SearchButtonText = styled.Text`
 const TeamCreatePresenter = ({
     loading,
     teamNameTerm,
+    locationNameTerm,
+    handleLocationNameUpdate,
     handleTeamNameUpdate,
     onClickSearchButton,
+    extractRegionData,
     error
 }) =>
     loading ? (
@@ -90,7 +98,13 @@ const TeamCreatePresenter = ({
                     <PickerText>지역</PickerText>
                 </TextContainer>
                 <PickerContainer>
-                    <Picker>선택 드롭다운</Picker>
+                    <Picker>
+                        <Dropdown
+                            placeholder="지역을 선택하세요."
+                            data={Region}
+                            onChangeText={value => extractRegionData(value)}
+                        />
+                    </Picker>
                 </PickerContainer>
             </SearchContainer>
             <SearchContainer>
@@ -98,7 +112,13 @@ const TeamCreatePresenter = ({
                     <PickerText>시 군 구</PickerText>
                 </TextContainer>
                 <PickerContainer>
-                    <Picker>선택 드롭다운</Picker>
+                    <TeamNameInput
+                        placeholder="시 군 구 정보를 입력하세요."
+                        value={locationNameTerm}
+                        onChangeText={handleLocationNameUpdate}
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                    />
                 </PickerContainer>
             </SearchContainer>
             <SearchContainer>
@@ -126,8 +146,11 @@ const TeamCreatePresenter = ({
 TeamCreatePresenter.propTypes = {
     loading: PropTypes.bool.isRequired,
     teamNameTerm: PropTypes.string.isRequired,
+    locationNameTerm: PropTypes.string.isRequired,
     handleTeamNameUpdate: PropTypes.func.isRequired,
+    handleLocationNameUpdate: PropTypes.func.isRequired,
     onClickSearchButton: PropTypes.func.isRequired,
+    extractRegionData: PropTypes.func.isRequired,
     error: PropTypes.string
 };
 
