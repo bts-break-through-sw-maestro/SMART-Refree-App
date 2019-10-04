@@ -13,21 +13,21 @@ const Container = styled.View`
     background-color: ${BG_COLOR};
 `;
 
-const StatPlotContainer = styled.View`
+const MainPageLogoImageContainer = styled.View`
     flex: 3;
     width: ${Layout.width - 60};
     align-items: center;
     justify-content: center;
 `;
 
-const StatPlotImageContainer = styled.View`
+const LogoImageContainer = styled.View`
     width: 70%;
     height: 60%;
     justify-content: center;
     border: 1px solid ${TINT_COLOR};
 `;
 
-const StatPlotImg = styled.Text`
+const LogoImage = styled.Text`
     font-size: 20px;
     font-weight: 600;
     text-align: center;
@@ -35,6 +35,12 @@ const StatPlotImg = styled.Text`
 
 const GameResultContainer = styled.ScrollView`
     flex: 5;
+`;
+
+const CenterViewContainer = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
 `;
 
 const MenuButtonContainer = styled.View`
@@ -58,24 +64,25 @@ const MenuButtonText = styled.Text`
     color: ${BG_COLOR};
 `;
 
+var dummy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 const HomePresenter = ({ loading, navigation }) =>
     loading ? (
         <Loader />
     ) : (
         <Container>
-            <StatPlotContainer>
-                <StatPlotImageContainer>
-                    <StatPlotImg>User Stat Plot</StatPlotImg>
-                </StatPlotImageContainer>
-            </StatPlotContainer>
+            <MainPageLogoImageContainer>
+                <LogoImageContainer>
+                    <LogoImage>Img</LogoImage>
+                </LogoImageContainer>
+            </MainPageLogoImageContainer>
             <GameResultContainer showsVerticalScrollIndicator={false}>
-                <Game />
-                <Game />
-                <Game />
-                <Game />
-                <Game />
+                <CenterViewContainer>
+                    {dummy.map(idx => (
+                        <Game key={idx} />
+                    ))}
+                </CenterViewContainer>
             </GameResultContainer>
-
             <MenuButtonContainer>
                 <MenuButton onPress={() => navigation.navigate("Menu")}>
                     <MenuButtonText>Menu</MenuButtonText>
