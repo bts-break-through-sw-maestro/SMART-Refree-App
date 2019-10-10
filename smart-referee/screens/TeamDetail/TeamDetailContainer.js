@@ -20,7 +20,7 @@ export default class extends React.Component {
             isPitcher: true,
             doubles: 0,
             triples: 0,
-            isMaster: true
+            isMaster: false
         };
 
         try {

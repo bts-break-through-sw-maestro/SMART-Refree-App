@@ -166,15 +166,13 @@ const TeamPresenter = ({ user, loading, navigation }) =>
                             </>
                         )}
                     </StatContainer>
-                    {user.isMaster ? (
-                        <ReleaseButtonContainer>
+                    <ReleaseButtonContainer>
+                        {user.isMaster ? (
                             <ReleaseButton>
                                 <ReleaseButtonText>방출하기</ReleaseButtonText>
                             </ReleaseButton>
-                        </ReleaseButtonContainer>
-                    ) : (
-                        <ReleaseButtonContainer></ReleaseButtonContainer>
-                    )}
+                        ) : null}
+                    </ReleaseButtonContainer>
                 </>
             ) : null}
         </Container>

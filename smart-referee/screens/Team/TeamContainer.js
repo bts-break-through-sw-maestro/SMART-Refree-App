@@ -4,7 +4,7 @@ import TeamPresenter from "./TeamPresenter";
 export default class extends React.Component {
     state = {
         loading: false,
-        hasTeam: false,
+        hasTeam: true,
         isMaster: true,
         error: null
     };

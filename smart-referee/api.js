@@ -1,11 +1,16 @@
 import axios from "axios";
+import { URL } from "./url";
 
 const api = axios.create({
-    baseURL: "sampleurl"
+    baseURL: URL
 });
 
-export const userApi = {
-    getUser: email => api.get(`accountses/${email}`)
+api.defaults.headers.post["Content-Type"] = "application/json";
+
+export const accountApi = {
+    findEmail: phoneNumber => api.post("account/find/id", { phoneNumber })
 };
+
+export const gameApi = {};
 
 export const teamApi = {};

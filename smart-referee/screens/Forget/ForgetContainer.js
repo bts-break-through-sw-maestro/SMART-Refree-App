@@ -1,6 +1,7 @@
 import React from "react";
 import ForgetPresenter from "./ForgetPresenter";
 import { Alert } from "react-native";
+import { accountApi } from "../../api";
 
 export default class extends React.Component {
     state = {
@@ -13,9 +14,20 @@ export default class extends React.Component {
         this.setState({ phoneNumberInputTerm: text });
     };
 
-    onClickForgetButton = () => {
+    onClickForgetButton = async () => {
         const { phoneNumberInputTerm: phoneNumber } = this.state;
-        Alert.alert("", `${phoneNumber}번호에 관한 이메일 정보`);
+        let result;
+        try {
+            ({ data: result } = await accountApi.findEmail(phoneNumber));
+        } catch (error) {
+            result = null;
+        }
+
+        {
+            result
+                ? Alert.alert("", result)
+                : Alert.alert("", `${phoneNumber}로 가입된 정보가 없습니다.`);
+        }
     };
 
     render() {
