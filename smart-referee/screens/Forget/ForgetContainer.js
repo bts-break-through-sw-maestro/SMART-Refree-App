@@ -18,7 +18,7 @@ export default class extends React.Component {
         const { phoneNumberInputTerm: phoneNumber } = this.state;
         let result;
         try {
-            ({ data: result } = await accountApi.findEmail(phoneNumber));
+            ({ data: result } = await accountApi.findAccountId(phoneNumber));
         } catch (error) {
             result = null;
         }
