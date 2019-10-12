@@ -8,6 +8,7 @@ export default class extends React.Component {
 
         this.state = {
             loading: false,
+            isRecord: false,
             hasPermission: null
         };
     }
@@ -22,11 +23,26 @@ export default class extends React.Component {
         }
     };
 
+    startPauseButtonClicked = () => {
+        const { isRecord } = this.state;
+
+        if (isRecord) {
+            this.setState({ isRecord: false });
+        } else {
+            this.setState({ isRecord: true });
+        }
+    };
+
     render() {
-        const { hasPermission, loading } = this.state;
+        const { hasPermission, loading, isRecord } = this.state;
 
         return (
-            <PlayPresenter loading={loading} hasPermission={hasPermission} />
+            <PlayPresenter
+                loading={loading}
+                hasPermission={hasPermission}
+                isRecord={isRecord}
+                startPauseButtonClicked={this.startPauseButtonClicked}
+            />
         );
     }
 }

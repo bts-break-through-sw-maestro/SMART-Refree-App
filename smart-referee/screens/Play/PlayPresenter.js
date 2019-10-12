@@ -36,7 +36,26 @@ const BackButton = styled.TouchableOpacity`
     margin-right: 20px;
 `;
 
-const PlayPresenter = ({ loading, hasPermission, navigation }) =>
+const StartPauseButtonContainer = styled.View`
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 40;
+    justify-content: center;
+    align-items: center;
+`;
+
+const StartPauseButton = styled.TouchableOpacity`
+    transform: rotate(90deg);
+`;
+
+const PlayPresenter = ({
+    loading,
+    hasPermission,
+    navigation,
+    isRecord,
+    startPauseButtonClicked
+}) =>
     loading ? (
         <Loader />
     ) : (
@@ -49,6 +68,9 @@ const PlayPresenter = ({ loading, hasPermission, navigation }) =>
                             height: "100%",
                             overflow: "hidden"
                         }}
+                        ref={ref => {
+                            this.camera = ref;
+                        }}
                     />
                 ) : (
                     <Text>Don't have Permission for this App.</Text>
@@ -60,12 +82,28 @@ const PlayPresenter = ({ loading, hasPermission, navigation }) =>
                     <AntDesign name="arrowup" size={44} color="white" />
                 </BackButton>
             </BackButtonContainer>
+
+            <StartPauseButtonContainer>
+                <StartPauseButton onPress={startPauseButtonClicked}>
+                    {isRecord ? (
+                        <AntDesign
+                            name="pausecircleo"
+                            size={44}
+                            color="white"
+                        />
+                    ) : (
+                        <AntDesign name="playcircleo" size={44} color="white" />
+                    )}
+                </StartPauseButton>
+            </StartPauseButtonContainer>
         </Container>
     );
 
 PlayPresenter.propTypes = {
     loading: PropTypes.bool.isRequired,
-    hasPermission: PropTypes.bool
+    isRecord: PropTypes.bool.isRequired,
+    hasPermission: PropTypes.bool,
+    startPauseButtonClicked: PropTypes.func
 };
 
 export default withNavigation(PlayPresenter);

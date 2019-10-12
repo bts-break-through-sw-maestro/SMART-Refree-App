@@ -64,10 +64,17 @@ const MenuButtonText = styled.Text`
     color: ${BG_COLOR};
 `;
 
+const NoGameTextContainer = styled.View`
+    width: 80%;
+    flex: 5;
+    justify-content: center;
+`;
+
 const NoGameText = styled.Text`
     font-size: 20px;
     font-weight: 600;
-    color: ${BG_COLOR};
+    color: ${TINT_COLOR};
+    text-align: center;
 `;
 
 const HomePresenter = ({ loading, navigation, error, gameList }) =>
@@ -80,10 +87,10 @@ const HomePresenter = ({ loading, navigation, error, gameList }) =>
                     <LogoImage>Img</LogoImage>
                 </LogoImageContainer>
             </MainPageLogoImageContainer>
-            <GameResultContainer showsVerticalScrollIndicator={false}>
-                <CenterViewContainer>
-                    {gameList.length != 0 ? (
-                        gameList.map((data, idx) => (
+            {gameList.length != 0 ? (
+                <GameResultContainer showsVerticalScrollIndicator={false}>
+                    <CenterViewContainer>
+                        {gameList.map((data, idx) => (
                             <Game
                                 key={idx}
                                 awayScore={data.awayScore}
@@ -95,12 +102,15 @@ const HomePresenter = ({ loading, navigation, error, gameList }) =>
                                     data.guildByHomeGuildId.guildName
                                 }
                             />
-                        ))
-                    ) : (
-                        <NoGameText>경기 정보가 없습니다.</NoGameText>
-                    )}
-                </CenterViewContainer>
-            </GameResultContainer>
+                        ))}
+                    </CenterViewContainer>
+                </GameResultContainer>
+            ) : (
+                <NoGameTextContainer>
+                    <NoGameText>경기 정보가 없습니다.</NoGameText>
+                </NoGameTextContainer>
+            )}
+
             <MenuButtonContainer>
                 <MenuButton onPress={() => navigation.navigate("Menu")}>
                     <MenuButtonText>Menu</MenuButtonText>
