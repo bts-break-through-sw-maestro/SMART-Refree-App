@@ -64,9 +64,13 @@ const MenuButtonText = styled.Text`
     color: ${BG_COLOR};
 `;
 
-var dummy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const NoGameText = styled.Text`
+    font-size: 20px;
+    font-weight: 600;
+    color: ${BG_COLOR};
+`;
 
-const HomePresenter = ({ loading, navigation }) =>
+const HomePresenter = ({ loading, navigation, error, gameList }) =>
     loading ? (
         <Loader />
     ) : (
@@ -78,9 +82,23 @@ const HomePresenter = ({ loading, navigation }) =>
             </MainPageLogoImageContainer>
             <GameResultContainer showsVerticalScrollIndicator={false}>
                 <CenterViewContainer>
-                    {dummy.map(idx => (
-                        <Game key={idx} />
-                    ))}
+                    {gameList.length != 0 ? (
+                        gameList.map((data, idx) => (
+                            <Game
+                                key={idx}
+                                awayScore={data.awayScore}
+                                homeScore={data.homeScore}
+                                awayGuildName={
+                                    data.guildByAwayGuildId.guildName
+                                }
+                                homeGuildName={
+                                    data.guildByHomeGuildId.guildName
+                                }
+                            />
+                        ))
+                    ) : (
+                        <NoGameText>경기 정보가 없습니다.</NoGameText>
+                    )}
                 </CenterViewContainer>
             </GameResultContainer>
             <MenuButtonContainer>
@@ -92,7 +110,9 @@ const HomePresenter = ({ loading, navigation }) =>
     );
 
 HomePresenter.propTypes = {
-    loading: PropTypes.bool.isRequired
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    gameList: PropTypes.array
 };
 
 export default withNavigation(HomePresenter);

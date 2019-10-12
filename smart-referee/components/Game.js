@@ -2,6 +2,7 @@ import React from "react";
 import { TINT_COLOR, BG_COLOR } from "../constants/Colors";
 import styled from "styled-components";
 import Layout from "../constants/Layout";
+import PropTypes from "prop-types";
 
 const Container = styled.View`
     width: ${Layout.width - 60};
@@ -21,17 +22,6 @@ const TeamContainer = styled.View`
     justify-content: center;
 `;
 
-const TeamLogoContainer = styled.View`
-    border: 1px solid ${TINT_COLOR};
-    border-radius: 50px;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-`;
-
-const TeamLogoImg = styled.Text``;
-
 const TeamInfoContainer = styled.View`
     flex-direction: column;
     justify-content: center;
@@ -40,7 +30,8 @@ const TeamInfoContainer = styled.View`
 `;
 
 const TeamInfoTeamName = styled.Text`
-    font-size: 14px;
+    font-size: 20px;
+    font-weight: 600;
     padding-bottom: 5px;
 `;
 
@@ -60,15 +51,16 @@ const VsText = styled.Text`
     font-size: 14;
 `;
 
-export default () => (
+const Game = ({ awayScore, awayGuildName, homeScore, homeGuildName }) => (
     <Container>
         <TeamContainer>
-            <TeamLogoContainer>
-                <TeamLogoImg>A</TeamLogoImg>
-            </TeamLogoContainer>
             <TeamInfoContainer>
-                <TeamInfoTeamName>Test Team A</TeamInfoTeamName>
-                <GameScore>9</GameScore>
+                <TeamInfoTeamName>
+                    {awayGuildName.length > 10
+                        ? `${awayGuildName.substring(0, 9)}...`
+                        : awayGuildName}
+                </TeamInfoTeamName>
+                <GameScore>{awayScore}</GameScore>
             </TeamInfoContainer>
         </TeamContainer>
         <VsTextContainer>
@@ -76,12 +68,22 @@ export default () => (
         </VsTextContainer>
         <TeamContainer>
             <TeamInfoContainer>
-                <TeamInfoTeamName>Test Team B</TeamInfoTeamName>
-                <GameScore>1</GameScore>
+                <TeamInfoTeamName>
+                    {homeGuildName.length > 10
+                        ? `${homeGuildName.substring(0, 9)}...`
+                        : homeGuildName}
+                </TeamInfoTeamName>
+                <GameScore>{homeScore}</GameScore>
             </TeamInfoContainer>
-            <TeamLogoContainer>
-                <TeamLogoImg>B</TeamLogoImg>
-            </TeamLogoContainer>
         </TeamContainer>
     </Container>
 );
+
+Game.propsType = {
+    awayGuildName: PropTypes.string.isRequired,
+    awayScore: PropTypes.number.isRequired,
+    homeGuildName: PropTypes.string.isRequired,
+    homeScore: PropTypes.number.isRequired
+};
+
+export default Game;

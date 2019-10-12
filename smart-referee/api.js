@@ -43,75 +43,77 @@ export const accountApi = {
 
 export const gameApi = {
     /* Method      : GET
-     * Parameter   : teamId [team 테이블 인덱스]
+     * Parameter   : accountId [account 테이블 인덱스]
      * Description : 경기 리스트 반환 API */
-    getMyTeamGameMatchList: teamId => api.get(`game/list/${teamId}`)
+    getMyGuildGameMatchList: accountId => api.get(`game/list/${accountId}`)
 };
 
-export const teamApi = {
+export const guildApi = {
     /* Method      : POST
-     * Parameter   : region [지역], teamName [팀명]
+     * Parameter   : region [지역], guildName [팀명]
      * Description : 팀 생성 API */
-    createMyTeam: (region, teamName) =>
-        api.post(`team/create`, { region, teamName }),
+    createMyguild: (region, guildName) =>
+        api.post(`guild/create`, { region, guildName }),
 
     /* Method      : GET
      * Parameter   : accountId [account 테이블 인덱스]
      * Description : 팀 정보 반환 API */
-    myTeamInfo: accountId => api.get(`team/myteam/info/${accountId}`),
+    myguildInfo: accountId => api.get(`guild/myguild/info/${accountId}`),
 
     /* Method      : GET
-     * Parameter   : teamId [team 테이블 인덱스]
+     * Parameter   : guildId [guild 테이블 인덱스]
      * Description : 팀 가입 신청서 반환 API */
-    getApplicationList: teamId =>
-        api.get(`team/myteam/manage/application/${teamId}`),
+    getApplicationList: guildId =>
+        api.get(`guild/myguild/manage/application/${guildId}`),
 
     /* Method      : PUT
      * Parameter   : accountId [account 테이블 인덱스]
      * Description : 팀원 방출 API */
-    dropMember: accountId => api.put(`team/myteam/manage/${accountId}/drop`),
+    dropMember: accountId => api.put(`guild/myguild/manage/${accountId}/drop`),
 
     /* Method      : GET
-     * Parameter   : teamId [team 테이블 인덱스]
+     * Parameter   : guildId [guild 테이블 인덱스]
      * Description : 팀원 리스트 반환 API */
-    myTeamMemberList: teamId => api.get(`team/myteam/members?id=${teamId}`),
+    myguildMemberList: guildId =>
+        api.get(`guild/myguild/members?id=${guildId}`),
 
     /* Method      : GET
-     * Parameter   : teamId [team 테이블 인덱스], accountId [account 테이블 인덱스]
+     * Parameter   : guildId [guild 테이블 인덱스], accountId [account 테이블 인덱스]
      * Description : 팀원 상세 정보 반환 API */
-    myTeamMemberInfo: (teamId, accountId) =>
-        api.get(`team/myteam/member/${teamId}?account=${accountId}`),
+    myguildMemberInfo: (guildId, accountId) =>
+        api.get(`guild/myguild/member/${guildId}?account=${accountId}`),
 
     /* Method      : PUT
-     * Parameter   : teamId [team 테이블 인덱스]
+     * Parameter   : guildId [guild 테이블 인덱스]
      * Description : 팀 이름, 지역 검색 API */
-    reportApplicationForm: teamId =>
-        api.put(`team/search/application/report`, { id: teamId }),
+    reportApplicationForm: guildId =>
+        api.put(`guild/search/application/report`, { id: guildId }),
 
     /* Method      : GET
-     * Parameter   : teamId [team 테이블 인덱스]
+     * Parameter   : guildId [guild 테이블 인덱스]
      * Description : 팀 상세 정보 API */
-    teamInfo: teamId => api.get(`team/search/info/${teamId}`),
+    guildInfo: guildId => api.get(`guild/search/info/${guildId}`),
 
     /* Method      : GET
-     * Parameter   : teamName [팀명], region[지역]
+     * Parameter   : guildName [팀명], region[지역]
      * Description : 팀 가입 멤버 리스트 반환 API */
-    memberList: (teamName, region) =>
-        api.get(`team/search/members?name=${teamName}&region=${region}`),
+    memberList: (guildName, region) =>
+        api.get(`guild/search/members?name=${guildName}&region=${region}`),
 
     /* Method      : GET
-     * Parameter   : teamId [team 테이블 인덱스], accountId [account 테이블 인덱스]
+     * Parameter   : guildId [guild 테이블 인덱스], accountId [account 테이블 인덱스]
      * Description : 팀 맴버 상세 정보 반환 API */
-    memberInfo: (teamId, accountId) =>
-        api.get(`team/search/member/${teamId}?account=${accountId}`),
+    memberInfo: (guildId, accountId) =>
+        api.get(`guild/search/member/${guildId}?account=${accountId}`),
 
     /* Method      : GET
-     * Parameter   : teamName [팀명]
+     * Parameter   : guildName [팀명]
      * Description : 팀 이름 검색 API */
-    getTeamListByTeamName: teamName => api.get(`team/search/name/${teamName}`),
+    getguildListByguildName: guildName =>
+        api.get(`guild/search/name/${guildName}`),
 
     /* Method      : GET
      * Parameter   : region [지역]
      * Description : 팀 지역 검색 API */
-    getTeamListByRegion: region => api.get(`team/search/region${region}`)
+    getguildListByRegion: region => api.get(`guild/search/region${region}`)
 };
