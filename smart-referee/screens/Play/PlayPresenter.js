@@ -1,8 +1,8 @@
 import React from "react";
-import { Camera } from "expo-camera";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
+import { Camera } from "expo-camera";
 import { AntDesign } from "@expo/vector-icons";
 import { withNavigation } from "react-navigation";
 import { BG_COLOR } from "../../constants/Colors";
@@ -36,17 +36,19 @@ const BackButton = styled.TouchableOpacity`
     margin-right: 20px;
 `;
 
-const StartPauseButtonContainer = styled.View`
+const RecordButtonContainer = styled.View`
     width: 100%;
     height: 50px;
     position: absolute;
     bottom: 40;
     justify-content: center;
     align-items: center;
+    flex-direction: row;
 `;
 
-const StartPauseButton = styled.TouchableOpacity`
+const RecordButton = styled.TouchableOpacity`
     transform: rotate(90deg);
+    padding-horizontal: 10px;
 `;
 
 const PlayPresenter = ({
@@ -54,7 +56,9 @@ const PlayPresenter = ({
     hasPermission,
     navigation,
     isRecord,
-    startPauseButtonClicked
+    _StartPauseButtonClicked,
+    _SavingVideo,
+    cameraRef
 }) =>
     loading ? (
         <Loader />
@@ -68,9 +72,7 @@ const PlayPresenter = ({
                             height: "100%",
                             overflow: "hidden"
                         }}
-                        ref={ref => {
-                            this.camera = ref;
-                        }}
+                        ref={cameraRef}
                     />
                 ) : (
                     <Text>Don't have Permission for this App.</Text>
@@ -79,23 +81,26 @@ const PlayPresenter = ({
 
             <BackButtonContainer>
                 <BackButton onPress={() => navigation.navigate("Menu")}>
-                    <AntDesign name="arrowup" size={44} color="white" />
+                    <AntDesign name="arrowup" size={50} color="white" />
                 </BackButton>
             </BackButtonContainer>
 
-            <StartPauseButtonContainer>
-                <StartPauseButton onPress={startPauseButtonClicked}>
+            <RecordButtonContainer>
+                <RecordButton onPress={_StartPauseButtonClicked}>
                     {isRecord ? (
                         <AntDesign
                             name="pausecircleo"
-                            size={44}
+                            size={50}
                             color="white"
                         />
                     ) : (
-                        <AntDesign name="playcircleo" size={44} color="white" />
+                        <AntDesign name="playcircleo" size={50} color="white" />
                     )}
-                </StartPauseButton>
-            </StartPauseButtonContainer>
+                </RecordButton>
+                <RecordButton onPress={_SavingVideo}>
+                    <AntDesign name="save" size={50} color="white" />
+                </RecordButton>
+            </RecordButtonContainer>
         </Container>
     );
 
@@ -103,7 +108,9 @@ PlayPresenter.propTypes = {
     loading: PropTypes.bool.isRequired,
     isRecord: PropTypes.bool.isRequired,
     hasPermission: PropTypes.bool,
-    startPauseButtonClicked: PropTypes.func
+    _StartPauseButtonClicked: PropTypes.func.isRequired,
+    _SavingVideo: PropTypes.func.isRequired,
+    cameraRef: PropTypes.object
 };
 
 export default withNavigation(PlayPresenter);

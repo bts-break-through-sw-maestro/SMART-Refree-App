@@ -1,6 +1,8 @@
 import React from "react";
+import { Alert } from "react-native";
 import PlayPresenter from "./PlayPresenter";
 import * as Permissions from "expo-permissions";
+import * as MediaLibrary from "expo-media-library";
 
 export default class extends React.Component {
     constructor(props) {
@@ -9,8 +11,11 @@ export default class extends React.Component {
         this.state = {
             loading: false,
             isRecord: false,
-            hasPermission: null
+            hasPermission: null,
+            video: null
         };
+
+        this.cameraRef = React.createRef();
     }
 
     componentDidMount = async () => {
@@ -23,14 +28,67 @@ export default class extends React.Component {
         }
     };
 
-    startPauseButtonClicked = () => {
+    _StartPauseButtonClicked = () => {
         const { isRecord } = this.state;
 
         if (isRecord) {
-            this.setState({ isRecord: false });
+            this._StopRecordingVideo();
         } else {
-            this.setState({ isRecord: true });
+            this._StartRecordingVideo();
         }
+    };
+
+    _StartRecordingVideo = async () => {
+        if (this.cameraRef.current) {
+            console.log("====== START RECORDING VIDEO =====");
+            this.setState({ isRecord: true });
+
+            const video = await this.cameraRef.current.recordAsync();
+            this.setState({ video });
+        }
+    };
+
+    _StopRecordingVideo = async () => {
+        console.log("======= STOP RECORDING VIDEO =====");
+        this.setState({ isRecord: false });
+        this.cameraRef.current.stopRecording();
+    };
+
+    _SavingVideo = async () => {
+        console.log("======= START SAVING VIDEO =======");
+
+        try {
+            const { video } = this.state;
+            const ALBUM_NAME = "SMART REFEREE";
+            console.log(video);
+            const { status } = await Permissions.askAsync(
+                Permissions.CAMERA_ROLL
+            );
+
+            if (status === "granted") {
+                const asset = await MediaLibrary.createAssetAsync(video.uri);
+                let album = await MediaLibrary.getAlbumAsync(ALBUM_NAME);
+
+                if (album === null) {
+                    console.log(album);
+                    album = await MediaLibrary.createAlbumAsync(
+                        ALBUM_NAME,
+                        asset
+                    );
+                } else {
+                    await MediaLibrary.addAssetsToAlbumAsync([asset], album);
+                }
+
+                this.setState({ video: null });
+            } else {
+                this.setState({ hasPermission: false });
+            }
+        } catch (error) {
+            console.log(error);
+            Alert.alert("비디오 없음");
+        }
+
+        console.log("======= FINISH SAVING VIDEO ======");
     };
 
     render() {
@@ -41,7 +99,9 @@ export default class extends React.Component {
                 loading={loading}
                 hasPermission={hasPermission}
                 isRecord={isRecord}
-                startPauseButtonClicked={this.startPauseButtonClicked}
+                _StartPauseButtonClicked={this._StartPauseButtonClicked}
+                _SavingVideo={this._SavingVideo}
+                cameraRef={this.cameraRef}
             />
         );
     }

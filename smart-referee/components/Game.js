@@ -16,13 +16,14 @@ const Container = styled.View`
 `;
 
 const TeamContainer = styled.View`
-    width: 40%;
+    width: 50%;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 `;
 
 const TeamInfoContainer = styled.View`
+    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -30,14 +31,14 @@ const TeamInfoContainer = styled.View`
 `;
 
 const TeamInfoTeamName = styled.Text`
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
     padding-bottom: 5px;
 `;
 
 const GameScore = styled.Text`
-    font-weight: 600;
-    font-size: 18px;
+    font-weight: 500;
+    font-size: 14px;
 `;
 
 const VsTextContainer = styled.View`
