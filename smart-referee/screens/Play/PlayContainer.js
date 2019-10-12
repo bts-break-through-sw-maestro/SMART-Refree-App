@@ -45,6 +45,16 @@ export default class extends React.Component {
 
             const video = await this.cameraRef.current.recordAsync();
             this.setState({ video });
+
+            try {
+                if (video !== null) {
+                    this._SavingVideo();
+                } else {
+                    throw Error();
+                }
+            } catch {
+                console.log("Video Is Null");
+            }
         }
     };
 
@@ -100,7 +110,6 @@ export default class extends React.Component {
                 hasPermission={hasPermission}
                 isRecord={isRecord}
                 _StartPauseButtonClicked={this._StartPauseButtonClicked}
-                _SavingVideo={this._SavingVideo}
                 cameraRef={this.cameraRef}
             />
         );

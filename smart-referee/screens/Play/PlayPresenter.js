@@ -48,7 +48,6 @@ const RecordButtonContainer = styled.View`
 
 const RecordButton = styled.TouchableOpacity`
     transform: rotate(90deg);
-    padding-horizontal: 10px;
 `;
 
 const PlayPresenter = ({
@@ -57,7 +56,6 @@ const PlayPresenter = ({
     navigation,
     isRecord,
     _StartPauseButtonClicked,
-    _SavingVideo,
     cameraRef
 }) =>
     loading ? (
@@ -97,9 +95,6 @@ const PlayPresenter = ({
                         <AntDesign name="playcircleo" size={50} color="white" />
                     )}
                 </RecordButton>
-                <RecordButton onPress={_SavingVideo}>
-                    <AntDesign name="save" size={50} color="white" />
-                </RecordButton>
             </RecordButtonContainer>
         </Container>
     );
@@ -109,7 +104,6 @@ PlayPresenter.propTypes = {
     isRecord: PropTypes.bool.isRequired,
     hasPermission: PropTypes.bool,
     _StartPauseButtonClicked: PropTypes.func.isRequired,
-    _SavingVideo: PropTypes.func.isRequired,
     cameraRef: PropTypes.object
 };
 
