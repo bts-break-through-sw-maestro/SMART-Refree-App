@@ -52,13 +52,13 @@ export const guildApi = {
     /* Method      : POST
      * Parameter   : region [지역], guildName [팀명]
      * Description : 팀 생성 API */
-    createMyguild: (region, guildName) =>
+    createMyGuild: (region, guildName) =>
         api.post(`guild/create`, { region, guildName }),
 
     /* Method      : GET
      * Parameter   : accountId [account 테이블 인덱스]
      * Description : 팀 정보 반환 API */
-    myguildInfo: accountId => api.get(`guild/myguild/info/${accountId}`),
+    myGuildInfo: accountId => api.get(`guild/myguild/info/${accountId}`),
 
     /* Method      : GET
      * Parameter   : guildId [guild 테이블 인덱스]
@@ -74,13 +74,13 @@ export const guildApi = {
     /* Method      : GET
      * Parameter   : guildId [guild 테이블 인덱스]
      * Description : 팀원 리스트 반환 API */
-    myguildMemberList: guildId =>
+    myGuildMemberList: guildId =>
         api.get(`guild/myguild/members?id=${guildId}`),
 
     /* Method      : GET
      * Parameter   : guildId [guild 테이블 인덱스], accountId [account 테이블 인덱스]
      * Description : 팀원 상세 정보 반환 API */
-    myguildMemberInfo: (guildId, accountId) =>
+    myGuildMemberInfo: (guildId, accountId) =>
         api.get(`guild/myguild/member/${guildId}?account=${accountId}`),
 
     /* Method      : PUT
@@ -109,11 +109,11 @@ export const guildApi = {
     /* Method      : GET
      * Parameter   : guildName [팀명]
      * Description : 팀 이름 검색 API */
-    getguildListByguildName: guildName =>
+    getGuildListByGuildName: guildName =>
         api.get(`guild/search/name/${guildName}`),
 
     /* Method      : GET
      * Parameter   : region [지역]
      * Description : 팀 지역 검색 API */
-    getguildListByRegion: region => api.get(`guild/search/region${region}`)
+    getGuildListByRegion: region => api.get(`guild/search/region${region}`)
 };
