@@ -80,7 +80,6 @@ export default class extends React.Component {
                 let album = await MediaLibrary.getAlbumAsync(ALBUM_NAME);
 
                 if (album === null) {
-                    console.log(album);
                     album = await MediaLibrary.createAlbumAsync(
                         ALBUM_NAME,
                         asset
