@@ -32,9 +32,11 @@ export default class extends React.Component {
         const { isRecord } = this.state;
 
         if (isRecord) {
-            this._StopRecordingVideo();
+            // this._StopRecordingVideo();
+            this.setState({ isRecord: false });
         } else {
-            this._StartRecordingVideo();
+            // this._StartRecordingVideo();
+            this.setState({ isRecord: true });
         }
     };
 
