@@ -117,3 +117,24 @@ export const guildApi = {
      * Description : 팀 지역 검색 API */
     getGuildListByRegion: region => api.get(`guild/search/region${region}`)
 };
+
+export const upload = (url, data) => {
+    let options = {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        },
+        method: "POST"
+    };
+
+    options.body = new FormData();
+
+    for (let key in data) {
+        options.body.append(key, data[key]);
+    }
+
+    return fetch(requestUrl, options).then(response => {
+        return response.json().then(responseJson => {
+            return responseJson;
+        });
+    });
+};

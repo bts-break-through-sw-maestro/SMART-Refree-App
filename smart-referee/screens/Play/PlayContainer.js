@@ -1,8 +1,12 @@
 import React from "react";
 import { Alert } from "react-native";
+import { upload } from "../../api";
 import PlayPresenter from "./PlayPresenter";
 import * as Permissions from "expo-permissions";
 import * as MediaLibrary from "expo-media-library";
+import * as ImageManipulator from "expo-image-manipulator";
+
+let i = 0;
 
 export default class extends React.Component {
     constructor(props) {
@@ -33,10 +37,10 @@ export default class extends React.Component {
 
         if (isRecord) {
             // this._StopRecordingVideo();
-            this.setState({ isRecord: false });
         } else {
             // this._StartRecordingVideo();
-            this.setState({ isRecord: true });
+            // this.setState({ isRecord: true });
+            this._TakePhoto();
         }
     };
 
@@ -100,6 +104,67 @@ export default class extends React.Component {
         }
 
         console.log("======= FINISH SAVING VIDEO ======");
+    };
+
+    _TakePhoto = async () => {
+        let { isRecord } = this.state;
+
+        console.log(isRecord, i++);
+
+        if (!isRecord) {
+            try {
+                if (this.cameraRef.current) {
+                    let { uri } = await this.cameraRef.current.takePictureAsync(
+                        {
+                            quality: 1
+                        }
+                    );
+
+                    const resizedImage = await ImageManipulator.manipulateAsync(
+                        uri,
+                        [{ resize: { width: 416, height: 416 } }],
+                        { format: ImageManipulator.SaveFormat.JPEG }
+                    );
+
+                    if (resizedImage) {
+                        this._SavePhoto(resizedImage.uri);
+                        // upload(url, resizedImage.uri);
+                    }
+
+                    setTimeout(this._TakePhoto, 1000);
+                }
+            } catch (error) {
+                Alert.alert(error);
+            }
+        } else {
+            this.setState({ isRecord: true });
+        }
+    };
+
+    _SavePhoto = async uri => {
+        const ALBUM_NAME = "SMART REFEREE";
+
+        try {
+            const { status } = await Permissions.askAsync(
+                Permissions.CAMERA_ROLL
+            );
+            if (status === "granted") {
+                const asset = await MediaLibrary.createAssetAsync(uri);
+                let album = await MediaLibrary.getAlbumAsync(ALBUM_NAME);
+                if (album === null) {
+                    album = await MediaLibrary.createAlbumAsync(
+                        ALBUM_NAME,
+                        asset
+                    );
+                } else {
+                    await MediaLibrary.addAssetsToAlbumAsync([asset], album.id);
+                }
+            } else {
+                this.setState({ hasPermission: false });
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     render() {
