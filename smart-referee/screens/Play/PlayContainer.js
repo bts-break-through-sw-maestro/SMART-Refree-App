@@ -1,12 +1,10 @@
 import React from "react";
 import { Alert } from "react-native";
-import { upload } from "../../api";
+import { imageUploadApi } from "../../api";
 import PlayPresenter from "./PlayPresenter";
 import * as Permissions from "expo-permissions";
 import * as MediaLibrary from "expo-media-library";
 import * as ImageManipulator from "expo-image-manipulator";
-
-let i = 0;
 
 export default class extends React.Component {
     constructor(props) {
@@ -37,107 +35,47 @@ export default class extends React.Component {
 
         if (isRecord) {
             // this._StopRecordingVideo();
+            this.setState({ isRecord: false });
         } else {
             // this._StartRecordingVideo();
-            // this.setState({ isRecord: true });
             this._TakePhoto();
-        }
-    };
-
-    _StartRecordingVideo = async () => {
-        if (this.cameraRef.current) {
-            console.log("====== START RECORDING VIDEO =====");
             this.setState({ isRecord: true });
-
-            const video = await this.cameraRef.current.recordAsync();
-            this.setState({ video });
-
-            try {
-                if (video !== null) {
-                    this._SavingVideo();
-                } else {
-                    throw Error();
-                }
-            } catch {
-                console.log("Video Is Null");
-            }
         }
-    };
-
-    _StopRecordingVideo = async () => {
-        console.log("======= STOP RECORDING VIDEO =====");
-        this.setState({ isRecord: false });
-        this.cameraRef.current.stopRecording();
-    };
-
-    _SavingVideo = async () => {
-        console.log("======= START SAVING VIDEO =======");
-
-        try {
-            const { video } = this.state;
-            const ALBUM_NAME = "SMART REFEREE";
-            console.log(video);
-            const { status } = await Permissions.askAsync(
-                Permissions.CAMERA_ROLL
-            );
-
-            if (status === "granted") {
-                const asset = await MediaLibrary.createAssetAsync(video.uri);
-                let album = await MediaLibrary.getAlbumAsync(ALBUM_NAME);
-
-                if (album === null) {
-                    album = await MediaLibrary.createAlbumAsync(
-                        ALBUM_NAME,
-                        asset
-                    );
-                } else {
-                    await MediaLibrary.addAssetsToAlbumAsync([asset], album);
-                }
-
-                this.setState({ video: null });
-            } else {
-                this.setState({ hasPermission: false });
-            }
-        } catch (error) {
-            console.log(error);
-            Alert.alert("비디오 없음");
-        }
-
-        console.log("======= FINISH SAVING VIDEO ======");
     };
 
     _TakePhoto = async () => {
-        let { isRecord } = this.state;
+        try {
+            if (this.cameraRef.current) {
+                let { uri } = await this.cameraRef.current.takePictureAsync({
+                    quality: 1
+                });
 
-        console.log(isRecord, i++);
+                const resizedImage = await ImageManipulator.manipulateAsync(
+                    uri,
+                    [{ resize: { width: 416, height: 416 } }],
+                    { format: ImageManipulator.SaveFormat.JPEG }
+                );
 
-        if (!isRecord) {
-            try {
-                if (this.cameraRef.current) {
-                    let { uri } = await this.cameraRef.current.takePictureAsync(
-                        {
-                            quality: 1
-                        }
-                    );
+                console.log(resizedImage);
 
-                    const resizedImage = await ImageManipulator.manipulateAsync(
-                        uri,
-                        [{ resize: { width: 416, height: 416 } }],
-                        { format: ImageManipulator.SaveFormat.JPEG }
-                    );
+                if (resizedImage) {
+                    this._SavePhoto(resizedImage.uri);
 
-                    if (resizedImage) {
-                        this._SavePhoto(resizedImage.uri);
-                        // upload(url, resizedImage.uri);
-                    }
+                    let formData = new FormData();
 
-                    setTimeout(this._TakePhoto, 1000);
+                    formData.append("file", resizedImage.uri);
+                    formData.append("type", "image/jpeg");
+                    formData.append("name", "image.jpeg");
+
+                    console.log(formData);
+
+                    imageUploadApi.uploadImage(formData);
                 }
-            } catch (error) {
-                Alert.alert(error);
+
+                // setTimeout(this._TakePhoto, 1000);
             }
-        } else {
-            this.setState({ isRecord: true });
+        } catch (error) {
+            Alert.alert(error.code);
         }
     };
 
@@ -181,3 +119,60 @@ export default class extends React.Component {
         );
     }
 }
+
+// _StartRecordingVideo = async () => {
+//     if (this.cameraRef.current) {
+//         console.log("====== START RECORDING VIDEO =====");
+//         this.setState({ isRecord: true });
+
+//         const video = await this.cameraRef.current.recordAsync();
+//         this.setState({ video });
+
+//         try {
+//             if (video !== null) {
+//                 this._SavingVideo();
+//             } else {
+//                 throw Error();
+//             }
+//         } catch {
+//             console.log("Video Is Null");
+//         }
+//     }
+// };
+
+// _SavingVideo = async () => {
+//     console.log("======= START SAVING VIDEO =======");
+
+//     try {
+//         const { video } = this.state;
+//         const ALBUM_NAME = "SMART REFEREE";
+//         console.log(video);
+//         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+//         if (status === "granted") {
+//             const asset = await MediaLibrary.createAssetAsync(video.uri);
+//             let album = await MediaLibrary.getAlbumAsync(ALBUM_NAME);
+
+//             if (album === null) {
+//                 album = await MediaLibrary.createAlbumAsync(ALBUM_NAME, asset);
+//             } else {
+//                 await MediaLibrary.addAssetsToAlbumAsync([asset], album);
+//             }
+
+//             this.setState({ video: null });
+//         } else {
+//             this.setState({ hasPermission: false });
+//         }
+//     } catch (error) {
+//         console.log(error);
+//         Alert.alert("비디오 없음");
+//     }
+
+//     console.log("======= FINISH SAVING VIDEO ======");
+// };
+
+// _StopRecordingVideo = async () => {
+//     console.log("======= STOP RECORDING VIDEO =====");
+//     this.setState({ isRecord: false });
+//     this.cameraRef.current.stopRecording();
+// };

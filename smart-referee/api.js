@@ -1,5 +1,5 @@
 import axios from "axios";
-import { URL } from "./url";
+import { URL, DL_URL } from "./url";
 
 const api = axios.create({
     baseURL: URL
@@ -118,23 +118,19 @@ export const guildApi = {
     getGuildListByRegion: region => api.get(`guild/search/region${region}`)
 };
 
-export const upload = (url, data) => {
-    let options = {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        },
-        method: "POST"
-    };
+const imageApi = axios.create({
+    baseURL: DL_URL
+});
 
-    options.body = new FormData();
+imageApi.defaults.headers.post["Content-Type"] = "multipart/form-data";
 
-    for (let key in data) {
-        options.body.append(key, data[key]);
-    }
-
-    return fetch(requestUrl, options).then(response => {
-        return response.json().then(responseJson => {
-            return responseJson;
-        });
-    });
+export const imageUploadApi = {
+    /* Method      : POST
+     * Parameter   : formData {uri, type, name}
+     * Description : 경기 이미지 업로드 API */
+    uploadImage: formData =>
+        imageApi
+            .post("analysis/result", { file: formData })
+            .then(response => console.log(response))
+            .catch(error => console.log(error))
 };
