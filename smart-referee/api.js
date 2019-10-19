@@ -119,7 +119,10 @@ export const guildApi = {
 };
 
 const imageApi = axios.create({
-    baseURL: DL_URL
+    baseURL: DL_URL,
+    headers: {
+        "Content-Type": "multipart/form-data"
+    }
 });
 
 imageApi.defaults.headers.post["Content-Type"] = "multipart/form-data";
@@ -129,8 +132,9 @@ export const imageUploadApi = {
      * Parameter   : formData {uri, type, name}
      * Description : 경기 이미지 업로드 API */
     uploadImage: formData =>
-        imageApi
-            .post("analysis/result", { file: formData })
-            .then(response => console.log(response))
-            .catch(error => console.log(error))
+        imageApi.post("analysis/result", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
 };

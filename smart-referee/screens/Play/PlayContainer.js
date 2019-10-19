@@ -50,32 +50,30 @@ export default class extends React.Component {
                     quality: 1
                 });
 
-                const resizedImage = await ImageManipulator.manipulateAsync(
+                let resizedImage = await ImageManipulator.manipulateAsync(
                     uri,
                     [{ resize: { width: 416, height: 416 } }],
                     { format: ImageManipulator.SaveFormat.JPEG }
                 );
 
-                console.log(resizedImage);
-
                 if (resizedImage) {
-                    this._SavePhoto(resizedImage.uri);
+                    // this._SavePhoto(resizedImage.uri);
 
                     let formData = new FormData();
 
-                    formData.append("file", resizedImage.uri);
-                    formData.append("type", "image/jpeg");
                     formData.append("name", "image.jpeg");
+                    formData.append("filename", resizedImage.uri);
 
-                    console.log(formData);
+                    const data = await imageUploadApi.uploadImage(formData);
 
-                    imageUploadApi.uploadImage(formData);
+                    console.log(data);
                 }
 
                 // setTimeout(this._TakePhoto, 1000);
             }
         } catch (error) {
-            Alert.alert(error.code);
+            Alert.alert("Error Corrupt");
+            console.log(error);
         }
     };
 
