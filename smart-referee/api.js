@@ -118,23 +118,15 @@ export const guildApi = {
     getGuildListByRegion: region => api.get(`guild/search/region${region}`)
 };
 
-const imageApi = axios.create({
-    baseURL: DL_URL,
-    headers: {
-        "Content-Type": "multipart/form-data"
-    }
-});
-
-imageApi.defaults.headers.post["Content-Type"] = "multipart/form-data";
-
 export const imageUploadApi = {
     /* Method      : POST
      * Parameter   : formData {uri, type, name}
      * Description : 경기 이미지 업로드 API */
     uploadImage: formData =>
-        imageApi.post("analysis/result", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
+        fetch(`${DL_URL}/analysis/result`, {
+            "Content-Type": "multipart/form-data",
+            Accept: "*/*",
+            method: "POST",
+            body: formData
         })
 };

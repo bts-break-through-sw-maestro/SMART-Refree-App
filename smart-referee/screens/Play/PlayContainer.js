@@ -61,8 +61,11 @@ export default class extends React.Component {
 
                     let formData = new FormData();
 
-                    formData.append("name", "image.jpeg");
-                    formData.append("filename", resizedImage.uri);
+                    formData.append(resizedImage.uri, {
+                        uri: resizedImage.uri,
+                        type: "image/jpg",
+                        name: "image.jpg"
+                    });
 
                     const data = await imageUploadApi.uploadImage(formData);
 
