@@ -3,7 +3,6 @@ import { Alert } from "react-native";
 import { imageUploadApi } from "../../api";
 import PlayPresenter from "./PlayPresenter";
 import * as Permissions from "expo-permissions";
-import * as MediaLibrary from "expo-media-library";
 import * as ImageManipulator from "expo-image-manipulator";
 
 export default class extends React.Component {
@@ -30,11 +29,16 @@ export default class extends React.Component {
         }
     };
 
+    componentWillUnmount = () => {
+        clearTimeout(this.takePhotoRecursion);
+    };
+
     _StartPauseButtonClicked = () => {
         const { isRecord } = this.state;
 
         if (isRecord) {
             // this._StopRecordingVideo();
+            clearTimeout(this.takePhotoRecursion);
             this.setState({ isRecord: false });
         } else {
             // this._StartRecordingVideo();
@@ -72,36 +76,13 @@ export default class extends React.Component {
                     console.log(data);
                 }
 
-                // setTimeout(this._TakePhoto, 1000);
+                this.takePhotoRecursion = setTimeout(
+                    () => this._TakePhoto(),
+                    1000
+                );
             }
         } catch (error) {
             Alert.alert("Error Corrupt");
-            console.log(error);
-        }
-    };
-
-    _SavePhoto = async uri => {
-        const ALBUM_NAME = "SMART REFEREE";
-
-        try {
-            const { status } = await Permissions.askAsync(
-                Permissions.CAMERA_ROLL
-            );
-            if (status === "granted") {
-                const asset = await MediaLibrary.createAssetAsync(uri);
-                let album = await MediaLibrary.getAlbumAsync(ALBUM_NAME);
-                if (album === null) {
-                    album = await MediaLibrary.createAlbumAsync(
-                        ALBUM_NAME,
-                        asset
-                    );
-                } else {
-                    await MediaLibrary.addAssetsToAlbumAsync([asset], album.id);
-                }
-            } else {
-                this.setState({ hasPermission: false });
-            }
-        } catch (error) {
             console.log(error);
         }
     };
@@ -120,6 +101,8 @@ export default class extends React.Component {
         );
     }
 }
+
+// import * as MediaLibrary from "expo-media-library";
 
 // _StartRecordingVideo = async () => {
 //     if (this.cameraRef.current) {
@@ -176,4 +159,25 @@ export default class extends React.Component {
 //     console.log("======= STOP RECORDING VIDEO =====");
 //     this.setState({ isRecord: false });
 //     this.cameraRef.current.stopRecording();
+// };
+
+// _SavePhoto = async uri => {
+//     const ALBUM_NAME = "SMART REFEREE";
+
+//     try {
+//         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+//         if (status === "granted") {
+//             const asset = await MediaLibrary.createAssetAsync(uri);
+//             let album = await MediaLibrary.getAlbumAsync(ALBUM_NAME);
+//             if (album === null) {
+//                 album = await MediaLibrary.createAlbumAsync(ALBUM_NAME, asset);
+//             } else {
+//                 await MediaLibrary.addAssetsToAlbumAsync([asset], album.id);
+//             }
+//         } else {
+//             this.setState({ hasPermission: false });
+//         }
+//     } catch (error) {
+//         console.log(error);
+//     }
 // };
