@@ -128,5 +128,7 @@ export const imageUploadApi = {
             Accept: "*/*",
             method: "POST",
             body: formData
+        }).then(response => {
+            return response.json();
         })
 };

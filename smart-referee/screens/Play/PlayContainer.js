@@ -4,6 +4,8 @@ import { imageUploadApi } from "../../api";
 import PlayPresenter from "./PlayPresenter";
 import * as Permissions from "expo-permissions";
 import * as ImageManipulator from "expo-image-manipulator";
+import { captureRef as takeSnapshotAsync } from "react-native-view-shot";
+import * as MediaLibrary from "expo-media-library";
 
 export default class extends React.Component {
     constructor(props) {
@@ -17,6 +19,8 @@ export default class extends React.Component {
         };
 
         this.cameraRef = React.createRef();
+        this.surfaceRef = React.createRef();
+        this.glViewRef = React.createRef();
     }
 
     componentDidMount = async () => {
@@ -30,7 +34,7 @@ export default class extends React.Component {
     };
 
     componentWillUnmount = () => {
-        clearTimeout(this.takePhotoRecursion);
+        cancelAnimationFrame(this.takePhotoRecursion);
     };
 
     _StartPauseButtonClicked = () => {
@@ -47,39 +51,79 @@ export default class extends React.Component {
         }
     };
 
+    _SavePhoto = async uri => {
+        const ALBUM_NAME = "SMART REFEREE";
+
+        try {
+            const { status } = await Permissions.askAsync(
+                Permissions.CAMERA_ROLL
+            );
+            if (status === "granted") {
+                const asset = await MediaLibrary.createAssetAsync(uri);
+                let album = await MediaLibrary.getAlbumAsync(ALBUM_NAME);
+                if (album === null) {
+                    album = await MediaLibrary.createAlbumAsync(
+                        ALBUM_NAME,
+                        asset
+                    );
+                } else {
+                    await MediaLibrary.addAssetsToAlbumAsync([asset], album.id);
+                }
+            } else {
+                this.setState({ hasPermission: false });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     _TakePhoto = async () => {
         try {
             if (this.cameraRef.current) {
-                let { uri } = await this.cameraRef.current.takePictureAsync({
-                    quality: 1
+                const uri = this.glViewRef.current.takeSnapshotAsync({
+                    type: "png",
+                    format: "file"
                 });
-
-                let resizedImage = await ImageManipulator.manipulateAsync(
-                    uri,
-                    [{ resize: { width: 416, height: 416 } }],
-                    { format: ImageManipulator.SaveFormat.JPEG }
-                );
-
-                if (resizedImage) {
-                    // this._SavePhoto(resizedImage.uri);
-
-                    let formData = new FormData();
-
-                    formData.append(resizedImage.uri, {
-                        uri: resizedImage.uri,
-                        type: "image/jpg",
-                        name: "image.jpg"
-                    });
-
-                    const data = await imageUploadApi.uploadImage(formData);
-
-                    console.log(data);
-                }
-
-                this.takePhotoRecursion = setTimeout(
-                    () => this._TakePhoto(),
-                    1000
-                );
+                console.log(uri);
+                // const result = await takeSnapshotAsync(this.cameraRef, {
+                //     format: "jpg",
+                //     width: 416,
+                //     height: 416,
+                //     quality: 1
+                // });
+                // console.log(result);
+                // // this._SavePhoto(result);
+                // let formData = new FormData();
+                // formData.append(result, {
+                //     uri: result,
+                //     type: "image/jpg",
+                //     name: "image.jpg"
+                // });
+                // const data = await imageUploadApi.uploadImage(formData);
+                // console.log(data);
+                // let { uri } = await this.cameraRef.current.takePictureAsync({
+                //     quality: 0.1
+                // });
+                // let resizedImage = await ImageManipulator.manipulateAsync(
+                //     uri,
+                //     [{ resize: { width: 416, height: 416 } }, { rotate: 270 }],
+                //     { format: ImageManipulator.SaveFormat.JPEG }
+                // );
+                // if (resizedImage) {
+                //     this._SavePhoto(resizedImage.uri);
+                //     let formData = new FormData();
+                //     formData.append(resizedImage.uri, {
+                //         uri: resizedImage.uri,
+                //         type: "image/jpg",
+                //         name: "image.jpg"
+                //     });
+                //     const data = await imageUploadApi.uploadImage(formData);
+                //     console.log(data);
+                // }
+                // this.takePhotoRecursion = setTimeout(
+                //     () => this._TakePhoto(),
+                //     100
+                // );
             }
         } catch (error) {
             Alert.alert("Error Corrupt");
@@ -97,12 +141,12 @@ export default class extends React.Component {
                 isRecord={isRecord}
                 _StartPauseButtonClicked={this._StartPauseButtonClicked}
                 cameraRef={this.cameraRef}
+                surfaceRef={this.surfaceRef}
+                glViewRef={this.glViewRef}
             />
         );
     }
 }
-
-// import * as MediaLibrary from "expo-media-library";
 
 // _StartRecordingVideo = async () => {
 //     if (this.cameraRef.current) {
@@ -159,25 +203,4 @@ export default class extends React.Component {
 //     console.log("======= STOP RECORDING VIDEO =====");
 //     this.setState({ isRecord: false });
 //     this.cameraRef.current.stopRecording();
-// };
-
-// _SavePhoto = async uri => {
-//     const ALBUM_NAME = "SMART REFEREE";
-
-//     try {
-//         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-//         if (status === "granted") {
-//             const asset = await MediaLibrary.createAssetAsync(uri);
-//             let album = await MediaLibrary.getAlbumAsync(ALBUM_NAME);
-//             if (album === null) {
-//                 album = await MediaLibrary.createAlbumAsync(ALBUM_NAME, asset);
-//             } else {
-//                 await MediaLibrary.addAssetsToAlbumAsync([asset], album.id);
-//             }
-//         } else {
-//             this.setState({ hasPermission: false });
-//         }
-//     } catch (error) {
-//         console.log(error);
-//     }
 // };

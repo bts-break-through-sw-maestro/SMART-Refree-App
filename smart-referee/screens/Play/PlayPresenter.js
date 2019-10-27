@@ -6,6 +6,9 @@ import { Camera } from "expo-camera";
 import { AntDesign } from "@expo/vector-icons";
 import { withNavigation } from "react-navigation";
 import { BG_COLOR } from "../../constants/Colors";
+import { Surface } from "gl-react-expo";
+import { Node, Shaders, GLSL } from "gl-react";
+import { GLView } from "expo-gl";
 
 const Container = styled.View`
     flex: 1;
@@ -50,13 +53,27 @@ const RecordButton = styled.TouchableOpacity`
     transform: rotate(90deg);
 `;
 
+const shaders = Shaders.create({
+    YFlip: {
+        frag: GLSL`
+            precision highp float;
+            varying vec2 uv;
+            uniform sampler2D t;
+            void main(){
+            gl_FragColor=texture2D(t, vec2(uv.x, 1.0 - uv.y));
+            }`
+    }
+});
+
 const PlayPresenter = ({
     loading,
     hasPermission,
     navigation,
     isRecord,
     _StartPauseButtonClicked,
-    cameraRef
+    cameraRef,
+    surfaceRef,
+    glViewRef
 }) =>
     loading ? (
         <Loader />
@@ -64,14 +81,35 @@ const PlayPresenter = ({
         <Container>
             <CameraContainer>
                 {hasPermission ? (
-                    <Camera
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            overflow: "hidden"
-                        }}
-                        ref={cameraRef}
-                    />
+                    <GLView ref={glViewRef}>
+                        <Surface
+                            style={{
+                                width: "100%",
+                                height: "100%"
+                            }}
+                            ref={surfaceRef}
+                        >
+                            <Node
+                                blendFunc={{
+                                    src: "one",
+                                    dst: "one minus src alpha"
+                                }}
+                                shader={shaders.YFlip}
+                                uniforms={{
+                                    t: cameraRef
+                                }}
+                            >
+                                <Camera
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        overflow: "hidden"
+                                    }}
+                                    ref={cameraRef}
+                                />
+                            </Node>
+                        </Surface>
+                    </GLView>
                 ) : (
                     <Text>Don't have Permission for this App.</Text>
                 )}
@@ -79,7 +117,7 @@ const PlayPresenter = ({
 
             <BackButtonContainer>
                 <BackButton onPress={() => navigation.navigate("Menu")}>
-                    <AntDesign name="arrowup" size={50} color="white" />
+                    <AntDesign name="arrowup" size={50} color="black" />
                 </BackButton>
             </BackButtonContainer>
 
@@ -89,10 +127,10 @@ const PlayPresenter = ({
                         <AntDesign
                             name="pausecircleo"
                             size={50}
-                            color="white"
+                            color="black"
                         />
                     ) : (
-                        <AntDesign name="playcircleo" size={50} color="white" />
+                        <AntDesign name="playcircleo" size={50} color="black" />
                     )}
                 </RecordButton>
             </RecordButtonContainer>
@@ -104,7 +142,9 @@ PlayPresenter.propTypes = {
     isRecord: PropTypes.bool.isRequired,
     hasPermission: PropTypes.bool,
     _StartPauseButtonClicked: PropTypes.func.isRequired,
-    cameraRef: PropTypes.object
+    cameraRef: PropTypes.object,
+    surfaceRef: PropTypes.object,
+    glViewRef: PropTypes.object
 };
 
 export default withNavigation(PlayPresenter);
