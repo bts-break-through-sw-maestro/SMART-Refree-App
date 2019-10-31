@@ -103,6 +103,7 @@ export default class extends React.Component {
 
                     image = resizedImage.uri;
                 } else if (Platform.OS === "ios") {
+                    throw Error();
                     image = captureResult;
                 }
 
@@ -114,7 +115,6 @@ export default class extends React.Component {
                     name: "image.jpg"
                 });
 
-                console.log(formData);
                 const data = await imageUploadApi.uploadImage(formData);
                 console.log(data);
                 // let { uri } = await this.cameraRef.current.takePictureAsync({
@@ -138,7 +138,7 @@ export default class extends React.Component {
                 // }
                 this.takePhotoRecursion = setTimeout(
                     () => this._TakePhoto(),
-                    100
+                    1000
                 );
             }
         } catch (error) {
