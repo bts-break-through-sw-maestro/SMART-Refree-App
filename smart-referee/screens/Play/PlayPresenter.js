@@ -96,7 +96,7 @@ const PlayPresenter = ({
 
             <BackButtonContainer>
                 <BackButton onPress={() => navigation.navigate("Menu")}>
-                    <AntDesign name="arrowup" size={50} color="black" />
+                    <AntDesign name="arrowup" size={50} color="white" />
                 </BackButton>
             </BackButtonContainer>
 
@@ -106,10 +106,10 @@ const PlayPresenter = ({
                         <AntDesign
                             name="pausecircleo"
                             size={50}
-                            color="black"
+                            color="white"
                         />
                     ) : (
-                        <AntDesign name="playcircleo" size={50} color="black" />
+                        <AntDesign name="playcircleo" size={50} color="white" />
                     )}
                 </RecordButton>
             </RecordButtonContainer>

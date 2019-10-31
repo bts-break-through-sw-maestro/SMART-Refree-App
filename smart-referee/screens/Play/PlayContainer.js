@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 import { imageUploadApi } from "../../api";
 import PlayPresenter from "./PlayPresenter";
 import * as Permissions from "expo-permissions";
@@ -80,24 +80,41 @@ export default class extends React.Component {
     _TakePhoto = async () => {
         try {
             if (this.cameraRef.current) {
-                const result = await takeSnapshotAsync(this.cameraRef.current, {
-                    format: "jpg",
-                    quality: 1
-                });
-
-                let resizedImage = await ImageManipulator.manipulateAsync(
-                    result,
-                    [{ resize: { width: 416, height: 416 } }, { rotate: 270 }],
-                    { format: ImageManipulator.SaveFormat.JPEG }
+                let captureResult = await takeSnapshotAsync(
+                    this.cameraRef.current,
+                    {
+                        format: "jpg",
+                        width: 416,
+                        height: 416,
+                        quality: 1
+                    }
                 );
+                let image = null;
 
-                this._SavePhoto(resizedImage.uri);
+                if (Platform.OS === "android") {
+                    let resizedImage = await ImageManipulator.manipulateAsync(
+                        captureResult,
+                        [
+                            { resize: { width: 416, height: 416 } },
+                            { rotate: 270 }
+                        ],
+                        { format: ImageManipulator.SaveFormat.JPEG }
+                    );
+
+                    image = resizedImage.uri;
+                } else if (Platform.OS === "ios") {
+                    image = captureResult;
+                }
+
                 let formData = new FormData();
-                formData.append(result, {
-                    uri: resizedImage,
+
+                formData.append(image, {
+                    uri: image,
                     type: "image/jpg",
                     name: "image.jpg"
                 });
+
+                console.log(formData);
                 const data = await imageUploadApi.uploadImage(formData);
                 console.log(data);
                 // let { uri } = await this.cameraRef.current.takePictureAsync({
