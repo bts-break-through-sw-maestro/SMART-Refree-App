@@ -80,27 +80,26 @@ export default class extends React.Component {
     _TakePhoto = async () => {
         try {
             if (this.cameraRef.current) {
-                const uri = this.glViewRef.current.takeSnapshotAsync({
-                    type: "png",
-                    format: "file"
+                const result = await takeSnapshotAsync(this.cameraRef.current, {
+                    format: "jpg",
+                    quality: 1
                 });
-                console.log(uri);
-                // const result = await takeSnapshotAsync(this.cameraRef, {
-                //     format: "jpg",
-                //     width: 416,
-                //     height: 416,
-                //     quality: 1
-                // });
-                // console.log(result);
-                // // this._SavePhoto(result);
-                // let formData = new FormData();
-                // formData.append(result, {
-                //     uri: result,
-                //     type: "image/jpg",
-                //     name: "image.jpg"
-                // });
-                // const data = await imageUploadApi.uploadImage(formData);
-                // console.log(data);
+
+                let resizedImage = await ImageManipulator.manipulateAsync(
+                    result,
+                    [{ resize: { width: 416, height: 416 } }, { rotate: 270 }],
+                    { format: ImageManipulator.SaveFormat.JPEG }
+                );
+
+                this._SavePhoto(resizedImage.uri);
+                let formData = new FormData();
+                formData.append(result, {
+                    uri: resizedImage,
+                    type: "image/jpg",
+                    name: "image.jpg"
+                });
+                const data = await imageUploadApi.uploadImage(formData);
+                console.log(data);
                 // let { uri } = await this.cameraRef.current.takePictureAsync({
                 //     quality: 0.1
                 // });
@@ -120,10 +119,10 @@ export default class extends React.Component {
                 //     const data = await imageUploadApi.uploadImage(formData);
                 //     console.log(data);
                 // }
-                // this.takePhotoRecursion = setTimeout(
-                //     () => this._TakePhoto(),
-                //     100
-                // );
+                this.takePhotoRecursion = setTimeout(
+                    () => this._TakePhoto(),
+                    100
+                );
             }
         } catch (error) {
             Alert.alert("Error Corrupt");

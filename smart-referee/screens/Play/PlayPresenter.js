@@ -81,35 +81,14 @@ const PlayPresenter = ({
         <Container>
             <CameraContainer>
                 {hasPermission ? (
-                    <GLView ref={glViewRef}>
-                        <Surface
-                            style={{
-                                width: "100%",
-                                height: "100%"
-                            }}
-                            ref={surfaceRef}
-                        >
-                            <Node
-                                blendFunc={{
-                                    src: "one",
-                                    dst: "one minus src alpha"
-                                }}
-                                shader={shaders.YFlip}
-                                uniforms={{
-                                    t: cameraRef
-                                }}
-                            >
-                                <Camera
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        overflow: "hidden"
-                                    }}
-                                    ref={cameraRef}
-                                />
-                            </Node>
-                        </Surface>
-                    </GLView>
+                    <Camera
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            overflow: "hidden"
+                        }}
+                        ref={cameraRef}
+                    />
                 ) : (
                     <Text>Don't have Permission for this App.</Text>
                 )}
