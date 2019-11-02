@@ -103,7 +103,7 @@ export default class extends React.Component {
 
                     image = resizedImage.uri;
                 } else if (Platform.OS === "ios") {
-                    throw Error();
+                    throw Error("iOS에서는 이용할 수 없습니다.");
                     image = captureResult;
                 }
 

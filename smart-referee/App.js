@@ -3,6 +3,8 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "react-native";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 import AppNavigation from "./navigation/AppNavigation";
 
 export default class App extends React.Component {
@@ -25,10 +27,10 @@ export default class App extends React.Component {
 
         if (loaded) {
             return (
-                <>
+                <Provider store={store}>
                     <StatusBar barStyle="light-content" />
                     <AppNavigation />
-                </>
+                </Provider>
             );
         } else {
             return (
