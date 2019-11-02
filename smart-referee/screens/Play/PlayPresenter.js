@@ -6,9 +6,6 @@ import { Camera } from "expo-camera";
 import { AntDesign } from "@expo/vector-icons";
 import { withNavigation } from "react-navigation";
 import { BG_COLOR } from "../../constants/Colors";
-import { Surface } from "gl-react-expo";
-import { Node, Shaders, GLSL } from "gl-react";
-import { GLView } from "expo-gl";
 
 const Container = styled.View`
     flex: 1;
@@ -53,27 +50,13 @@ const RecordButton = styled.TouchableOpacity`
     transform: rotate(90deg);
 `;
 
-const shaders = Shaders.create({
-    YFlip: {
-        frag: GLSL`
-            precision highp float;
-            varying vec2 uv;
-            uniform sampler2D t;
-            void main(){
-            gl_FragColor=texture2D(t, vec2(uv.x, 1.0 - uv.y));
-            }`
-    }
-});
-
 const PlayPresenter = ({
     loading,
     hasPermission,
     navigation,
     isRecord,
     _StartPauseButtonClicked,
-    cameraRef,
-    surfaceRef,
-    glViewRef
+    cameraRef
 }) =>
     loading ? (
         <Loader />
@@ -121,9 +104,7 @@ PlayPresenter.propTypes = {
     isRecord: PropTypes.bool.isRequired,
     hasPermission: PropTypes.bool,
     _StartPauseButtonClicked: PropTypes.func.isRequired,
-    cameraRef: PropTypes.object,
-    surfaceRef: PropTypes.object,
-    glViewRef: PropTypes.object
+    cameraRef: PropTypes.object
 };
 
 export default withNavigation(PlayPresenter);

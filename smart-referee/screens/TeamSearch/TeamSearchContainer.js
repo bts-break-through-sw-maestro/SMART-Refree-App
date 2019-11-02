@@ -1,6 +1,7 @@
 import React from "react";
 import TeamSearchPresenter from "./TeamSearchPresenter";
 import { Alert } from "react-native";
+import { guildApi } from "../../api";
 
 export default class extends React.Component {
     state = {
@@ -9,7 +10,8 @@ export default class extends React.Component {
         teamNameTerm: "",
         locationNameTerm: "",
         region: "",
-        error: null
+        error: null,
+        teamList: null
     };
 
     handleTeamNameUpdate = text => {
@@ -32,6 +34,13 @@ export default class extends React.Component {
 
             this.setState({ searchLoading: true });
             console.log("Searching...", region, teamName, location);
+
+            let teamList = await guildApi.getGuildListByGuildName(teamName);
+            teamList = await teamList.assign(guildApi.getGuildListByRegion(region));
+
+            console.log(teamList)
+
+            this.setState({ teamList });
         } catch (e) {
             this.setState({ error: e });
         } finally {
@@ -41,6 +50,7 @@ export default class extends React.Component {
     };
 
     onClickJoinButton = key => {
+        await guildApi.reportApplicationForm(key);
         Alert.alert("", `${key} 가입 신청 완료`);
     };
 
@@ -69,7 +79,8 @@ export default class extends React.Component {
             teamNameTerm,
             locationNameTerm,
             searchLoading,
-            region
+            region,
+            teamList
         } = this.state;
 
         return (
@@ -85,6 +96,7 @@ export default class extends React.Component {
                 onClickJoinButton={this.onClickJoinButton}
                 region={region}
                 extractRegionData={this.extractRegionData}
+                teamList={teamList}
             />
         );
     }

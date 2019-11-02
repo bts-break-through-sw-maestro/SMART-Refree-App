@@ -85,8 +85,9 @@ const TeamCreatePresenter = ({
     locationNameTerm,
     handleLocationNameUpdate,
     handleTeamNameUpdate,
-    onClickSearchButton,
     extractRegionData,
+    onClickCreateButton,
+    created,
     error
 }) =>
     loading ? (
@@ -107,20 +108,6 @@ const TeamCreatePresenter = ({
                     </Picker>
                 </PickerContainer>
             </SearchContainer>
-            {/* <SearchContainer>
-                <TextContainer>
-                    <PickerText>시 군 구</PickerText>
-                </TextContainer>
-                <PickerContainer>
-                    <TeamNameInput
-                        placeholder="시 군 구 정보를 입력하세요."
-                        value={locationNameTerm}
-                        onChangeText={handleLocationNameUpdate}
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                    />
-                </PickerContainer>
-            </SearchContainer> */}
             <SearchContainer>
                 <TextContainer>
                     <PickerText>팀이름</PickerText>
@@ -136,7 +123,7 @@ const TeamCreatePresenter = ({
                 </PickerContainer>
             </SearchContainer>
             <SearchButtonContainer>
-                <SearchButton onPress={onClickSearchButton}>
+                <SearchButton onPress={onClickCreateButton}>
                     <SearchButtonText>Create</SearchButtonText>
                 </SearchButton>
             </SearchButtonContainer>
@@ -149,7 +136,6 @@ TeamCreatePresenter.propTypes = {
     locationNameTerm: PropTypes.string.isRequired,
     handleTeamNameUpdate: PropTypes.func.isRequired,
     handleLocationNameUpdate: PropTypes.func.isRequired,
-    onClickSearchButton: PropTypes.func.isRequired,
     extractRegionData: PropTypes.func.isRequired,
     error: PropTypes.string
 };

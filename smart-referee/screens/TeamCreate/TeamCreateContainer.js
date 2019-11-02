@@ -1,6 +1,7 @@
 import React from "react";
 import TeamCreatePresenter from "./TeamCreatePresenter";
 import { Alert } from "react-native";
+import { guildApi } from "../../api";
 
 export default class extends React.Component {
     state = {
@@ -8,7 +9,7 @@ export default class extends React.Component {
         teamNameTerm: "",
         locationNameTerm: "",
         region: "",
-        error: null
+        error: null,
     };
 
     handleTeamNameUpdate = text => {
@@ -44,8 +45,19 @@ export default class extends React.Component {
         }
     }
 
+    onClickCreateButton = () => {
+        const { region, teamName } = this.state;
+        let created = await guildApi.createMyGuild(region, teamName);
+        
+        if (created) {
+            Alert.alert("팀 생성 완료")
+        } else {
+            Alert.alert("팀 생성 실패")
+        }
+    };
+
     render() {
-        const { loading, error, teamNameTerm, locationNameTerm } = this.state;
+        const { loading, error, teamNameTerm, locationNameTerm, created } = this.state;
 
         return (
             <TeamCreatePresenter
@@ -57,6 +69,8 @@ export default class extends React.Component {
                 handleLocationNameUpdate={this.handleLocationNameUpdate}
                 onClickSearchButton={this.onClickSearchButton}
                 extractRegionData={this.extractRegionData}
+                created={created}
+                _CreateButtonOnclick={this.onClickCreateButton}
             />
         );
     }

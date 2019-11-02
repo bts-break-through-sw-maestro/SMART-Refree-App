@@ -65,7 +65,15 @@ const SettingsButton = styled.TouchableOpacity`
     padding-right: 20px;
 `;
 
-const TeamPresenter = ({ loading, hasTeam, isMaster, navigation, error }) =>
+const TeamPresenter = ({
+    loading,
+    hasTeam,
+    isMaster,
+    navigation,
+    error,
+    memberList,
+    guildInfo
+}) =>
     loading ? (
         <Loader />
     ) : (
@@ -121,7 +129,9 @@ TeamPresenter.propTypes = {
     loading: PropTypes.bool.isRequired,
     hasTeam: PropTypes.bool.isRequired,
     isMaster: PropTypes.bool.isRequired,
-    error: PropTypes.string
+    error: PropTypes.string,
+    memberList: PropTypes.object,
+    guildInfo: PropTypes.object
 };
 
 export default withNavigation(TeamPresenter);

@@ -1,13 +1,18 @@
 import React from "react";
 import LoginPresenter from "./LoginPresenter";
+import { connect } from "react-redux";
+import * as actions from "../redux/actions/authActions";
 
 export default class extends React.Component {
-    state = {
-        loading: false,
-        usernameTerm: "",
-        passwordTerm: "",
-        error: null
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false,
+            usernameTerm: "",
+            passwordTerm: "",
+            error: null
+        };
+    }
 
     handleUsernameUpdate = text => {
         this.setState({ usernameTerm: text });

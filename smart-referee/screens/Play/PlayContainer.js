@@ -19,8 +19,6 @@ export default class extends React.Component {
         };
 
         this.cameraRef = React.createRef();
-        this.surfaceRef = React.createRef();
-        this.glViewRef = React.createRef();
     }
 
     componentDidMount = async () => {
@@ -157,8 +155,6 @@ export default class extends React.Component {
                 isRecord={isRecord}
                 _StartPauseButtonClicked={this._StartPauseButtonClicked}
                 cameraRef={this.cameraRef}
-                surfaceRef={this.surfaceRef}
-                glViewRef={this.glViewRef}
             />
         );
     }
