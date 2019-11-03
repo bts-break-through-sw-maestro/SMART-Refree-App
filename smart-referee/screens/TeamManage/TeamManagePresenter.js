@@ -29,7 +29,16 @@ const TeamManageListContainer = styled.ScrollView`
     width: 100%;
 `;
 
-const TeamManagePresenter = ({ loading }) =>
+const NoScrollView = styled.View`
+    flex: 9;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`;
+
+const NoTeamMemberText = styled.Text``;
+
+const TeamManagePresenter = ({ loading, memberList, error }) =>
     loading ? (
         <Loader />
     ) : (
@@ -37,9 +46,15 @@ const TeamManagePresenter = ({ loading }) =>
             <TeamManageSummary>
                 <TeamManageText>가입된 팀원</TeamManageText>
             </TeamManageSummary>
-            <TeamManageListContainer>
-                <TeamMemberList />
-            </TeamManageListContainer>
+            {memberList ? (
+                <TeamManageListContainer>
+                    <TeamMemberList memberList={memberList} />
+                </TeamManageListContainer>
+            ) : (
+                <NoScrollView>
+                    <NoTeamMemberText>가입된 팀원이 없습니다.</NoTeamMemberText>
+                </NoScrollView>
+            )}
             <TeamManageSummary>
                 <TeamManageText>가입 신청</TeamManageText>
             </TeamManageSummary>
@@ -50,7 +65,9 @@ const TeamManagePresenter = ({ loading }) =>
     );
 
 TeamManagePresenter.propTypes = {
-    loading: PropTypes.bool.isRequired
+    loading: PropTypes.bool.isRequired,
+    memberList: PropTypes.array,
+    error: PropTypes.string
 };
 
 export default TeamManagePresenter;

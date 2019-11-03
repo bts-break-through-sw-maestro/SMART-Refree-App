@@ -6,6 +6,7 @@ import { Camera } from "expo-camera";
 import { AntDesign } from "@expo/vector-icons";
 import { withNavigation } from "react-navigation";
 import { BG_COLOR } from "../../constants/Colors";
+import { Platform } from "react-native";
 
 const Container = styled.View`
     flex: 1;
@@ -32,7 +33,11 @@ const BackButtonContainer = styled.View`
     align-items: flex-end;
 `;
 
-const BackButton = styled.TouchableOpacity`
+const BackButtonAndroid = styled.TouchableWithoutFeedback`
+    margin-right: 20px;
+`;
+
+const BackButtonIos = styled.TouchableOpacity`
     margin-right: 20px;
 `;
 
@@ -46,7 +51,11 @@ const RecordButtonContainer = styled.View`
     flex-direction: row;
 `;
 
-const RecordButton = styled.TouchableOpacity`
+const RecordButtonAndroid = styled.TouchableWithoutFeedback`
+    transform: rotate(90deg);
+`;
+
+const RecordButtonIos = styled.TouchableOpacity`
     transform: rotate(90deg);
 `;
 
@@ -78,23 +87,53 @@ const PlayPresenter = ({
             </CameraContainer>
 
             <BackButtonContainer>
-                <BackButton onPress={() => navigation.navigate("Menu")}>
-                    <AntDesign name="arrowup" size={50} color="white" />
-                </BackButton>
+                {Platform.OS === "ios" ? (
+                    <BackButtonIos onPress={() => navigation.navigate("Menu")}>
+                        <AntDesign name="arrowup" size={50} color="white" />
+                    </BackButtonIos>
+                ) : (
+                    <BackButtonAndroid
+                        onPress={() => navigation.navigate("Menu")}
+                    >
+                        <AntDesign name="arrowup" size={50} color="white" />
+                    </BackButtonAndroid>
+                )}
             </BackButtonContainer>
 
             <RecordButtonContainer>
-                <RecordButton onPress={_StartPauseButtonClicked}>
-                    {isRecord ? (
-                        <AntDesign
-                            name="pausecircleo"
-                            size={50}
-                            color="white"
-                        />
-                    ) : (
-                        <AntDesign name="playcircleo" size={50} color="white" />
-                    )}
-                </RecordButton>
+                {Platform.OS === "ios" ? (
+                    <RecordButtonIos onPress={_StartPauseButtonClicked}>
+                        {isRecord ? (
+                            <AntDesign
+                                name="pausecircleo"
+                                size={50}
+                                color="white"
+                            />
+                        ) : (
+                            <AntDesign
+                                name="playcircleo"
+                                size={50}
+                                color="white"
+                            />
+                        )}
+                    </RecordButtonIos>
+                ) : (
+                    <RecordButtonAndroid onPress={_StartPauseButtonClicked}>
+                        {isRecord ? (
+                            <AntDesign
+                                name="pausecircleo"
+                                size={50}
+                                color="white"
+                            />
+                        ) : (
+                            <AntDesign
+                                name="playcircleo"
+                                size={50}
+                                color="white"
+                            />
+                        )}
+                    </RecordButtonAndroid>
+                )}
             </RecordButtonContainer>
         </Container>
     );

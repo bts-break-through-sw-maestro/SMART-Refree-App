@@ -13,7 +13,7 @@ export default class extends React.Component {
         try {
             let gameList = [];
             this.setState({ loading: true });
-            ({ data: gameList } = await gameApi.getMyGuildGameMatchList(1));
+            ({ data: gameList } = await gameApi.getMyGuildGameMatchList(2));
             this.setState({ gameList });
         } catch (error) {
             console.log(error);

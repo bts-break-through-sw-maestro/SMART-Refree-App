@@ -32,7 +32,7 @@ export default class extends React.Component {
     };
 
     componentWillUnmount = () => {
-        cancelAnimationFrame(this.takePhotoRecursion);
+        clearTimeout(this.takePhotoRecursion);
     };
 
     _StartPauseButtonClicked = () => {
@@ -84,7 +84,7 @@ export default class extends React.Component {
                         format: "jpg",
                         width: 416,
                         height: 416,
-                        quality: 1
+                        quality: 0.1
                     }
                 );
                 let image = null;
@@ -107,36 +107,20 @@ export default class extends React.Component {
 
                 let formData = new FormData();
 
+                let date = Date.now();
+
                 formData.append(image, {
                     uri: image,
                     type: "image/jpg",
-                    name: "image.jpg"
+                    name: `image-${date}.jpg`
                 });
 
                 const data = await imageUploadApi.uploadImage(formData);
                 console.log(data);
-                // let { uri } = await this.cameraRef.current.takePictureAsync({
-                //     quality: 0.1
-                // });
-                // let resizedImage = await ImageManipulator.manipulateAsync(
-                //     uri,
-                //     [{ resize: { width: 416, height: 416 } }, { rotate: 270 }],
-                //     { format: ImageManipulator.SaveFormat.JPEG }
-                // );
-                // if (resizedImage) {
-                //     this._SavePhoto(resizedImage.uri);
-                //     let formData = new FormData();
-                //     formData.append(resizedImage.uri, {
-                //         uri: resizedImage.uri,
-                //         type: "image/jpg",
-                //         name: "image.jpg"
-                //     });
-                //     const data = await imageUploadApi.uploadImage(formData);
-                //     console.log(data);
-                // }
+
                 this.takePhotoRecursion = setTimeout(
                     () => this._TakePhoto(),
-                    1000
+                    30
                 );
             }
         } catch (error) {
@@ -216,3 +200,23 @@ export default class extends React.Component {
 //     this.setState({ isRecord: false });
 //     this.cameraRef.current.stopRecording();
 // };
+
+// let { uri } = await this.cameraRef.current.takePictureAsync({
+//     quality: 0.1
+// });
+// let resizedImage = await ImageManipulator.manipulateAsync(
+//     uri,
+//     [{ resize: { width: 416, height: 416 } }, { rotate: 270 }],
+//     { format: ImageManipulator.SaveFormat.JPEG }
+// );
+// if (resizedImage) {
+//     this._SavePhoto(resizedImage.uri);
+//     let formData = new FormData();
+//     formData.append(resizedImage.uri, {
+//         uri: resizedImage.uri,
+//         type: "image/jpg",
+//         name: "image.jpg"
+//     });
+//     const data = await imageUploadApi.uploadImage(formData);
+//     console.log(data);
+// }
