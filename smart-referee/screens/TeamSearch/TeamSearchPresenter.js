@@ -104,14 +104,14 @@ const TeamInfoContainer = styled.View`
 `;
 
 const TeamNameText = styled.Text`
-    font-size: 24px;
-    flex: 2;
+    font-size: 16px;
+    flex: 5;
     text-align: center;
 `;
 
 const DetailContainer = styled.View`
     flex-direction: column;
-    flex: 2;
+    flex: 3;
 `;
 
 const TeamRecordText = styled.Text``;
@@ -119,7 +119,7 @@ const TeamRecordText = styled.Text``;
 const TeamMemberCountText = styled.Text``;
 
 const TeamJoinButtonContainer = styled.View`
-    flex: 1;
+    flex: 2;
 `;
 
 const TeamJoinButton = styled.TouchableOpacity`
@@ -136,19 +136,16 @@ const TeamJoinButtonText = styled.Text`
     text-align: center;
 `;
 
-var dummy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
 const TeamSearchPresenter = ({
     loading,
     searchLoading,
     teamNameTerm,
-    locationNameTerm,
     region,
     handleTeamNameUpdate,
-    handleLocationNameUpdate,
     onClickSearchButton,
     onClickJoinButton,
     extractRegionData,
+    teamList,
     error
 }) =>
     loading ? (
@@ -169,20 +166,6 @@ const TeamSearchPresenter = ({
                     </Picker>
                 </PickerContainer>
             </SearchContainer>
-            {/* <SearchContainer>
-                <TextContainer>
-                    <PickerText>시 군 구</PickerText>
-                </TextContainer>
-                <PickerContainer>
-                    <TeamNameInput
-                        placeholder="시 군 구 정보를 입력하세요."
-                        value={locationNameTerm}
-                        onChangeText={handleLocationNameUpdate}
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                    />
-                </PickerContainer>
-            </SearchContainer> */}
             <SearchContainer>
                 <TextContainer>
                     <PickerText>팀이름</PickerText>
@@ -212,32 +195,43 @@ const TeamSearchPresenter = ({
                     <Loader />
                 ) : (
                     <ResultScrollView>
-                        <CenterViewContainer>
-                            {dummy.map(idx => (
-                                <TeamInfoContainer key={idx}>
-                                    <TeamNameText>팀이름{idx}</TeamNameText>
-                                    <DetailContainer>
-                                        <TeamMemberCountText>
-                                            총 인원 : 30명
-                                        </TeamMemberCountText>
-                                        <TeamRecordText>
-                                            0승 0패 0무
-                                        </TeamRecordText>
-                                    </DetailContainer>
-                                    <TeamJoinButtonContainer>
-                                        <TeamJoinButton
-                                            onPress={() =>
-                                                onClickJoinButton(idx)
-                                            }
-                                        >
-                                            <TeamJoinButtonText>
-                                                가입
-                                            </TeamJoinButtonText>
-                                        </TeamJoinButton>
-                                    </TeamJoinButtonContainer>
-                                </TeamInfoContainer>
-                            ))}
-                        </CenterViewContainer>
+                        {error ? (
+                            error
+                        ) : (
+                            <CenterViewContainer>
+                                {teamList.length !== 0
+                                    ? teamList.map(team => (
+                                          <TeamInfoContainer key={team.id}>
+                                              <TeamNameText>
+                                                  {team.guildName}
+                                              </TeamNameText>
+                                              <DetailContainer>
+                                                  <TeamMemberCountText>
+                                                      총 인원 : 30명
+                                                  </TeamMemberCountText>
+                                                  <TeamRecordText>
+                                                      {team.wins}승 {team.loses}
+                                                      패 {team.draws}무
+                                                  </TeamRecordText>
+                                              </DetailContainer>
+                                              <TeamJoinButtonContainer>
+                                                  <TeamJoinButton
+                                                      onPress={() =>
+                                                          onClickJoinButton(
+                                                              team.id
+                                                          )
+                                                      }
+                                                  >
+                                                      <TeamJoinButtonText>
+                                                          가입
+                                                      </TeamJoinButtonText>
+                                                  </TeamJoinButton>
+                                              </TeamJoinButtonContainer>
+                                          </TeamInfoContainer>
+                                      ))
+                                    : null}
+                            </CenterViewContainer>
+                        )}
                     </ResultScrollView>
                 )}
             </ResultContainer>
@@ -248,13 +242,12 @@ TeamSearchPresenter.propTypes = {
     loading: PropTypes.bool.isRequired,
     searchLoading: PropTypes.bool.isRequired,
     teamNameTerm: PropTypes.string.isRequired,
-    locationNameTerm: PropTypes.string.isRequired,
     region: PropTypes.string,
     handleTeamNameUpdate: PropTypes.func.isRequired,
-    handleLocationNameUpdate: PropTypes.func.isRequired,
     onClickSearchButton: PropTypes.func.isRequired,
     onClickJoinButton: PropTypes.func.isRequired,
     extractRegionData: PropTypes.func.isRequired,
+    teamList: PropTypes.array,
     error: PropTypes.string
 };
 

@@ -9,7 +9,7 @@ export default class extends React.Component {
         teamNameTerm: "",
         locationNameTerm: "",
         region: "",
-        error: null,
+        error: null
     };
 
     handleTeamNameUpdate = text => {
@@ -45,19 +45,25 @@ export default class extends React.Component {
         }
     }
 
-    onClickCreateButton = () => {
+    onClickCreateButton = async () => {
         const { region, teamName } = this.state;
         let created = await guildApi.createMyGuild(region, teamName);
-        
+
         if (created) {
-            Alert.alert("팀 생성 완료")
+            Alert.alert("팀 생성 완료");
         } else {
-            Alert.alert("팀 생성 실패")
+            Alert.alert("팀 생성 실패");
         }
     };
 
     render() {
-        const { loading, error, teamNameTerm, locationNameTerm, created } = this.state;
+        const {
+            loading,
+            error,
+            teamNameTerm,
+            locationNameTerm,
+            created
+        } = this.state;
 
         return (
             <TeamCreatePresenter

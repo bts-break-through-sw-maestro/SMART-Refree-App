@@ -115,7 +115,13 @@ export const guildApi = {
     /* Method      : GET
      * Parameter   : region [지역]
      * Description : 팀 지역 검색 API */
-    getGuildListByRegion: region => api.get(`guild/search/region${region}`)
+    getGuildListByRegion: region => api.get(`guild/search/region/${region}`),
+
+    /* Method      : GET
+     * Parameter   : guildName [팀명[, region [지역]
+     * Description : 팀명, 지역 검색 API */
+    getGuildByRegionGuildName: (guildName, region) =>
+        api.get(`guild/search?name=${guildName}&region=${region}`)
 };
 
 export const imageUploadApi = {

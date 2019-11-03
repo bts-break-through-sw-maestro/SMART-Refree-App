@@ -8,10 +8,9 @@ export default class extends React.Component {
         loading: false,
         searchLoading: false,
         teamNameTerm: "",
-        locationNameTerm: "",
         region: "",
         error: null,
-        teamList: null
+        teamList: []
     };
 
     handleTeamNameUpdate = text => {
@@ -19,29 +18,38 @@ export default class extends React.Component {
         console.log("Team Name :", text);
     };
 
-    handleLocationNameUpdate = text => {
-        this.setState({ locationNameTerm: text });
-        console.log("Location Name :", text);
-    };
-
-    onClickSearchButton = () => {
+    onClickSearchButton = async () => {
         try {
-            const {
-                region,
-                teamNameTerm: teamName,
-                locationNameTerm: location
-            } = this.state;
+            const { region, teamNameTerm: teamName } = this.state;
+            let teamList = [];
 
             this.setState({ searchLoading: true });
-            console.log("Searching...", region, teamName, location);
+            console.log("Searching...", region, teamName);
 
-            let teamList = await guildApi.getGuildListByGuildName(teamName);
-            teamList = await teamList.assign(guildApi.getGuildListByRegion(region));
+            if (teamName === "") {
+                ({ data: teamList } = await guildApi.getGuildListByRegion(
+                    region
+                ));
+                console.log(teamList);
+            } else if (region === "") {
+                ({ data: teamList } = await guildApi.getGuildListByGuildName(
+                    teamName
+                ));
+                console.log(teamList);
+            } else {
+                ({ data: teamList } = await guildApi.getGuildByRegionGuildName(
+                    teamName,
+                    region
+                ));
+            }
 
-            console.log(teamList)
+            if (teamList === "") {
+                teamList = [];
+            }
 
             this.setState({ teamList });
         } catch (e) {
+            console.log(e);
             this.setState({ error: e });
         } finally {
             this.setState({ searchLoading: false });
@@ -49,8 +57,9 @@ export default class extends React.Component {
         }
     };
 
-    onClickJoinButton = key => {
-        await guildApi.reportApplicationForm(key);
+    onClickJoinButton = async key => {
+        let check = await guildApi.reportApplicationForm(key);
+        console.log(check);
         Alert.alert("", `${key} 가입 신청 완료`);
     };
 
@@ -77,7 +86,6 @@ export default class extends React.Component {
             loading,
             error,
             teamNameTerm,
-            locationNameTerm,
             searchLoading,
             region,
             teamList
@@ -89,9 +97,7 @@ export default class extends React.Component {
                 searchLoading={searchLoading}
                 error={error}
                 teamNameTerm={teamNameTerm}
-                locationNameTerm={locationNameTerm}
                 handleTeamNameUpdate={this.handleTeamNameUpdate}
-                handleLocationNameUpdate={this.handleLocationNameUpdate}
                 onClickSearchButton={this.onClickSearchButton}
                 onClickJoinButton={this.onClickJoinButton}
                 region={region}

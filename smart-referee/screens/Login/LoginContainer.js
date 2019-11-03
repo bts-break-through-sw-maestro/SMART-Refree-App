@@ -1,7 +1,6 @@
 import React from "react";
 import LoginPresenter from "./LoginPresenter";
 import { connect } from "react-redux";
-import * as actions from "../redux/actions/authActions";
 
 export default class extends React.Component {
     constructor(props) {
@@ -33,10 +32,10 @@ export default class extends React.Component {
                 if (usernameTerm === "123" && passwordTerm === "123") {
                     token = "Get token";
                 } else {
-                    alert("Invaild User Information");
+                    alert("Invalid User Information");
                 }
             } catch {
-                error = "Invaild Username or Password";
+                error = "Invalid Username or Password";
             } finally {
                 this.setState({
                     loading: false,
