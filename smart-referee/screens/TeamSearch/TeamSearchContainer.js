@@ -10,7 +10,7 @@ export default class extends React.Component {
         teamNameTerm: "",
         region: "",
         error: null,
-        teamList: []
+        teamList: null
     };
 
     handleTeamNameUpdate = text => {
@@ -22,6 +22,10 @@ export default class extends React.Component {
         try {
             const { region, teamNameTerm: teamName } = this.state;
             let teamList = [];
+
+            if (teamName === "." || teamName === "..") {
+                throw Error("잘못된 팀명으로 검색되었습니다.");
+            }
 
             this.setState({ searchLoading: true });
             console.log("Searching...", region, teamName);
@@ -43,6 +47,10 @@ export default class extends React.Component {
                 ));
             }
 
+            if (typeof teamList == "object") {
+                teamList = [teamList];
+            }
+
             if (teamList === "") {
                 teamList = [];
             }
@@ -50,7 +58,7 @@ export default class extends React.Component {
             this.setState({ teamList });
         } catch (e) {
             console.log(e);
-            this.setState({ error: e });
+            this.setState({ error: "팀 검색에 실패했습니다." });
         } finally {
             this.setState({ searchLoading: false });
             console.log("Searching Finish...");

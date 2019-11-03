@@ -136,6 +136,11 @@ const TeamJoinButtonText = styled.Text`
     text-align: center;
 `;
 
+const Text = styled.Text`
+    font-size: 20px;
+    padding-top: 20px;
+`;
+
 const TeamSearchPresenter = ({
     loading,
     searchLoading,
@@ -196,40 +201,51 @@ const TeamSearchPresenter = ({
                 ) : (
                     <ResultScrollView>
                         {error ? (
-                            error
+                            <CenterViewContainer>
+                                <Text>{error}</Text>
+                            </CenterViewContainer>
                         ) : (
                             <CenterViewContainer>
-                                {teamList.length !== 0
-                                    ? teamList.map(team => (
-                                          <TeamInfoContainer key={team.id}>
-                                              <TeamNameText>
-                                                  {team.guildName}
-                                              </TeamNameText>
-                                              <DetailContainer>
-                                                  <TeamMemberCountText>
-                                                      총 인원 : 30명
-                                                  </TeamMemberCountText>
-                                                  <TeamRecordText>
-                                                      {team.wins}승 {team.loses}
-                                                      패 {team.draws}무
-                                                  </TeamRecordText>
-                                              </DetailContainer>
-                                              <TeamJoinButtonContainer>
-                                                  <TeamJoinButton
-                                                      onPress={() =>
-                                                          onClickJoinButton(
-                                                              team.id
-                                                          )
-                                                      }
-                                                  >
-                                                      <TeamJoinButtonText>
-                                                          가입
-                                                      </TeamJoinButtonText>
-                                                  </TeamJoinButton>
-                                              </TeamJoinButtonContainer>
-                                          </TeamInfoContainer>
-                                      ))
-                                    : null}
+                                {teamList ? (
+                                    teamList.length !== 0 ? (
+                                        teamList.map(team => (
+                                            <TeamInfoContainer key={team.id}>
+                                                <TeamNameText>
+                                                    {team.guildName}
+                                                </TeamNameText>
+                                                <DetailContainer>
+                                                    <TeamMemberCountText>
+                                                        총 인원 : 30명
+                                                    </TeamMemberCountText>
+                                                    <TeamRecordText>
+                                                        {team.wins}승{" "}
+                                                        {team.loses}패{" "}
+                                                        {team.draws}무
+                                                    </TeamRecordText>
+                                                </DetailContainer>
+                                                <TeamJoinButtonContainer>
+                                                    <TeamJoinButton
+                                                        onPress={() =>
+                                                            onClickJoinButton(
+                                                                team.id
+                                                            )
+                                                        }
+                                                    >
+                                                        <TeamJoinButtonText>
+                                                            가입
+                                                        </TeamJoinButtonText>
+                                                    </TeamJoinButton>
+                                                </TeamJoinButtonContainer>
+                                            </TeamInfoContainer>
+                                        ))
+                                    ) : (
+                                        <Text>
+                                            검색 결과가 존재하지 않습니다.
+                                        </Text>
+                                    )
+                                ) : (
+                                    <Text>팀을 검색하세요.</Text>
+                                )}
                             </CenterViewContainer>
                         )}
                     </ResultScrollView>
