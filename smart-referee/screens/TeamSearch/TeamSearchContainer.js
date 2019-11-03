@@ -47,13 +47,7 @@ export default class extends React.Component {
                 ));
             }
 
-            if (typeof teamList == "object") {
-                teamList = [teamList];
-            }
-
-            if (teamList === "") {
-                teamList = [];
-            }
+            console.log(teamList);
 
             this.setState({ teamList });
         } catch (e) {
@@ -65,10 +59,9 @@ export default class extends React.Component {
         }
     };
 
-    onClickJoinButton = async key => {
-        let check = await guildApi.reportApplicationForm(key);
-        console.log(check);
-        Alert.alert("", `${key} 가입 신청 완료`);
+    onClickJoinButton = async (key, teamName) => {
+        // let check = await guildApi.reportApplicationForm(key);
+        Alert.alert("", `${teamName} 가입 신청 완료`);
     };
 
     extractRegionData = region => {

@@ -10,16 +10,16 @@ const CenterViewContainer = styled.View`
     margin-bottom: 10px;
 `;
 
-var dummy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-const TeamMemberList = () => (
+const TeamMemberList = ({ memberList }) => (
     <CenterViewContainer>
-        {dummy.map(idx => (
-            <TeamMember idx={idx} key={idx} />
+        {memberList.map(member => (
+            <TeamMember key={member.id} member={member} />
         ))}
     </CenterViewContainer>
 );
 
-TeamMemberList.propsType = {};
+TeamMemberList.propsType = {
+    memberList: Props.array
+};
 
 export default TeamMemberList;

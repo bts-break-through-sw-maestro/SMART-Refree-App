@@ -227,7 +227,8 @@ const TeamSearchPresenter = ({
                                                     <TeamJoinButton
                                                         onPress={() =>
                                                             onClickJoinButton(
-                                                                team.id
+                                                                team.id,
+                                                                team.guildName
                                                             )
                                                         }
                                                     >

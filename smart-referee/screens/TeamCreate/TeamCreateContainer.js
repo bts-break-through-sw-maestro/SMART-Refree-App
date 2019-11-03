@@ -7,7 +7,6 @@ export default class extends React.Component {
     state = {
         loading: false,
         teamNameTerm: "",
-        locationNameTerm: "",
         region: "",
         error: null
     };
@@ -46,37 +45,30 @@ export default class extends React.Component {
     }
 
     onClickCreateButton = async () => {
-        const { region, teamName } = this.state;
-        let created = await guildApi.createMyGuild(region, teamName);
+        const { region, teamNameTerm: teamName } = this.state;
+        // let created = await guildApi.createMyGuild(region, teamName);
 
-        if (created) {
-            Alert.alert("팀 생성 완료");
+        // console.log(created);
+
+        if (region && teamName) {
+            Alert.alert(`지역 : ${region} 팀명 : ${teamName}팀 생성 완료`);
         } else {
             Alert.alert("팀 생성 실패");
         }
     };
 
     render() {
-        const {
-            loading,
-            error,
-            teamNameTerm,
-            locationNameTerm,
-            created
-        } = this.state;
+        const { loading, error, teamNameTerm, created } = this.state;
 
         return (
             <TeamCreatePresenter
                 loading={loading}
                 error={error}
                 teamNameTerm={teamNameTerm}
-                locationNameTerm={locationNameTerm}
                 handleTeamNameUpdate={this.handleTeamNameUpdate}
-                handleLocationNameUpdate={this.handleLocationNameUpdate}
-                onClickSearchButton={this.onClickSearchButton}
                 extractRegionData={this.extractRegionData}
                 created={created}
-                _CreateButtonOnclick={this.onClickCreateButton}
+                onClickCreateButton={this.onClickCreateButton}
             />
         );
     }

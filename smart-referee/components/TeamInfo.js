@@ -35,20 +35,22 @@ const TeamRecord = styled.Text`
 
 const TeamLogoText = styled.Text``;
 
-const TeamInfo = () => (
+const TeamInfo = ({ guildInfo }) => (
     <TeamContainer>
         <LogoImgContainer>
             <TeamLogoText>Team Logo</TeamLogoText>
         </LogoImgContainer>
         <TeamInfoContainer>
-            <TeamName>팀 이름</TeamName>
-            <TeamRecord>0승 0패 0무</TeamRecord>
+            <TeamName>{guildInfo.name}</TeamName>
+            <TeamRecord>
+                {guildInfo.wins}승 {guildInfo.loses}패 {guildInfo.draws}무
+            </TeamRecord>
         </TeamInfoContainer>
     </TeamContainer>
 );
 
 TeamInfo.propsType = {
-    team: Props.object
+    guildInfo: Props.object
 };
 
 export default TeamInfo;

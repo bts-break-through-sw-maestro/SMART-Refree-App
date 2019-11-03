@@ -82,12 +82,9 @@ const SearchButtonText = styled.Text`
 const TeamCreatePresenter = ({
     loading,
     teamNameTerm,
-    locationNameTerm,
-    handleLocationNameUpdate,
     handleTeamNameUpdate,
     extractRegionData,
     onClickCreateButton,
-    created,
     error
 }) =>
     loading ? (
@@ -133,10 +130,9 @@ const TeamCreatePresenter = ({
 TeamCreatePresenter.propTypes = {
     loading: PropTypes.bool.isRequired,
     teamNameTerm: PropTypes.string.isRequired,
-    locationNameTerm: PropTypes.string.isRequired,
     handleTeamNameUpdate: PropTypes.func.isRequired,
-    handleLocationNameUpdate: PropTypes.func.isRequired,
     extractRegionData: PropTypes.func.isRequired,
+    onClickCreateButton: PropTypes.func.isRequired,
     error: PropTypes.string
 };
 

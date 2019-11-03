@@ -40,34 +40,35 @@ const MemberRecordCategoryText = styled.Text`
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px;
+    margin-right: 3px;
 `;
 
 const MemberRecordValueText = styled.Text`
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px;
-    margin-right: 5px;
+    margin-right: 3px;
 `;
 
-const TeamMember = ({ idx, navigation }) => (
+const TeamMember = ({ member, navigation }) => (
     <MemberContainer onPress={() => navigation.navigate("TeamDetail")}>
         <MemberProfileImgContainer></MemberProfileImgContainer>
         <MemberProfileContentContainer>
-            <MemberNameContainer>김타자{idx}</MemberNameContainer>
+            <MemberNameContainer>{member.name}</MemberNameContainer>
             <MemberRecordContainer>
-                <MemberRecordCategoryText>타수</MemberRecordCategoryText>
-                <MemberRecordValueText>300</MemberRecordValueText>
-                <MemberRecordCategoryText>안타</MemberRecordCategoryText>
+                <MemberRecordCategoryText>포지션</MemberRecordCategoryText>
+                <MemberRecordValueText>{member.position}</MemberRecordValueText>
+                {/* <MemberRecordCategoryText>안타</MemberRecordCategoryText>
                 <MemberRecordValueText>100</MemberRecordValueText>
                 <MemberRecordCategoryText>홈런</MemberRecordCategoryText>
-                <MemberRecordValueText>10</MemberRecordValueText>
+                <MemberRecordValueText>10</MemberRecordValueText> */}
             </MemberRecordContainer>
         </MemberProfileContentContainer>
     </MemberContainer>
 );
 
 TeamMember.propTypes = {
-    idx: PropTypes.number.isRequired
+    member: PropTypes.object
 };
 
 export default withNavigation(TeamMember);

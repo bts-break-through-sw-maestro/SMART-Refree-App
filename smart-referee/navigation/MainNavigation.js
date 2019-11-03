@@ -109,7 +109,7 @@ const MainNavigation = createStackNavigator(
         }
     },
     {
-        initialRouteName: "TeamSearch",
+        initialRouteName: "Login",
         headerBackTitleVisible: false
     }
 );

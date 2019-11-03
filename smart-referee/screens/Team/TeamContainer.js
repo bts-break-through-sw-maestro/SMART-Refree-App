@@ -14,14 +14,15 @@ export default class extends React.Component {
 
     async componentDidMount() {
         try {
-            let memberList = await guildApi.memberList("팀 명", "지역");
-            let guildInfo = await guildApi.myGuildInfo(1);
+            this.setState({ loading: true });
+            const { data: guildInfo } = await guildApi.myGuildInfo(5959);
+            const { data: memberList } = await guildApi.myGuildMemberList(5959);
 
             console.log(memberList);
-            console.log(guildInfo);
 
             this.setState({ memberList, guildInfo });
-        } catch {
+        } catch (e) {
+            console.log(e);
             this.setState({
                 error: "Can't get Team information."
             });
@@ -41,6 +42,7 @@ export default class extends React.Component {
             memberList,
             guildInfo
         } = this.state;
+
         return (
             <TeamPresenter
                 loading={loading}

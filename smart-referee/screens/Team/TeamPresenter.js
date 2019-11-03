@@ -50,6 +50,7 @@ const TeamJoinButtonText = styled.Text`
 
 const TeamMemberContainer = styled.ScrollView`
     flex: 7;
+    width: 100%;
 `;
 
 const TopButtonContainer = styled.View`
@@ -95,9 +96,11 @@ const TeamPresenter = ({
                             </SettingsButton>
                         </TopButtonContainer>
                     ) : null}
-                    <TeamInfo />
-                    <TeamMemberContainer>
-                        <TeamMemberList />
+                    {guildInfo ? <TeamInfo guildInfo={guildInfo} /> : null}
+                    <TeamMemberContainer showsVerticalScrollIndicator={false}>
+                        {memberList ? (
+                            <TeamMemberList memberList={memberList} />
+                        ) : null}
                     </TeamMemberContainer>
                 </>
             ) : (
@@ -130,7 +133,7 @@ TeamPresenter.propTypes = {
     hasTeam: PropTypes.bool.isRequired,
     isMaster: PropTypes.bool.isRequired,
     error: PropTypes.string,
-    memberList: PropTypes.object,
+    memberList: PropTypes.array,
     guildInfo: PropTypes.object
 };
 
