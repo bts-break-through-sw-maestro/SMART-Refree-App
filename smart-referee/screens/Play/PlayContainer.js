@@ -100,6 +100,8 @@ export default class extends React.Component {
 
                 let image = null;
 
+                this._SavePhoto(captureResult);
+
                 console.log(check++);
 
                 // if (Platform.OS === "android") {

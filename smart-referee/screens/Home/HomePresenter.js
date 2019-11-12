@@ -77,47 +77,50 @@ const NoGameText = styled.Text`
     text-align: center;
 `;
 
-const HomePresenter = ({ loading, navigation, error, gameList }) =>
-    loading ? (
-        <Loader />
-    ) : (
-        <Container>
-            <MainPageLogoImageContainer>
-                <LogoImageContainer>
-                    <LogoImage>Img</LogoImage>
-                </LogoImageContainer>
-            </MainPageLogoImageContainer>
-            {gameList.length != 0 ? (
-                <GameResultContainer showsVerticalScrollIndicator={false}>
-                    <CenterViewContainer>
-                        {gameList.map((data, idx) => (
-                            <Game
-                                key={idx}
-                                awayScore={data.awayScore}
-                                homeScore={data.homeScore}
-                                awayGuildName={
-                                    data.guildByAwayGuildId.guildName
-                                }
-                                homeGuildName={
-                                    data.guildByHomeGuildId.guildName
-                                }
-                            />
-                        ))}
-                    </CenterViewContainer>
-                </GameResultContainer>
-            ) : (
-                <NoGameTextContainer>
-                    <NoGameText>경기 정보가 없습니다.</NoGameText>
-                </NoGameTextContainer>
-            )}
+const HomePresenter = ({ loading, navigation, error, gameList }) => (
+    <Container>
+        <MainPageLogoImageContainer>
+            <LogoImageContainer>
+                <LogoImage>Img</LogoImage>
+            </LogoImageContainer>
+        </MainPageLogoImageContainer>
+        {loading ? (
+            <Loader />
+        ) : (
+            <>
+                {gameList.length != 0 ? (
+                    <GameResultContainer showsVerticalScrollIndicator={false}>
+                        <CenterViewContainer>
+                            {gameList.map((data, idx) => (
+                                <Game
+                                    key={idx}
+                                    awayScore={data.awayScore}
+                                    homeScore={data.homeScore}
+                                    awayGuildName={
+                                        data.guildByAwayGuildId.guildName
+                                    }
+                                    homeGuildName={
+                                        data.guildByHomeGuildId.guildName
+                                    }
+                                />
+                            ))}
+                        </CenterViewContainer>
+                    </GameResultContainer>
+                ) : (
+                    <NoGameTextContainer>
+                        <NoGameText>경기 정보가 없습니다.</NoGameText>
+                    </NoGameTextContainer>
+                )}
+            </>
+        )}
 
-            <MenuButtonContainer>
-                <MenuButton onPress={() => navigation.navigate("Menu")}>
-                    <MenuButtonText>Menu</MenuButtonText>
-                </MenuButton>
-            </MenuButtonContainer>
-        </Container>
-    );
+        <MenuButtonContainer>
+            <MenuButton onPress={() => navigation.navigate("Menu")}>
+                <MenuButtonText>Menu</MenuButtonText>
+            </MenuButton>
+        </MenuButtonContainer>
+    </Container>
+);
 
 HomePresenter.propTypes = {
     loading: PropTypes.bool.isRequired,
