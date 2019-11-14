@@ -1,14 +1,15 @@
 import React from "react";
-import { TINT_COLOR, BG_COLOR } from "../constants/Colors";
 import styled from "styled-components";
 import Layout from "../constants/Layout";
 import PropTypes from "prop-types";
+import teamA from "../assets/images/teamA.png";
+import teamB from "../assets/images/teamB.png";
 
 const Container = styled.View`
     width: ${Layout.width - 60};
-    height: 80px;
+    height: 60px;
     border-radius: 5px;
-    border: 1px solid ${TINT_COLOR};
+    border: 1px solid #bababa;
     margin-bottom: 7px;
     flex: 1;
     flex-direction: row;
@@ -24,21 +25,34 @@ const TeamContainer = styled.View`
 
 const TeamInfoContainer = styled.View`
     width: 100%;
+    flex-direction: row;
+    justify-content: center;
+`;
+
+const MatchTeamInfoContainer = styled.View`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-horizontal: 7px;
+    width: 50%;
+`;
+
+const TeamLogoImage = styled.ImageBackground`
+    width: 50px;
+    height: 50px;
+    margin-left: ${props => (props.away ? "0px" : "15px")};
+    margin-right: ${props => (props.away ? "15px" : "0px")};
 `;
 
 const TeamInfoTeamName = styled.Text`
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     padding-bottom: 5px;
+    color: #bababa;
 `;
 
 const GameScore = styled.Text`
-    font-weight: 500;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 16px;
 `;
 
 const VsTextContainer = styled.View`
@@ -53,15 +67,23 @@ const VsText = styled.Text`
 `;
 
 const Game = ({ awayScore, awayGuildName, homeScore, homeGuildName }) => (
-    <Container>
+    <Container
+        style={{ backgroundColor: "#fff" }}
+        shadowOffset={{ height: 0.1 }}
+        shadowColor="black"
+        shadowOpacity={0.2}
+    >
         <TeamContainer>
             <TeamInfoContainer>
-                <TeamInfoTeamName>
-                    {awayGuildName.length > 10
-                        ? `${awayGuildName.substring(0, 9)}...`
-                        : awayGuildName}
-                </TeamInfoTeamName>
-                <GameScore>{awayScore}</GameScore>
+                <TeamLogoImage source={teamA} away={false} />
+                <MatchTeamInfoContainer>
+                    <TeamInfoTeamName>
+                        {awayGuildName.length > 5
+                            ? `${awayGuildName.substring(0, 5)}...`
+                            : awayGuildName}
+                    </TeamInfoTeamName>
+                    <GameScore>{awayScore}</GameScore>
+                </MatchTeamInfoContainer>
             </TeamInfoContainer>
         </TeamContainer>
         <VsTextContainer>
@@ -69,12 +91,15 @@ const Game = ({ awayScore, awayGuildName, homeScore, homeGuildName }) => (
         </VsTextContainer>
         <TeamContainer>
             <TeamInfoContainer>
-                <TeamInfoTeamName>
-                    {homeGuildName.length > 10
-                        ? `${homeGuildName.substring(0, 9)}...`
-                        : homeGuildName}
-                </TeamInfoTeamName>
-                <GameScore>{homeScore}</GameScore>
+                <MatchTeamInfoContainer>
+                    <TeamInfoTeamName>
+                        {homeGuildName.length > 5
+                            ? `${homeGuildName.substring(0, 5)}...`
+                            : homeGuildName}
+                    </TeamInfoTeamName>
+                    <GameScore>{homeScore}</GameScore>
+                </MatchTeamInfoContainer>
+                <TeamLogoImage source={teamB} away={true} />
             </TeamInfoContainer>
         </TeamContainer>
     </Container>

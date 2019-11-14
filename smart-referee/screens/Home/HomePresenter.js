@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
 import Game from "../../components/Game";
 import styled from "styled-components";
-import { BG_COLOR, BUTTON_COLOR, TINT_COLOR } from "../../constants/Colors";
+import { BG_COLOR, TINT_COLOR } from "../../constants/Colors";
 import { withNavigation } from "react-navigation";
 import Layout from "../../constants/Layout";
+import Graph from "../../assets/images/graph.png";
+import LoginButtonBox from "../../assets/images/btn_box.png";
 
 const Container = styled.View`
     flex: 1;
@@ -13,28 +15,30 @@ const Container = styled.View`
     background-color: ${BG_COLOR};
 `;
 
-const MainPageLogoImageContainer = styled.View`
-    flex: 3;
-    width: ${Layout.width - 60};
+const PlayerRecordContainer = styled.View`
+    flex: 4;
+    width: ${Layout.width - 40};
+    justify-content: center;
     align-items: center;
-    justify-content: center;
 `;
 
-const LogoImageContainer = styled.View`
-    width: 70%;
-    height: 60%;
-    justify-content: center;
-    border: 1px solid ${TINT_COLOR};
+const PlayerRecord = styled.Image`
+    width: 180px;
+    height: 220px;
 `;
 
-const LogoImage = styled.Text`
-    font-size: 20px;
+const GameResultTextContainer = styled.View`
+    width: 80%;
+    padding-vertical: 20px;
+`;
+
+const GameResultText = styled.Text`
+    font-size: 18px;
     font-weight: 600;
-    text-align: center;
 `;
 
 const GameResultContainer = styled.ScrollView`
-    flex: 5;
+    flex: 4;
 `;
 
 const CenterViewContainer = styled.View`
@@ -47,21 +51,23 @@ const MenuButtonContainer = styled.View`
     flex: 2;
     justify-content: center;
     align-items: center;
+    margin-top: -20px;
 `;
 
-const MenuButton = styled.TouchableOpacity`
-    background-color: ${BUTTON_COLOR};
-    width: ${Layout.width - 60};
-    height: 40px;
-    border-radius: 10px;
+const MenuButton = styled.TouchableOpacity``;
+
+const MenuButtonImage = styled.ImageBackground`
+    width: ${Layout.width - 20};
+    height: 70px;
     justify-content: center;
-    align-items: center;
+    border-radius: 30px;
 `;
 
 const MenuButtonText = styled.Text`
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
     color: ${BG_COLOR};
+    text-align: center;
 `;
 
 const NoGameTextContainer = styled.View`
@@ -79,11 +85,20 @@ const NoGameText = styled.Text`
 
 const HomePresenter = ({ loading, navigation, error, gameList }) => (
     <Container>
-        <MainPageLogoImageContainer>
-            <LogoImageContainer>
-                <LogoImage>Img</LogoImage>
-            </LogoImageContainer>
-        </MainPageLogoImageContainer>
+        <GameResultTextContainer>
+            <GameResultText>선수 기록</GameResultText>
+        </GameResultTextContainer>
+        <PlayerRecordContainer
+            style={{ backgroundColor: "#fff" }}
+            shadowOffset={{ height: 0.1 }}
+            shadowColor="black"
+            shadowOpacity={0.2}
+        >
+            <PlayerRecord source={Graph} resizeMode="cover" />
+        </PlayerRecordContainer>
+        <GameResultTextContainer>
+            <GameResultText>경기 결과</GameResultText>
+        </GameResultTextContainer>
         {loading ? (
             <Loader />
         ) : (
@@ -115,9 +130,11 @@ const HomePresenter = ({ loading, navigation, error, gameList }) => (
         )}
 
         <MenuButtonContainer>
-            <MenuButton onPress={() => navigation.navigate("Menu")}>
-                <MenuButtonText>Menu</MenuButtonText>
-            </MenuButton>
+            <MenuButtonImage source={LoginButtonBox} resizeMode="stretch">
+                <MenuButton onPress={() => navigation.navigate("Menu")}>
+                    <MenuButtonText>MENU</MenuButtonText>
+                </MenuButton>
+            </MenuButtonImage>
         </MenuButtonContainer>
     </Container>
 );

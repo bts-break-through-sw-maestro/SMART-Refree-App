@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Loader from "../../components/Loader";
 import LoginButtonBox from "../../assets/images/btn_box.png";
-import { BG_COLOR, TINT_COLOR } from "../../constants/Colors";
+import { BG_COLOR } from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 
 const Container = styled.View`

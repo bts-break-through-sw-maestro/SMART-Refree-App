@@ -1,6 +1,5 @@
 import React from "react";
 import ForgetPresenter from "./ForgetPresenter";
-import { Alert } from "react-native";
 import { accountApi } from "../../api";
 
 export default class extends React.Component {

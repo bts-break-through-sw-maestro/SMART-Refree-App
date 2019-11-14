@@ -40,7 +40,7 @@ const MainNavigation = createStackNavigator(
         Home: {
             screen: HomeScreen,
             navigationOptions: {
-                title: "Smart Referee",
+                title: "HOME",
                 headerRight: <AvatarModal />,
                 ...headerStyles
             }
@@ -109,7 +109,7 @@ const MainNavigation = createStackNavigator(
         }
     },
     {
-        initialRouteName: "Login",
+        initialRouteName: "Home",
         headerBackTitleVisible: false
     }
 );
