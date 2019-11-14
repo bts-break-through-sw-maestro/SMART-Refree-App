@@ -6,6 +6,7 @@ import { accountApi } from "../../api";
 export default class extends React.Component {
     state = {
         loading: false,
+        modalVisible: false,
         phoneNumberInputTerm: ""
     };
 
@@ -16,27 +17,31 @@ export default class extends React.Component {
 
     onClickForgetButton = async () => {
         const { phoneNumberInputTerm: phoneNumber } = this.state;
-        let result;
-        try {
-            ({ data: result } = await accountApi.findAccountId(phoneNumber));
-        } catch (error) {
-            result = null;
-        }
 
-        {
-            result
-                ? Alert.alert("", result)
-                : Alert.alert("", `${phoneNumber}로 가입된 정보가 없습니다.`);
-        }
+        // let result;
+
+        // try {
+        //     ({ data: result } = await accountApi.findAccountId(phoneNumber));
+        // } catch (error) {
+        //     result = null;
+        // }
+
+        this.setState({ modalVisible: true });
+    };
+
+    closeModal = () => {
+        this.setState({ modalVisible: false });
     };
 
     render() {
-        const { loading, phoneNumberInputTerm } = this.state;
+        const { loading, phoneNumberInputTerm, modalVisible } = this.state;
 
         return (
             <ForgetPresenter
                 loading={loading}
+                modalVisible={modalVisible}
                 phoneNumberInputTerm={phoneNumberInputTerm}
+                closeModal={this.closeModal}
                 handlePhoneNumberInputUpdate={this.handlePhoneNumberInputUpdate}
                 onClickForgetButton={this.onClickForgetButton}
             />

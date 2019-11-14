@@ -26,14 +26,14 @@ const MainNavigation = createStackNavigator(
         SignUp: {
             screen: SignUpScreen,
             navigationOptions: {
-                title: "Sign Up",
+                title: "회원가입",
                 ...headerStyles
             }
         },
         Forget: {
             screen: ForgetScreen,
             navigationOptions: {
-                title: "Forget",
+                title: "비밀번호 찾기",
                 ...headerStyles
             }
         },

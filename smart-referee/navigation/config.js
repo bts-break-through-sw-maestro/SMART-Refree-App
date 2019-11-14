@@ -1,4 +1,4 @@
-import { HEADER_COLOR, BG_COLOR } from "../constants/Colors";
+import { HEADER_COLOR, TINT_COLOR } from "../constants/Colors";
 
 export const headerStyles = {
     headerStyle: {
@@ -6,7 +6,8 @@ export const headerStyles = {
         height: 45
     },
     headerTitleStyle: {
-        color: BG_COLOR
+        color: TINT_COLOR,
+        fontWeight: "600"
     },
-    headerTintColor: BG_COLOR
+    headerTintColor: TINT_COLOR
 };
