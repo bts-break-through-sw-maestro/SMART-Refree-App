@@ -4,10 +4,7 @@ import { imageUploadApi } from "../../api";
 import PlayPresenter from "./PlayPresenter";
 import * as Permissions from "expo-permissions";
 import * as ImageManipulator from "expo-image-manipulator";
-import {
-    captureRef as takeSnapshotAsync,
-    captureScreen
-} from "react-native-view-shot";
+import { captureRef as takeSnapshotAsync } from "react-native-view-shot";
 import * as MediaLibrary from "expo-media-library";
 
 let check = 1;
@@ -83,55 +80,50 @@ export default class extends React.Component {
     _TakePhoto = async () => {
         try {
             if (this.cameraRef.current) {
-                // let captureResult = await takeSnapshotAsync(
-                //     this.cameraRef.current,
-                //     {
-                //         format: "jpg",
-                //         width: 416,
-                //         height: 416,
-                //         quality: 0.1
-                //     }
-                // );
-
-                let captureResult = await captureScreen({
-                    format: "jpg",
-                    quality: 0.1
-                });
+                let captureResult = await takeSnapshotAsync(
+                    this.cameraRef.current,
+                    {
+                        format: "jpg",
+                        width: 416,
+                        height: 416,
+                        quality: 0.1
+                    }
+                );
 
                 let image = null;
 
-                this._SavePhoto(captureResult);
+                // this._SavePhoto(captureResult);
 
                 console.log(check++);
 
-                // if (Platform.OS === "android") {
-                //     let resizedImage = await ImageManipulator.manipulateAsync(
-                //         captureResult,
-                //         [
-                //             { resize: { width: 416, height: 416 } },
-                //             { rotate: 270 }
-                //         ],
-                //         { format: ImageManipulator.SaveFormat.JPEG }
-                //     );
+                if (Platform.OS === "android") {
+                    let resizedImage = await ImageManipulator.manipulateAsync(
+                        captureResult,
+                        [
+                            { resize: { width: 416, height: 416 } },
+                            { rotate: 270 }
+                        ],
+                        { format: ImageManipulator.SaveFormat.JPEG }
+                    );
 
-                //     image = resizedImage.uri;
-                // } else if (Platform.OS === "ios") {
-                //     throw Error("iOS에서는 이용할 수 없습니다.");
-                //     image = captureResult;
-                // }
+                    image = resizedImage.uri;
+                } else if (Platform.OS === "ios") {
+                    throw Error("iOS에서는 이용할 수 없습니다.");
+                    image = captureResult;
+                }
 
-                // let formData = new FormData();
+                let formData = new FormData();
 
-                // let date = Date.now();
+                let date = Date.now();
 
-                // formData.append(image, {
-                //     uri: image,
-                //     type: "image/jpg",
-                //     name: `image-${date}.jpg`
-                // });
+                formData.append(image, {
+                    uri: image,
+                    type: "image/jpg",
+                    name: `image-${date}.jpg`
+                });
 
-                // const data = await imageUploadApi.uploadImage(formData);
-                // console.log(data);
+                const data = await imageUploadApi.uploadImage(formData);
+                console.log(data);
 
                 this.takePhotoRecursion = setTimeout(
                     () => this._TakePhoto(),

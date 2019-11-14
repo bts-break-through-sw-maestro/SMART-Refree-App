@@ -1,10 +1,11 @@
 import React from "react";
-import { Text } from "react-native";
-import { BUTTON_COLOR, BG_COLOR, BORDER_COLOR } from "../../constants/Colors";
+import { BG_COLOR } from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
 import styled from "styled-components";
+import LoginLogo from "../../assets/images/login_logo.png";
+import LoginButtonBox from "../../assets/images/btn_box.png";
 import { withNavigation } from "react-navigation";
 
 const Container = styled.View`
@@ -15,50 +16,61 @@ const Container = styled.View`
 `;
 
 const LogoImageContainer = styled.View`
-    width: ${Layout.width / 2};
-    height: ${Layout.height / 3.5};
+    flex: 2;
     justify-content: center;
     align-items: center;
-    border: 2px solid ${BORDER_COLOR};
-    margin-top: 20px;
+`;
+
+const LogoImage = styled.ImageBackground`
+    width: 150px;
+    height: 100px;
+    margin-top: 50px;
 `;
 
 const LoginInputContainer = styled.View`
-    width: ${Layout.width / 2};
-    height: ${Layout.height / 4};
+    flex: 2;
     justify-content: center;
     align-items: center;
 `;
 
 const InputContainer = styled.View`
     border-bottom-width: 2px;
-    border-bottom-color: ${BORDER_COLOR};
+    border-bottom-color: #bababa;
     margin-bottom: 5px;
+    padding-top: 30px;
+`;
+
+const InputLabelText = styled.Text`
+    padding-bottom: 5px;
+    color: #bababa;
 `;
 
 const Input = styled.TextInput`
-    width: ${Layout.width / 1.6};
+    width: ${Layout.width - 100};
     padding: 10px;
     text-align: left;
 `;
 
 const ButtonContainer = styled.View`
-    justify-content: center;
+    flex: 2;
     align-items: center;
     padding-bottom: 20px;
 `;
 
-const LoginButtonContainer = styled.TouchableOpacity`
-    background-color: ${BUTTON_COLOR};
-    margin-horizontal: 30px;
-    padding: 10px 70px;
-    border-radius: 10px;
+const LoginButtonContainer = styled.TouchableOpacity``;
+
+const LoginButtonImage = styled.ImageBackground`
+    width: ${Layout.width - 120};
+    height: 70px;
+    justify-content: center;
+    border-radius: 30px;
 `;
 
 const LoginButton = styled.Text`
     font-size: 20px;
     font-weight: 600;
     color: ${BG_COLOR};
+    text-align: center;
 `;
 
 const AccountButtonContainer = styled.View`
@@ -95,13 +107,14 @@ const LoginPresenter = ({
     ) : (
         <Container>
             <LogoImageContainer>
-                <Text>Logo</Text>
+                <LogoImage source={LoginLogo} resizeMode="contain" />
             </LogoImageContainer>
 
             <LoginInputContainer>
                 <InputContainer>
+                    <InputLabelText>USERNAME</InputLabelText>
                     <Input
-                        placeholder="Username or E-mail"
+                        placeholder=""
                         value={usernameTerm}
                         onChangeText={handleUsernameUpdate}
                         autoCorrect={false}
@@ -109,9 +122,10 @@ const LoginPresenter = ({
                     />
                 </InputContainer>
                 <InputContainer>
+                    <InputLabelText>PASSWORD</InputLabelText>
                     <Input
                         secureTextEntry={true}
-                        placeholder="Password"
+                        placeholder=""
                         value={passwordTerm}
                         onChangeText={handlePasswordUpdate}
                         onSubmitEditing={onSubmitEditing}
@@ -122,6 +136,23 @@ const LoginPresenter = ({
             </LoginInputContainer>
 
             <ButtonContainer>
+                <AccountButtonContainer>
+                    <AccountButton>
+                        <AccountButtonText
+                            onPress={() => navigation.navigate("SignUp")}
+                        >
+                            회원가입
+                        </AccountButtonText>
+                    </AccountButton>
+
+                    <Bar> | </Bar>
+
+                    <AccountButton
+                        onPress={() => navigation.navigate("Forget")}
+                    >
+                        <AccountButtonText>비밀번호 찾기</AccountButtonText>
+                    </AccountButton>
+                </AccountButtonContainer>
                 <LoginButtonContainer
                     onPress={() => {
                         console.log(
@@ -134,26 +165,13 @@ const LoginPresenter = ({
                         navigation.navigate("Home");
                     }}
                 >
-                    <LoginButton>Login</LoginButton>
-                </LoginButtonContainer>
-
-                <AccountButtonContainer>
-                    <AccountButton>
-                        <AccountButtonText
-                            onPress={() => navigation.navigate("SignUp")}
-                        >
-                            Sign Up
-                        </AccountButtonText>
-                    </AccountButton>
-
-                    <Bar> | </Bar>
-
-                    <AccountButton
-                        onPress={() => navigation.navigate("Forget")}
+                    <LoginButtonImage
+                        source={LoginButtonBox}
+                        resizeMode="stretch"
                     >
-                        <AccountButtonText>Forget</AccountButtonText>
-                    </AccountButton>
-                </AccountButtonContainer>
+                        <LoginButton>LOG IN</LoginButton>
+                    </LoginButtonImage>
+                </LoginButtonContainer>
             </ButtonContainer>
         </Container>
     );
