@@ -2,31 +2,35 @@ import React from "react";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
 import styled from "styled-components";
-import { BG_COLOR, TINT_COLOR, HEADER_COLOR } from "../../constants/Colors";
+import { BG_COLOR } from "../../constants/Colors";
 import { withNavigation } from "react-navigation";
+import PlayButtonImage from "../../assets/images/play.png";
+import PracticeButtonImage from "../../assets/images/practice.png";
+import TeamButtonImage from "../../assets/images/team.png";
+import Layout from "../../constants/Layout";
 
 const Container = styled.View`
     flex: 1;
-    background-color: ${BG_COLOR};
 `;
 
-const MenuContainer = styled.View`
+const MenuButtonContainer = styled.View`
     flex: 1;
-    border-bottom-width: 1px;
-    border-bottom-color: ${HEADER_COLOR};
+    align-items: center;
 `;
 
-const MenuButton = styled.TouchableOpacity`
-    width: 100%;
-    height: 100%;
-    align-items: center;
+const MenuButtonImage = styled.ImageBackground`
+    width: ${Layout.width - 40};
+    height: 200px;
     justify-content: center;
 `;
 
+const MenuButton = styled.TouchableOpacity``;
+
 const MenuButtonText = styled.Text`
-    font-size: 26px;
-    font-weight: 400;
-    color: ${TINT_COLOR};
+    font-size: 24px;
+    font-weight: 600;
+    color: ${BG_COLOR};
+    text-align: center;
 `;
 
 const MenuPresenter = ({ loading, navigation }) =>
@@ -34,21 +38,53 @@ const MenuPresenter = ({ loading, navigation }) =>
         <Loader />
     ) : (
         <Container>
-            <MenuContainer>
+            <MenuButtonContainer
+                style={{ justifyContent: "flex-end", marginBottom: -20 }}
+            >
                 <MenuButton onPress={() => navigation.navigate("Play")}>
-                    <MenuButtonText>Play</MenuButtonText>
+                    <MenuButtonImage
+                        source={PlayButtonImage}
+                        resizeMode="stretch"
+                        shadowOffset={{ height: 0.5 }}
+                        shadowColor="black"
+                        shadowOpacity={0.2}
+                        imageStyle={{ borderRadius: 15 }}
+                    >
+                        <MenuButtonText>PLAY</MenuButtonText>
+                    </MenuButtonImage>
                 </MenuButton>
-            </MenuContainer>
-            <MenuContainer>
+            </MenuButtonContainer>
+            <MenuButtonContainer style={{ justifyContent: "center" }}>
                 <MenuButton onPress={() => navigation.navigate("Play")}>
-                    <MenuButtonText>Practice</MenuButtonText>
+                    <MenuButtonImage
+                        source={PracticeButtonImage}
+                        resizeMode="stretch"
+                        shadowOffset={{ height: 0.5 }}
+                        shadowColor="black"
+                        shadowOpacity={0.2}
+                        imageStyle={{ borderRadius: 20 }}
+                    >
+                        <MenuButtonText>PRACTICE</MenuButtonText>
+                    </MenuButtonImage>
                 </MenuButton>
-            </MenuContainer>
-            <MenuContainer>
+            </MenuButtonContainer>
+
+            <MenuButtonContainer
+                style={{ justifyContent: "flex-start", marginTop: -20 }}
+            >
                 <MenuButton onPress={() => navigation.navigate("Team")}>
-                    <MenuButtonText>Team</MenuButtonText>
+                    <MenuButtonImage
+                        source={TeamButtonImage}
+                        resizeMode="stretch"
+                        shadowOffset={{ height: 0.5 }}
+                        shadowColor="black"
+                        shadowOpacity={0.2}
+                        imageStyle={{ borderRadius: 15 }}
+                    >
+                        <MenuButtonText>TEAM</MenuButtonText>
+                    </MenuButtonImage>
                 </MenuButton>
-            </MenuContainer>
+            </MenuButtonContainer>
         </Container>
     );
 

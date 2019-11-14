@@ -2,9 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
 import styled from "styled-components";
-import { Avatar } from "react-native-elements";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { withNavigation } from "react-navigation";
+import AvatarImage from "../../assets/images/profile_empty_main.png";
+import PatternBg from "../../assets/images/pattern_bg.png";
+import BaseBall from "../../assets/images/baseball.png";
 
 const Container = styled.View`
     flex: 1;
@@ -15,7 +17,14 @@ const Container = styled.View`
 const NameContainer = styled.View`
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+`;
+
+const PatternBackground = styled.ImageBackground`
+    width: 100%;
+    height: 200px;
+    margin-top: -40px;
 `;
 
 const Name = styled.Text`
@@ -32,17 +41,28 @@ const TeamInfo = styled.View`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding-vertical: 10px;
+    padding-vertical: 20px;
+`;
+
+const InfoDetailContainer = styled.View`
+    flex-direction: column;
+    width: 120px;
+    border-right-width: ${props => (props.borderCheck ? "1px" : "0px")};
+    border-right-color: black;
+    padding-horizontal: 20px;
+`;
+
+const InfoLabel = styled.Text`
+    font-size: 16px;
+    color: #919090;
+    text-align: center;
+    padding-bottom: 10px;
 `;
 
 const InfoText = styled.Text`
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 500;
-`;
-
-const BarContainer = styled.Text`
-    font-size: 16px;
-    padding-horizontal: 10px;
+    text-align: center;
 `;
 
 const UsernameContainer = styled.View`
@@ -51,7 +71,14 @@ const UsernameContainer = styled.View`
 `;
 
 const UserNameText = styled.Text`
-    font-size: 24px;
+    font-size: 20px;
+    color: #919090;
+`;
+
+const UserProfileImage = styled.Image`
+    width: 160px;
+    height: 160px;
+    margin-top: -180px;
 `;
 
 const TopButtonContainer = styled.View`
@@ -64,17 +91,31 @@ const TopButtonContainer = styled.View`
 
 const BackButton = styled.TouchableOpacity`
     flex: 5;
-    align-items: flex-start;
-    padding-left: 20px;
+    position: absolute;
+    top: 20;
+    left: 20;
+    z-index: 2;
 `;
 
 const SettingsButton = styled.TouchableOpacity`
     flex: 5;
-    align-items: flex-end;
-    padding-right: 20px;
+    top: 20;
+    right: 20;
+    position: absolute;
+    z-index: 2;
 `;
 
-const CreditContainer = styled.View``;
+const CreditContainer = styled.View`
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+`;
+
+const BallCreditImage = styled.Image`
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+`;
 
 const CreditText = styled.Text`
     font-size: 24px;
@@ -86,39 +127,50 @@ const ModalPresenter = ({ loading, navigation }) =>
     ) : (
         <Container>
             <TopButtonContainer>
-                <BackButton onPress={() => navigation.goBack()}>
-                    <AntDesign name="close" size={40} color="black" />
+                <PatternBackground source={PatternBg} style={{ zIndx: 2 }} />
+                <BackButton
+                    onPress={() => navigation.goBack()}
+                    style={{ zIndx: 1 }}
+                >
+                    <AntDesign name="close" size={32} color="white" />
                 </BackButton>
-                <SettingsButton>
+                <SettingsButton style={{ zIndx: 1 }}>
                     <MaterialCommunityIcons
                         name="settings"
-                        size={40}
-                        color="black"
+                        size={32}
+                        color="white"
                     />
                 </SettingsButton>
             </TopButtonContainer>
-            <Avatar
-                rounded
-                size="xlarge"
-                icon={{ name: "user", type: "font-awesome" }}
-            />
+            <UserProfileImage source={AvatarImage} />
+
             <NameContainer>
                 <Name>김투수</Name>
             </NameContainer>
             <InfoContainer>
                 <UsernameContainer>
-                    <UserNameText>aaa@naver.com</UserNameText>
+                    <UserNameText>alstn2468_@naver.com</UserNameText>
                 </UsernameContainer>
 
                 <TeamInfo>
-                    <InfoText>무소속</InfoText>
-                    <BarContainer>|</BarContainer>
-                    <InfoText>투수</InfoText>
-                    <BarContainer>|</BarContainer>
-                    <InfoText>21</InfoText>
+                    <InfoDetailContainer borderCheck={true}>
+                        <InfoLabel>소속팀</InfoLabel>
+                        <InfoText>Thumbs</InfoText>
+                    </InfoDetailContainer>
+
+                    <InfoDetailContainer borderCheck={true}>
+                        <InfoLabel>포지션</InfoLabel>
+                        <InfoText>투수</InfoText>
+                    </InfoDetailContainer>
+
+                    <InfoDetailContainer borderCheck={false}>
+                        <InfoLabel>나이</InfoLabel>
+                        <InfoText>21</InfoText>
+                    </InfoDetailContainer>
                 </TeamInfo>
                 <CreditContainer>
-                    <CreditText>⚾️ 100</CreditText>
+                    <BallCreditImage source={BaseBall} />
+                    <CreditText>100</CreditText>
                 </CreditContainer>
             </InfoContainer>
         </Container>

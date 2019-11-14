@@ -109,7 +109,7 @@ const MainNavigation = createStackNavigator(
         }
     },
     {
-        initialRouteName: "Home",
+        initialRouteName: "Login",
         headerBackTitleVisible: false
     }
 );

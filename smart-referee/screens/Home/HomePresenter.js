@@ -130,11 +130,11 @@ const HomePresenter = ({ loading, navigation, error, gameList }) => (
         )}
 
         <MenuButtonContainer>
-            <MenuButtonImage source={LoginButtonBox} resizeMode="stretch">
-                <MenuButton onPress={() => navigation.navigate("Menu")}>
+            <MenuButton onPress={() => navigation.navigate("Menu")}>
+                <MenuButtonImage source={LoginButtonBox} resizeMode="stretch">
                     <MenuButtonText>MENU</MenuButtonText>
-                </MenuButton>
-            </MenuButtonImage>
+                </MenuButtonImage>
+            </MenuButton>
         </MenuButtonContainer>
     </Container>
 );
