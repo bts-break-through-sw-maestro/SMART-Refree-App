@@ -37,6 +37,10 @@ const GameResultText = styled.Text`
     font-weight: 600;
 `;
 
+const LoaderContainer = styled.View`
+    flex: 4;
+`;
+
 const GameResultContainer = styled.ScrollView`
     flex: 4;
 `;
@@ -100,7 +104,9 @@ const HomePresenter = ({ loading, navigation, error, gameList }) => (
             <GameResultText>경기 결과</GameResultText>
         </GameResultTextContainer>
         {loading ? (
-            <Loader />
+            <LoaderContainer>
+                <Loader />
+            </LoaderContainer>
         ) : (
             <>
                 {gameList.length != 0 ? (
