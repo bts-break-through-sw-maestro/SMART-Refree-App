@@ -1,10 +1,13 @@
 import React from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
-import { Avatar } from "react-native-elements";
+import styled from "styled-components";
 import { AntDesign } from "@expo/vector-icons";
 import { withNavigation } from "react-navigation";
+import AvatarImage from "../../assets/images/profile_empty_main.png";
+import PatternBg from "../../assets/images/pattern_bg.png";
+import ButtonBox from "../../assets/images/btn_box.png";
+import Layout from "../../constants/Layout";
 import { BG_COLOR } from "../../constants/Colors";
 
 const Container = styled.View`
@@ -13,174 +16,163 @@ const Container = styled.View`
     align-items: center;
 `;
 
+const NameContainer = styled.View`
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    padding-bottom: 20px;
+`;
+
+const PatternBackground = styled.ImageBackground`
+    width: 100%;
+    height: 200px;
+    margin-top: -40px;
+`;
+
+const Name = styled.Text`
+    font-size: 30px;
+    font-weight: 600;
+`;
+
+const InfoContainer = styled.View`
+    justify-content: center;
+    align-items: center;
+`;
+
+const TeamInfo = styled.View`
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-vertical: 20px;
+`;
+
+const InfoDetailContainer = styled.View`
+    flex-direction: column;
+    width: 120px;
+    border-right-width: ${props => (props.borderCheck ? "1px" : "0px")};
+    border-right-color: black;
+    padding-horizontal: 20px;
+`;
+
+const InfoLabel = styled.Text`
+    font-size: 16px;
+    color: #919090;
+    text-align: center;
+    padding-bottom: 10px;
+`;
+
+const InfoText = styled.Text`
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+`;
+
+const UsernameContainer = styled.View`
+    justify-content: center;
+    align-items: center;
+`;
+
+const UserNameText = styled.Text`
+    font-size: 20px;
+    color: #919090;
+`;
+
+const UserProfileImage = styled.Image`
+    width: 160px;
+    height: 160px;
+    margin-top: -120px;
+`;
+
 const TopButtonContainer = styled.View`
     width: 100%;
     height: 50px;
     position: absolute;
     top: 40;
-    z-index: 1;
+    flex-direction: row;
 `;
 
 const BackButton = styled.TouchableOpacity`
     flex: 5;
-    align-items: flex-start;
-    padding-left: 20px;
+    position: absolute;
+    top: 20;
+    left: 20;
+    z-index: 2;
 `;
 
-const ProfileContainer = styled.View`
-    flex: 5;
-    width: 100%;
-    align-items: center;
+const ExitButton = styled.TouchableOpacity`
+    padding-top: 40px;
+`;
+
+const ExitButtonBox = styled.ImageBackground`
+    width: ${Layout.width - 60};
+    height: 80px;
     justify-content: center;
 `;
 
-const ProfileTextContainer = styled.View`
-    margin: 10px;
-`;
-
-const ProfileNameText = styled.Text`
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-`;
-
-const ProfileEmailText = styled.Text`
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
-    margin-top: 3px;
-`;
-
-const StatContainer = styled.View`
-    flex: 2;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-`;
-
-const StatDetailContainer = styled.View`
-    flex-direction: row;
-    margin: 5px;
-`;
-
-const StatCategoryText = styled.Text`
-    font-size: 14px;
-`;
-
-const StatText = styled.Text`
-    font-size: 14px;
-`;
-
-const ReleaseButtonContainer = styled.View`
-    flex: 3;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-`;
-
-const ReleaseButton = styled.TouchableOpacity`
-    height: 20%;
-    width: 80%;
-    background-color: #ef5350;
-    justify-content: center;
-    border-radius: 20px;
-`;
-
-const ReleaseButtonText = styled.Text`
-    font-size: 16px;
-    font-weight: 600;
+const ExitButtonText = styled.Text`
     color: ${BG_COLOR};
     text-align: center;
+    font-size: 18px;
+    font-weight: bold;
 `;
 
-const TeamPresenter = ({ user, loading, navigation }) =>
+const TeamPresenter = ({ user, guildName, loading, navigation }) =>
     loading ? (
         <Loader />
     ) : (
         <Container>
             <TopButtonContainer>
-                <BackButton onPress={() => navigation.goBack()}>
-                    <AntDesign name="close" size={40} color="black" />
+                <PatternBackground source={PatternBg} style={{ zIndx: 2 }} />
+                <BackButton
+                    onPress={() => navigation.goBack()}
+                    style={{ zIndx: 1 }}
+                >
+                    <AntDesign name="close" size={32} color="white" />
                 </BackButton>
             </TopButtonContainer>
-            {user !== null ? (
-                <>
-                    <ProfileContainer>
-                        <Avatar
-                            rounded
-                            size={120}
-                            icon={{ name: "user", type: "font-awesome" }}
-                        />
-                        <ProfileTextContainer>
-                            <ProfileNameText>{user.name}</ProfileNameText>
-                            <ProfileEmailText>{user.email}</ProfileEmailText>
-                        </ProfileTextContainer>
-                    </ProfileContainer>
-                    <StatContainer>
-                        <StatDetailContainer>
-                            <StatCategoryText>포지션</StatCategoryText>
-                            <StatText>{user.position}</StatText>
-                        </StatDetailContainer>
-                        <StatDetailContainer>
-                            <StatCategoryText>팀명</StatCategoryText>
-                            <StatText>{user.teamName}</StatText>
-                        </StatDetailContainer>
-                        {user.isPitcher ? (
-                            <>
-                                <StatDetailContainer>
-                                    <StatCategoryText>이닝</StatCategoryText>
-                                    <StatText>{user.inning}</StatText>
-                                </StatDetailContainer>
-                                <StatDetailContainer>
-                                    <StatCategoryText>삼진</StatCategoryText>
-                                    <StatText>{user.strikeOut}</StatText>
-                                </StatDetailContainer>
-                                <StatDetailContainer>
-                                    <StatCategoryText>피안타</StatCategoryText>
-                                    <StatText>{user.hits}</StatText>
-                                </StatDetailContainer>
+            <UserProfileImage source={AvatarImage} />
 
-                                <StatDetailContainer>
-                                    <StatCategoryText>피홈런</StatCategoryText>
-                                    <StatText>{user.homeRuns}</StatText>
-                                </StatDetailContainer>
-                            </>
-                        ) : (
-                            <>
-                                <StatDetailContainer>
-                                    <StatCategoryText>안타</StatCategoryText>
-                                    <StatText>{user.hits}</StatText>
-                                </StatDetailContainer>
-                                <StatDetailContainer>
-                                    <StatCategoryText>2루타</StatCategoryText>
-                                    <StatText>{user.doubles}</StatText>
-                                </StatDetailContainer>
-                                <StatDetailContainer>
-                                    <StatCategoryText>3루타</StatCategoryText>
-                                    <StatText>{user.tripes}</StatText>
-                                </StatDetailContainer>
-                                <StatDetailContainer>
-                                    <StatCategoryText>홈런</StatCategoryText>
-                                    <StatText>{user.homeRuns}</StatText>
-                                </StatDetailContainer>
-                            </>
-                        )}
-                    </StatContainer>
-                    <ReleaseButtonContainer>
-                        {user.isMaster ? (
-                            <ReleaseButton>
-                                <ReleaseButtonText>방출하기</ReleaseButtonText>
-                            </ReleaseButton>
-                        ) : null}
-                    </ReleaseButtonContainer>
-                </>
-            ) : null}
+            <NameContainer>
+                <Name>{user.replace(/\"/g, "")}</Name>
+            </NameContainer>
+            <InfoContainer>
+                <UsernameContainer>
+                    <UserNameText>alstn2468_@naver.com</UserNameText>
+                </UsernameContainer>
+
+                <TeamInfo>
+                    <InfoDetailContainer borderCheck={true}>
+                        <InfoLabel>소속팀</InfoLabel>
+                        <InfoText>{guildName.replace(/\"/g, "")}</InfoText>
+                    </InfoDetailContainer>
+
+                    <InfoDetailContainer borderCheck={true}>
+                        <InfoLabel>포지션</InfoLabel>
+                        <InfoText>투수</InfoText>
+                    </InfoDetailContainer>
+
+                    <InfoDetailContainer borderCheck={false}>
+                        <InfoLabel>나이</InfoLabel>
+                        <InfoText>21</InfoText>
+                    </InfoDetailContainer>
+                </TeamInfo>
+            </InfoContainer>
+            <ExitButton>
+                <ExitButtonBox
+                    source={ButtonBox}
+                    style={{ borderRadius: 20 }}
+                    resizeMode="stretch"
+                >
+                    <ExitButtonText>EXILE</ExitButtonText>
+                </ExitButtonBox>
+            </ExitButton>
         </Container>
     );
 
 TeamPresenter.propTypes = {
     loading: PropTypes.bool.isRequired,
-    user: PropTypes.object
+    user: PropTypes.string,
+    guildName: PropTypes.string
 };
 
 export default withNavigation(TeamPresenter);

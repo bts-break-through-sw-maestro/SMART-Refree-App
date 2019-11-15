@@ -78,7 +78,7 @@ const MainNavigation = createStackNavigator(
         Team: {
             screen: TeamScreen,
             navigationOptions: {
-                title: "Team",
+                title: "TEAM",
                 headerRight: <AvatarModal />,
                 ...headerStyles
             }
@@ -86,7 +86,7 @@ const MainNavigation = createStackNavigator(
         TeamManage: {
             screen: TeamManageScreen,
             navigationOptions: {
-                title: "Team Manage",
+                title: "TEAM MANAGE",
                 headerRight: <AvatarModal />,
                 ...headerStyles
             }
@@ -94,7 +94,7 @@ const MainNavigation = createStackNavigator(
         TeamCreate: {
             screen: TeamCreateScreen,
             navigationOptions: {
-                title: "Team Create",
+                title: "TEAM CREATE",
                 headerRight: <AvatarModal />,
                 ...headerStyles
             }
@@ -102,7 +102,7 @@ const MainNavigation = createStackNavigator(
         TeamSearch: {
             screen: TeamSearchScreen,
             navigationOptions: {
-                title: "Team Search",
+                title: "TEAM SEARCH",
                 headerRight: <AvatarModal />,
                 ...headerStyles
             }

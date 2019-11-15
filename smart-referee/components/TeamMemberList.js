@@ -10,16 +10,17 @@ const CenterViewContainer = styled.View`
     margin-bottom: 10px;
 `;
 
-const TeamMemberList = ({ memberList }) => (
+const TeamMemberList = ({ memberList, guildName }) => (
     <CenterViewContainer>
         {memberList.map(member => (
-            <TeamMember key={member.id} member={member} />
+            <TeamMember key={member.id} member={member} guildName={guildName} />
         ))}
     </CenterViewContainer>
 );
 
 TeamMemberList.propsType = {
-    memberList: Props.array
+    memberList: Props.array,
+    guildName: Props.string
 };
 
 export default TeamMemberList;

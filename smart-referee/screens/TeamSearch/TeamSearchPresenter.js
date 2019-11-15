@@ -2,10 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
-import { BORDER_COLOR, BUTTON_COLOR, BG_COLOR } from "../../constants/Colors";
+import { BG_COLOR } from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 import { Dropdown } from "react-native-material-dropdown";
 import { Region } from "../../constants/Region";
+import ButtonBox from "../../assets/images/btn_menu.png";
+import Search from "../../assets/images/search.png";
+import TeamCount from "../../assets/images/teamCount.png";
+import TeamRecord from "../../assets/images/record.png";
 
 const Container = styled.View`
     display: flex;
@@ -24,57 +28,73 @@ const SearchContainer = styled.View`
 `;
 
 const TextContainer = styled.View`
-    width: 100px;
-    border-bottom-width: 1px;
-    border-bottom-color: ${BORDER_COLOR};
+    width: 300px;
     padding-bottom: 5px;
+    text-align: left;
+    align-self: stretch;
 `;
 
 const PickerText = styled.Text`
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 40px;
+    margin-bottom: -5px;
+`;
+
+const ResultNumText = styled.Text`
     font-size: 16px;
-    text-align: center;
+    font-weight: bold;
+    color: #5d3f6a;
 `;
 
 const PickerContainer = styled.View`
+    width: ${Layout.width - 60};
+    height: 68px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const Picker = styled.View`
+    width: 95%;
+    justify-content: center;
+    padding-bottom: 5px;
+`;
+
+const TeamNameInput = styled.TextInput`
+    width: 95%;
+    padding: 0 0 8px 0;
+    text-align: left;
+    font-size: 14px;
+    border-bottom-width: 1px;
+    border-bottom-color: #bababa;
+`;
+
+const SearchButtonBox = styled.ImageBackground`
+    width: ${Layout.width - 60};
+    height: 70px;
+    border-radius: 15px;
     margin-vertical: 10px;
-    border: 1px solid ${BORDER_COLOR};
-    width: 100%;
-    height: 40px;
-    border-radius: 10px;
     justify-content: center;
     align-items: center;
     flex-direction: row;
 `;
 
-const Picker = styled.View`
-    padding-left: 5px;
-    width: 100%;
-    justify-content: center;
-`;
-
-const TeamNameInput = styled.TextInput`
-    width: 100%;
-    padding: 10px;
-    text-align: left;
-`;
-
-const SearchButtonContainer = styled.View`
-    width: 100%;
-    padding: 0px 10px;
-`;
-
-const SearchButton = styled.TouchableOpacity`
-    background-color: ${BUTTON_COLOR};
-    justify-content: center;
-    border-radius: 10px;
-    width: 100%;
-    height: 40px;
-`;
+const SearchButton = styled.TouchableOpacity``;
 
 const SearchButtonText = styled.Text`
+    width: auto;
+    height: 20px;
     color: ${BG_COLOR};
     font-size: 16px;
+    font-weight: bold;
     text-align: center;
+`;
+
+const SearchButtonIcon = styled.Image`
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
 `;
 
 const ResultContainer = styled.View`
@@ -95,7 +115,7 @@ const CenterViewContainer = styled.View`
 const TeamInfoContainer = styled.View`
     width: ${Layout.width - 20};
     height: 60px;
-    border: 1px solid black;
+    border: 1px solid #dbdbdb;
     border-radius: 10px;
     margin-top: 10px;
     padding: 5px;
@@ -104,40 +124,49 @@ const TeamInfoContainer = styled.View`
 `;
 
 const TeamNameText = styled.Text`
-    font-size: 16px;
-    flex: 5;
+    font-size: 14px;
+    font-weight: bold;
+    width: 120px;
     text-align: center;
+    padding-horizontal: 10px;
+`;
+
+const TeamIcon = styled.Image`
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
 `;
 
 const DetailContainer = styled.View`
-    flex-direction: column;
-    flex: 3;
+    flex-direction: row;
+    width: 40px;
+    margin-right: 20px;
 `;
 
-const TeamRecordText = styled.Text``;
-
-const TeamMemberCountText = styled.Text``;
-
-const TeamJoinButtonContainer = styled.View`
-    flex: 2;
+const TeamRecordText = styled.Text`
+    color: #6e6e6e;
+    font-size: 10px;
 `;
 
 const TeamJoinButton = styled.TouchableOpacity`
-    background-color: ${BUTTON_COLOR};
+    background-color: ${BG_COLOR};
+    border: 1px solid #9b54ba;
     justify-content: center;
-    border-radius: 10px;
-    width: 100%;
-    height: 40px;
+    border-radius: 20px;
+    width: 60px;
+    height: 25px;
+    margin-left: -5px;
 `;
 
 const TeamJoinButtonText = styled.Text`
-    color: ${BG_COLOR};
-    font-size: 16px;
+    color: #9b54ba;
+    font-size: 12px;
+    font-weight: bold;
     text-align: center;
 `;
 
 const Text = styled.Text`
-    font-size: 20px;
+    font-size: 10px;
     padding-top: 20px;
 `;
 
@@ -157,43 +186,58 @@ const TeamSearchPresenter = ({
         <Loader />
     ) : (
         <Container>
-            <SearchContainer>
-                <TextContainer>
-                    <PickerText>지역</PickerText>
-                </TextContainer>
-                <PickerContainer>
-                    <Picker>
-                        <Dropdown
-                            placeholder="지역을 선택하세요."
-                            data={Region}
-                            onChangeText={value => extractRegionData(value)}
-                        />
-                    </Picker>
-                </PickerContainer>
-            </SearchContainer>
-            <SearchContainer>
-                <TextContainer>
-                    <PickerText>팀이름</PickerText>
-                </TextContainer>
-                <PickerContainer>
-                    <TeamNameInput
-                        placeholder="팀 이름을 입력하세요."
-                        value={teamNameTerm}
-                        onChangeText={handleTeamNameUpdate}
-                        autoCorrect={false}
-                        autoCapitalize="none"
+            <TextContainer style={{ marginBottom: -10, marginTop: 40 }}>
+                <PickerText>지역</PickerText>
+            </TextContainer>
+            <PickerContainer style={{ marginBottom: 10 }}>
+                <Picker>
+                    <Dropdown
+                        placeholder="지역을 선택하세요."
+                        data={Region}
+                        onChangeText={value => extractRegionData(value)}
+                        fontSize={14}
                     />
-                </PickerContainer>
-            </SearchContainer>
-            <SearchButtonContainer>
-                <SearchButton onPress={onClickSearchButton}>
-                    <SearchButtonText>Search</SearchButtonText>
-                </SearchButton>
-            </SearchButtonContainer>
+                </Picker>
+            </PickerContainer>
+            <TextContainer>
+                <PickerText>팀이름</PickerText>
+            </TextContainer>
+            <PickerContainer>
+                <TeamNameInput
+                    placeholder="팀 이름을 입력하세요."
+                    value={teamNameTerm}
+                    onChangeText={handleTeamNameUpdate}
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                />
+            </PickerContainer>
+
+            <SearchButton onPress={onClickSearchButton}>
+                <SearchButtonBox
+                    source={ButtonBox}
+                    resizeMode="stretch"
+                    style={{ borderRadius: 20 }}
+                >
+                    <SearchButtonIcon source={Search} />
+                    <SearchButtonText>SEARCH</SearchButtonText>
+                </SearchButtonBox>
+            </SearchButton>
             <ResultContainer>
                 <SearchContainer>
                     <TextContainer>
-                        <PickerText>검색 결과</PickerText>
+                        <PickerText style={{ fontSize: 16, paddingLeft: 30 }}>
+                            검색결과{" "}
+                            {teamList ? (
+                                <>
+                                    <ResultNumText>
+                                        {teamList.length}
+                                    </ResultNumText>
+                                    <PickerText style={{ fontSize: 16 }}>
+                                        건
+                                    </PickerText>
+                                </>
+                            ) : null}
+                        </PickerText>
                     </TextContainer>
                 </SearchContainer>
                 {searchLoading ? (
@@ -214,38 +258,54 @@ const TeamSearchPresenter = ({
                                                     {team.guildName}
                                                 </TeamNameText>
                                                 <DetailContainer>
-                                                    <TeamMemberCountText>
-                                                        총 인원 : 30명
-                                                    </TeamMemberCountText>
+                                                    <TeamIcon
+                                                        source={TeamCount}
+                                                        resizeMode="stretch"
+                                                    />
+                                                    <TeamRecordText>
+                                                        30명
+                                                    </TeamRecordText>
+                                                </DetailContainer>
+                                                <DetailContainer
+                                                    style={{
+                                                        width: 70,
+                                                        marginRight: 30
+                                                    }}
+                                                >
+                                                    <TeamIcon
+                                                        source={TeamRecord}
+                                                        resizeMode="stretch"
+                                                    />
                                                     <TeamRecordText>
                                                         {team.wins}승{" "}
                                                         {team.loses}패{" "}
                                                         {team.draws}무
                                                     </TeamRecordText>
                                                 </DetailContainer>
-                                                <TeamJoinButtonContainer>
-                                                    <TeamJoinButton
-                                                        onPress={() =>
-                                                            onClickJoinButton(
-                                                                team.id,
-                                                                team.guildName
-                                                            )
-                                                        }
-                                                    >
-                                                        <TeamJoinButtonText>
-                                                            가입
-                                                        </TeamJoinButtonText>
-                                                    </TeamJoinButton>
-                                                </TeamJoinButtonContainer>
+
+                                                <TeamJoinButton
+                                                    onPress={() =>
+                                                        onClickJoinButton(
+                                                            team.id,
+                                                            team.guildName
+                                                        )
+                                                    }
+                                                >
+                                                    <TeamJoinButtonText>
+                                                        가입
+                                                    </TeamJoinButtonText>
+                                                </TeamJoinButton>
                                             </TeamInfoContainer>
                                         ))
                                     ) : (
-                                        <Text>
+                                        <Text style={{ fontSize: 20 }}>
                                             검색 결과가 존재하지 않습니다.
                                         </Text>
                                     )
                                 ) : (
-                                    <Text>팀을 검색하세요.</Text>
+                                    <Text style={{ fontSize: 20 }}>
+                                        팀을 검색하세요.
+                                    </Text>
                                 )}
                             </CenterViewContainer>
                         )}

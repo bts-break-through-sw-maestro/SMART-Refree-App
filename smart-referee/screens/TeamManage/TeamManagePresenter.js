@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
-import TeamMemberList from "../../components/TeamMemberList";
 import TeamJoinMemberList from "../../components/TeamJoinMemberList";
 
 const Container = styled.View`
@@ -13,15 +12,17 @@ const Container = styled.View`
 
 const TeamManageSummary = styled.View`
     display: flex;
-    flex: 1;
+    height: 40px;
+    width: 90%;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 `;
 
 const TeamManageText = styled.Text`
     margin-top: 5px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
+    padding-left: 15px;
 `;
 
 const TeamManageListContainer = styled.ScrollView`
@@ -36,27 +37,13 @@ const NoScrollView = styled.View`
     align-items: center;
 `;
 
-const NoTeamMemberText = styled.Text``;
-
-const TeamManagePresenter = ({ loading, memberList, error }) =>
+const TeamManagePresenter = ({ loading, error }) =>
     loading ? (
         <Loader />
     ) : (
         <Container>
             <TeamManageSummary>
-                <TeamManageText>가입된 팀원</TeamManageText>
-            </TeamManageSummary>
-            {memberList ? (
-                <TeamManageListContainer>
-                    <TeamMemberList memberList={memberList} />
-                </TeamManageListContainer>
-            ) : (
-                <NoScrollView>
-                    <NoTeamMemberText>가입된 팀원이 없습니다.</NoTeamMemberText>
-                </NoScrollView>
-            )}
-            <TeamManageSummary>
-                <TeamManageText>가입 신청</TeamManageText>
+                <TeamManageText>가입신청</TeamManageText>
             </TeamManageSummary>
             <TeamManageListContainer>
                 <TeamJoinMemberList />
