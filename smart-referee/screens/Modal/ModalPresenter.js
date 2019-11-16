@@ -47,6 +47,7 @@ const TeamInfo = styled.View`
 const InfoDetailContainer = styled.View`
     flex-direction: column;
     width: 120px;
+    height: 50px;
     border-right-width: ${props => (props.borderCheck ? "1px" : "0px")};
     border-right-color: black;
     padding-horizontal: 20px;

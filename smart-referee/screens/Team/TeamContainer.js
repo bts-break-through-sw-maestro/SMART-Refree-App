@@ -5,7 +5,7 @@ import { guildApi } from "../../api";
 export default class extends React.Component {
     state = {
         loading: false,
-        hasTeam: true,
+        hasTeam: false,
         isMaster: true,
         memberList: null,
         guildInfo: null,

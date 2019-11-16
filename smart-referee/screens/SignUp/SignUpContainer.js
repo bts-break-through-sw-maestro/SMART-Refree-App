@@ -22,7 +22,7 @@ export default class extends React.Component {
     };
 
     handleEmailUpdate = text => {
-        this.setState({ usernameTerm: text });
+        this.setState({ emailTerm: text });
     };
 
     handlePasswordUpdate = text => {
@@ -34,15 +34,18 @@ export default class extends React.Component {
     };
 
     onPressOneCheckBox = () => {
-        this.setState({ buttonOneChecked: true });
+        const { buttonOneChecked } = this.state;
+        this.setState({ buttonOneChecked: !buttonOneChecked });
     };
 
     onPressTwoCheckBox = () => {
-        this.setState({ buttonTwoChecked: true });
+        const { buttonTwoChecked } = this.state;
+        this.setState({ buttonTwoChecked: !buttonTwoChecked });
     };
 
     onPressThrCheckBox = () => {
-        this.setState({ buttonThrChecked: true });
+        const { buttonThrChecked } = this.state;
+        this.setState({ buttonThrChecked: !buttonThrChecked });
     };
 
     render() {
